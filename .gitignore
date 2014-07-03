@@ -14,3 +14,6 @@ dist/
 
 # Alpha versions
 *a.zip
+
+# Dev test file
+src/Prueba.java
