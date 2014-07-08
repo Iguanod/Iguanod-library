@@ -51,8 +51,8 @@ public final class Objects{
 	/**
 	 * Compares to objects for equality, working correctly with arrays.
 	 *
-	 *
-	 * <p>Returns true if the arguments are equal to each other and false
+	 * <p>
+	 * Returns true if the arguments are equal to each other and false
 	 * otherwise. Consequently, if both arguments are null, true is returned
 	 * and if exactly one argument is null, false is returned. Otherwise,
 	 * equality is determined by using the equals method of the first argument
@@ -60,13 +60,15 @@ public final class Objects{
 	 * {@link java.util.Arrays#deepEquals(Object[],Object[]) Arrays.deepEquals}
 	 * method.</p>
 	 *
-	 * <p>If both arguments are arrays, and either of them contain themselves
-	 * as elements either directly or indirectly through one or more levels of
+	 * <p>
+	 * If both arguments are arrays, and either of them contain themselves as
+	 * elements either directly or indirectly through one or more levels of
 	 * arrays, the behavior of this method is undefined.</p>
 	 *
-	 * <p>This method eliminates the need in
+	 * <p>
+	 * This method eliminates the need in
 	 * {@link java.util.Objects java.util.Objects} to have two separated
-	 * {@code equals} methods, as this one serves bot for non-arrays and
+	 * {@code equals} methods, as this one serves both for non-arrays and
 	 * arrays of any dimension.</p>
 	 *
 	 * @param obj1 the first object to be compared for equality
@@ -134,8 +136,8 @@ public final class Objects{
 	 * {@code null} object is always considered less than any other object,
 	 * unless both are {@code null}, in which case the comparison returns 0.
 	 * If both objects are non-{@code null} references, 0 is returned if they
-	 * are identical references. Otherwise, if
-	 * {@code comparator!=null}, {@code comparator.}{@link java.util.Comparator#compare(Object,Object) compare}{@code (obj1,obj2)}
+	 * are identical references. Otherwise, if {@code comparator!=null},
+	 * {@code comparator.}{@link java.util.Comparator#compare(Object,Object) compare}{@code (obj1,obj2)}
 	 * is returned; or if {@code comparator==null}, {@code obj1} is casted to
 	 * {@link java.util.Comparable Comparable} and the result of
 	 * {@link java.util.Comparable#compareTo(Object) compareTo} is returned.
@@ -144,6 +146,7 @@ public final class Objects{
 	 *
 	 * @param obj1 the first object to be compared
 	 * @param obj2 the second object to be compared
+	 * @param comparator the Comparator used for the comparison
 	 *
 	 * @return 0 if the objects are identical; -1, 0 or 1 if any of the
 	 * arguments is {@code null} (as specified by the method description);
