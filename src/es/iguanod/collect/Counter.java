@@ -82,7 +82,7 @@ import java.util.Map;
  *
  * @author <a href="mailto:rubiof.david@gmail.com">David Rubio Fernández</a>
  * @since 0.0.2.1.a
- * @version 1.0.1.1.b
+ * @version 1.0.1.b
  */
 public interface Counter<K, V extends Number> extends Map<K, V>{
 

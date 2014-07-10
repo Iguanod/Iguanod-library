@@ -53,7 +53,7 @@ import java.util.List;
  *
  * @author <a href="mailto:rubiof.david@gmail.com">David Rubio Fernández</a>
  * @since 0.0.8.1.a
- * @version 1.0.1.1.b
+ * @version 1.0.1.b
  */
 public final class Knapsack{
 

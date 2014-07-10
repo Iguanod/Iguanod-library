@@ -70,7 +70,7 @@ import java.util.Set;
  *
  * @author <a href="mailto:rubiof.david@gmail.com">David Rubio Fernández</a>
  * @since 0.0.2.1.a
- * @version 1.0.1.1.b
+ * @version 1.0.1.b
  */
 public class HashCounter<K, V extends Number> extends AbstractCounter<K, V>{
 
@@ -115,7 +115,7 @@ public class HashCounter<K, V extends Number> extends AbstractCounter<K, V>{
 	 * @author <a href="mailto:rubiof.david@gmail.com">David Rubio
 	 * Fernández</a>
 	 * @since 1.0.1.1.cb
-	 * @version 1.0.1.1.b
+	 * @version 1.0.1.b
 	 */
 	public static class HashCounterBuilder<K, V extends Number> implements Serializable{
 
