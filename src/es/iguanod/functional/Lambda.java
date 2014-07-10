@@ -5,15 +5,15 @@ import java.lang.reflect.Field;
 
 /**
  *
- * @param <T>
+ * @param <P>
  * 
  * @author <a href="mailto:rubiof.david@gmail.com">David Rubio Fernández</a>
  * @since
  * @version
  */
-public class Lambda<T>{
+public class Lambda<P,R>{
 
-	protected Object res=null;
+	protected R res=null;
 	//*********
 	private Class cls=null;
 	private Constructor constructor=null;
@@ -63,7 +63,7 @@ public class Lambda<T>{
 		}
 	}
 
-	public Object eval(T... params) throws ReflectiveOperationException, MalformedLambdaException, IllegalArgumentException{
+	public R eval(P... params) throws ReflectiveOperationException, MalformedLambdaException, IllegalArgumentException{
 
 		if(cls == null){
 			try{
@@ -86,54 +86,54 @@ public class Lambda<T>{
 			if(this$0 != null){
 				switch(num_params){
 					case 1:
-						return ((Lambda)constructor.newInstance(this$0.get(this))).res;
+						return ((Lambda<P,R>)constructor.newInstance(this$0.get(this))).res;
 					case 2:
-						return ((Lambda)constructor.newInstance(this$0.get(this), params[0])).res;
+						return ((Lambda<P,R>)constructor.newInstance(this$0.get(this), params[0])).res;
 					case 3:
-						return ((Lambda)constructor.newInstance(this$0.get(this), params[0], params[1])).res;
+						return ((Lambda<P,R>)constructor.newInstance(this$0.get(this), params[0], params[1])).res;
 					case 4:
-						return ((Lambda)constructor.newInstance(this$0.get(this), params[0], params[1], params[2])).res;
+						return ((Lambda<P,R>)constructor.newInstance(this$0.get(this), params[0], params[1], params[2])).res;
 					case 5:
-						return ((Lambda)constructor.newInstance(this$0.get(this), params[0], params[1], params[2], params[3])).res;
+						return ((Lambda<P,R>)constructor.newInstance(this$0.get(this), params[0], params[1], params[2], params[3])).res;
 					case 6:
-						return ((Lambda)constructor.newInstance(this$0.get(this), params[0], params[1], params[2], params[3], params[4])).res;
+						return ((Lambda<P,R>)constructor.newInstance(this$0.get(this), params[0], params[1], params[2], params[3], params[4])).res;
 					case 7:
-						return ((Lambda)constructor.newInstance(this$0.get(this), params[0], params[1], params[2], params[3], params[4], params[5])).res;
+						return ((Lambda<P,R>)constructor.newInstance(this$0.get(this), params[0], params[1], params[2], params[3], params[4], params[5])).res;
 					case 8:
-						return ((Lambda)constructor.newInstance(this$0.get(this), params[0], params[1], params[2], params[3], params[4], params[5], params[6])).res;
+						return ((Lambda<P,R>)constructor.newInstance(this$0.get(this), params[0], params[1], params[2], params[3], params[4], params[5], params[6])).res;
 					case 9:
-						return ((Lambda)constructor.newInstance(this$0.get(this), params[0], params[1], params[2], params[3], params[4], params[5], params[6], params[7])).res;
+						return ((Lambda<P,R>)constructor.newInstance(this$0.get(this), params[0], params[1], params[2], params[3], params[4], params[5], params[6], params[7])).res;
 					case 10:
-						return ((Lambda)constructor.newInstance(this$0.get(this), params[0], params[1], params[2], params[3], params[4], params[5], params[6], params[7], params[8])).res;
+						return ((Lambda<P,R>)constructor.newInstance(this$0.get(this), params[0], params[1], params[2], params[3], params[4], params[5], params[6], params[7], params[8])).res;
 					case 11:
-						return ((Lambda)constructor.newInstance(this$0.get(this), params[0], params[1], params[2], params[3], params[4], params[5], params[6], params[7], params[8], params[9])).res;
+						return ((Lambda<P,R>)constructor.newInstance(this$0.get(this), params[0], params[1], params[2], params[3], params[4], params[5], params[6], params[7], params[8], params[9])).res;
 					default:
 						throw new MalformedLambdaException("Lambda created with too many parameters");
 				}
 			}else{
 				switch(num_params){
 					case 0:
-						return ((Lambda)constructor.newInstance()).res;
+						return ((Lambda<P,R>)constructor.newInstance()).res;
 					case 1:
-						return ((Lambda)constructor.newInstance(params[0])).res;
+						return ((Lambda<P,R>)constructor.newInstance(params[0])).res;
 					case 2:
-						return ((Lambda)constructor.newInstance(params[0], params[1])).res;
+						return ((Lambda<P,R>)constructor.newInstance(params[0], params[1])).res;
 					case 3:
-						return ((Lambda)constructor.newInstance(params[0], params[1], params[2])).res;
+						return ((Lambda<P,R>)constructor.newInstance(params[0], params[1], params[2])).res;
 					case 4:
-						return ((Lambda)constructor.newInstance(params[0], params[1], params[2], params[3])).res;
+						return ((Lambda<P,R>)constructor.newInstance(params[0], params[1], params[2], params[3])).res;
 					case 5:
-						return ((Lambda)constructor.newInstance(params[0], params[1], params[2], params[3], params[4])).res;
+						return ((Lambda<P,R>)constructor.newInstance(params[0], params[1], params[2], params[3], params[4])).res;
 					case 6:
-						return ((Lambda)constructor.newInstance(params[0], params[1], params[2], params[3], params[4], params[5])).res;
+						return ((Lambda<P,R>)constructor.newInstance(params[0], params[1], params[2], params[3], params[4], params[5])).res;
 					case 7:
-						return ((Lambda)constructor.newInstance(params[0], params[1], params[2], params[3], params[4], params[5], params[6])).res;
+						return ((Lambda<P,R>)constructor.newInstance(params[0], params[1], params[2], params[3], params[4], params[5], params[6])).res;
 					case 8:
-						return ((Lambda)constructor.newInstance(params[0], params[1], params[2], params[3], params[4], params[5], params[6], params[7])).res;
+						return ((Lambda<P,R>)constructor.newInstance(params[0], params[1], params[2], params[3], params[4], params[5], params[6], params[7])).res;
 					case 9:
-						return ((Lambda)constructor.newInstance(params[0], params[1], params[2], params[3], params[4], params[5], params[6], params[7], params[8])).res;
+						return ((Lambda<P,R>)constructor.newInstance(params[0], params[1], params[2], params[3], params[4], params[5], params[6], params[7], params[8])).res;
 					case 10:
-						return ((Lambda)constructor.newInstance(params[0], params[1], params[2], params[3], params[4], params[5], params[6], params[7], params[8], params[9])).res;
+						return ((Lambda<P,R>)constructor.newInstance(params[0], params[1], params[2], params[3], params[4], params[5], params[6], params[7], params[8], params[9])).res;
 					default:
 						throw new MalformedLambdaException("Lambda created with too many parameters");
 				}
