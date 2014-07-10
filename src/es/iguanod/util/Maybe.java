@@ -27,13 +27,15 @@ import java.io.Serializable;
  * this type either contains a reference (that may or may not be null), or
  * contains nothing (in which case we say that the reference is "absent").
  *
- * <p>A non-null {@code Maybe<T>} reference can be used as a replacement for a
+ * <p>
+ * A non-null {@code Maybe<T>} reference can be used as a replacement for a
  * {@code T} reference. It allows you to represent "a {@code T} that must be
  * present" (in which case you use simply a {@code T}) and a "a {@code T} that
  * might be absent" (in which case you use a {@code Maybe<T>}) as two distinct
  * types in your program, which can aid clarity.</p>
  *
- * <p>Some uses of this class include:<br/>
+ * <p>
+ * Some uses of this class include:<br/>
  *
  * &nbsp;&nbsp;&nbsp;&nbsp;&bull; As a method return type, as an alternative to
  * returning {@code null} to indicate that no value was available.<br/>
@@ -46,12 +48,13 @@ import java.io.Serializable;
  * collection that does not support {@code null} (though there are several other
  * approaches to this that should be considered first).</p>
  *
- * <p>If an API uses {@code Maybes}, sometimes having a {@code Maybe<T>}
- * returned from a method instead of simply a &lt;T&gt; may seem like a burden.
- * Some examples may be when another API or method works with null values to
- * indicate non-present, or when printing a collection of {@code Maybes} and
- * wanting to print "null" for absent values. However, in those cases the
- * apparent problem may be circunvented using
+ * <p>
+ * If an API uses {@code Maybes}, sometimes having a {@code Maybe<T>} returned
+ * from a method instead of simply a &lt;T&gt; may seem like a burden. Some
+ * examples may be when another API or method works with null values to indicate
+ * non-present, or when printing a collection of {@code Maybes} and wanting to
+ * print "null" for absent values. However, in those cases the apparent problem
+ * may be circunvented using
  * {@code maybe.}{@link #or(Object) or}{@code (null)}.</p>
  *
  * @param <T> the class of the object wrapped by this {@code Maybe}
@@ -225,8 +228,8 @@ public class Maybe<T> implements Serializable, Comparable<Maybe<T>>{
 	 * Compares this object with the specified object for order. Returns a
 	 * negative integer, zero, or a positive integer as this object is less
 	 * than, equal to, or greater than the specified object.
-	 *
-	 * <p>An absent {@code Maybe} is considered less than any other
+	 * <p>
+	 * An absent {@code Maybe} is considered less than any other
 	 * {@code Maybe}, except for another absent {@code Maybe}, to which is
 	 * equal. If none of the compared {@code Maybes} are absent the result of
 	 * {@link es.iguanod.base.Objects#compare(Object,Object) Objects.compare(this,maybe)}
@@ -262,14 +265,14 @@ public class Maybe<T> implements Serializable, Comparable<Maybe<T>>{
 	 * {@code Maybes} are considered equals if both are absent, or both are
 	 * non-absent and
 	 * {@link es.iguanod.base.Objects#equals(Object,Object) Objects.equals(this,obj)}{@code ==true}.
-	 *
-	 * <p>In every other aspect this method follows the general contract of
+	 * <p>
+	 * In every other aspect this method follows the general contract of
 	 * {@link java.lang.Object#equals(Object) Object.equals}.</p>
 	 *
 	 * @param obj the object to be tested for equality
 	 *
-	 * @return {@code true} if the passed argument is equal to
-	 * {@code this}, {@code false} otherwise
+	 * @return {@code true} if the passed argument is equal to {@code this},
+	 * {@code false} otherwise
 	 */
 	@Override
 	public boolean equals(Object obj){
@@ -295,8 +298,8 @@ public class Maybe<T> implements Serializable, Comparable<Maybe<T>>{
 	 * is absent, the returned hash code is 0 (zero). Note that if this
 	 * {@code Maybe} is non-absent, its hash code is not the same as the hash
 	 * code of the object it wraps.
-	 *
-	 * <p>This method follows the general contract of
+	 * <p>
+	 * This method follows the general contract of
 	 * {@link java.lang.Object#hashCode() Object.hashCode}.</p>
 	 *
 	 * @return the hashCode of this object
@@ -312,11 +315,11 @@ public class Maybe<T> implements Serializable, Comparable<Maybe<T>>{
 
 	/**
 	 * Returns a {@code String} representation of this {@code Maybe}.
-	 *
-	 * <p>If this is absent, the method returns: "Maybe -> Absent"</p>
-	 *
-	 * <p>If this is non absent, the method returns the equivalent of: "Maybe
-	 * -> value = " +
+	 * <p>
+	 * If this is absent, the method returns: "Maybe -> Absent"</p>
+	 * <p>
+	 * If this is non absent, the method returns the equivalent of: "Maybe ->
+	 * value = " +
 	 * {@code (}{@link #get()}{@code !=null?get().toString():"null")}</p>
 	 *
 	 * @return the {@code String} representation

@@ -27,8 +27,8 @@ import java.io.Serializable;
  * this cast has to happen: it can create a new object, use a decorator to
  * return an object backed by the original object to be casted, or any other
  * method.
- *
- * <p>Contrary to other simple interfaces part of the JDK (as {@link java.util.Comparator Comparator}),
+ * <p>
+ * Contrary to other simple interfaces part of the JDK (as {@link java.util.Comparator Comparator}),
  * {@code Caster} is {@code Serializable} itself to allow for anonymous
  * {@code Caster} creation in the cases in which the outer class has to be
  * {@code Serializable}; and any {@code Caster} shouldn't generally have any

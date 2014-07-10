@@ -26,22 +26,22 @@ package es.iguanod.util;
  * Unlike {@link es.iguanod.util.Maybe Maybe}, {@code MaybeM} is mutable, and
  * can change the reference it stores or even change from being non absent to
  * absent and viceversa.
- *
- * <p>A non-null {@code MaybeM<T>} reference can be used as a replacement for a
+ * <p>
+ * A non-null {@code MaybeM<T>} reference can be used as a replacement for a
  * {@code T} reference. It allows you to represent "a {@code T} that must be
  * present" (in which case you use simply a {@code T}) and a "a {@code T} that
  * might be absent" (in which case you use a {@code MaybeM<T>}) as two distinct
  * types in your program, which can aid clarity.</p>
- *
- * <p>Some uses of this class include:<br/>
- *
+ * <p>
+ * Some uses of this class include:
+ * <br/>
  * &nbsp;&nbsp;&nbsp;&nbsp;&bull; As a method return type, as an alternative to
- * returning {@code null} to indicate that no value was available.<br/>
- *
+ * returning {@code null} to indicate that no value was available.
+ * <br/>
  * &nbsp;&nbsp;&nbsp;&nbsp;&bull; To distinguish between "unknown" (for example,
  * not present in a map) and "known to have no value" (present in the map, with
- * value {@link es.iguanod.util.MaybeM#absent() MaybeM.absent()}).<br/>
- *
+ * value {@link es.iguanod.util.MaybeM#absent() MaybeM.absent()}).
+ * <br/>
  * &nbsp;&nbsp;&nbsp;&nbsp;&bull; To wrap nullable references for storage in a
  * collection that does not support {@code null} (though there are several other
  * approaches to this that should be considered first).</p>
