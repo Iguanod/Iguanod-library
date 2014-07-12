@@ -47,8 +47,10 @@ public enum DeckType{
 	FRENCH;
 
 	/**
-	 * Returns the name of this DeckType constant. The first letter is
+	 * Returns the name of this {@code DeckType} constant. The first letter is
 	 * uppercase, and all the others are lowercase.
+	 * 
+	 * @return the name of this {@code DeckType}
 	 */
 	@Override
 	public String toString(){
