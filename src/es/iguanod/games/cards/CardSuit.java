@@ -293,7 +293,10 @@ public enum CardSuit{
 	 *
 	 * @see es.iguanod.games.cards.CardSymbol#supported_locale
 	 */
-	public String toString(Locale locale){
+	public String toString(Locale locale) throws IllegalArgumentException{
+		if(locale==null){
+			throw new NullPointerException("Locale can't be null");
+		}
 		if(!supported_locale.contains(locale)){
 			throw new IllegalArgumentException("Unsupported Locale");
 		}
@@ -313,10 +316,18 @@ public enum CardSuit{
 	 * @return the {@code CardSuit} corresponding with {@code name}.
 	 *
 	 * @throws IllegalArgumentException if this {@link java.lang.Enum Enum}
-	 * does not have a constant with the specified name
-	 * @throws NullPointerException if {@code name} is {@code null}
+	 * does not have a constant with the specified name, or if {@code locale}
+	 * is not supported
+	 * @throws NullPointerException if {@code name} or {@code locale} is
+	 * {@code null}
 	 */
-	public static Maybe<CardSuit> fromString(String name, Locale locale){
+	public static Maybe<CardSuit> fromString(String name, Locale locale) throws IllegalArgumentException{
+		if(name==null || locale==null){
+			throw new NullPointerException("Null values not accepted");
+		}
+		if(!supported_locale.contains(locale)){
+			throw new IllegalArgumentException("Locale not supported");
+		}
 		CardSuit ret=mappings.get(locale).get(name.toUpperCase());
 		if(ret == null){
 			return Maybe.ABSENT;

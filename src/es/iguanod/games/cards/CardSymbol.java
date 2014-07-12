@@ -1,3 +1,22 @@
+/*
+ * -------------------- DO NOT REMOVE OR MODIFY THIS HEADER --------------------
+ * 
+ * Copyright (C) 2014 The Iguanod Authors
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * A copy of the License should have been provided along with this file, usually
+ * under the name "LICENSE.txt". If that is not the case you may obtain a
+ * copy of the License at
+ * 
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package es.iguanod.games.cards;
 
 import static es.iguanod.games.cards.DeckType.*;
@@ -13,15 +32,18 @@ import java.util.Map;
 import java.util.Set;
 
 /**
+ * An {@link java.lang.Enum Enum} representing different symbols in playing
+ * cards.
  *
  * @author <a href="mailto:rubiof.david@gmail.com">David Rubio Fernández</a>
  * @since 0.0.1.1.a
- * @version
+ * @version 1.0.1.b
  */
 public enum CardSymbol{
 
 	/**
-	 * French, Spanish and extended Spanish card symbol. <p>
+	 * French, Spanish and extended Spanish card symbol.
+	 * <p>
 	 * Translations:<br/>
 	 * <pre>
 	 *     English: "Ace"
@@ -43,7 +65,8 @@ public enum CardSymbol{
 		new Tuple2(Locale.FRENCH, "As")
 	}),
 	/**
-	 * French, Spanish and extended Spanish card symbol. <p>
+	 * French, Spanish and extended Spanish card symbol.
+	 * <p>
 	 * Translations:<br/>
 	 * <pre>
 	 *     English: "Two"
@@ -65,7 +88,8 @@ public enum CardSymbol{
 		new Tuple2(Locale.FRENCH, "Deux")
 	}),
 	/**
-	 * French, Spanish and extended Spanish card symbol. <p>
+	 * French, Spanish and extended Spanish card symbol.
+	 * <p>
 	 * Translations:<br/>
 	 * <pre>
 	 *     English: "Three"
@@ -87,7 +111,8 @@ public enum CardSymbol{
 		new Tuple2(Locale.FRENCH, "Trois")
 	}),
 	/**
-	 * French, Spanish and extended Spanish card symbol. <p>
+	 * French, Spanish and extended Spanish card symbol.
+	 * <p>
 	 * Translations:<br/>
 	 * <pre>
 	 *     English: "Four"
@@ -109,7 +134,8 @@ public enum CardSymbol{
 		new Tuple2(Locale.FRENCH, "Quatre")
 	}),
 	/**
-	 * French, Spanish and extended Spanish card symbol. <p>
+	 * French, Spanish and extended Spanish card symbol.
+	 * <p>
 	 * Translations:<br/>
 	 * <pre>
 	 *     English: "Five"
@@ -131,7 +157,8 @@ public enum CardSymbol{
 		new Tuple2(Locale.FRENCH, "Cinq")
 	}),
 	/**
-	 * French, Spanish and extended Spanish card symbol. <p>
+	 * French, Spanish and extended Spanish card symbol.
+	 * <p>
 	 * Translations:<br/>
 	 * <pre>
 	 *     English: "Six"
@@ -153,7 +180,8 @@ public enum CardSymbol{
 		new Tuple2(Locale.FRENCH, "Six")
 	}),
 	/**
-	 * French, Spanish and extended Spanish card symbol. <p>
+	 * French, Spanish and extended Spanish card symbol.
+	 * <p>
 	 * Translations:<br/>
 	 * <pre>
 	 *     English: "Seven"
@@ -175,7 +203,9 @@ public enum CardSymbol{
 		new Tuple2(Locale.FRENCH, "Sept")
 	}),
 	/**
-	 * French and extended Spanish card symbol. <p> Translations:<br/>
+	 * French and extended Spanish card symbol.
+	 * <p>
+	 * Translations:<br/>
 	 * <pre>
 	 *     English: "Eight"
 	 *     Spanish: "Ocho"
@@ -194,7 +224,9 @@ public enum CardSymbol{
 		new Tuple2(Locale.FRENCH, "Huit")
 	}),
 	/**
-	 * French and extended Spanish card symbol. <p> Translations:<br/>
+	 * French and extended Spanish card symbol.
+	 * <p>
+	 * Translations:<br/>
 	 * <pre>
 	 *     English: "Nine"
 	 *     Spanish: "Nueve"
@@ -213,7 +245,9 @@ public enum CardSymbol{
 		new Tuple2(Locale.FRENCH, "Neuf")
 	}),
 	/**
-	 * French and extended Spanish card symbol. <p> Translations:<br/>
+	 * French and extended Spanish card symbol.
+	 * <p>
+	 * Translations:<br/>
 	 * <pre>
 	 *     English: "Ten"
 	 *     Spanish: "Diez"
@@ -232,7 +266,9 @@ public enum CardSymbol{
 		new Tuple2(Locale.FRENCH, "Dix")
 	}),
 	/**
-	 * French card symbol. <p> Translations:<br/>
+	 * French card symbol.
+	 * <p>
+	 * Translations:<br/>
 	 * <pre>
 	 *     English: "Jack"
 	 *     Spanish: "Jota"
@@ -249,7 +285,9 @@ public enum CardSymbol{
 		new Tuple2(Locale.FRENCH, "Jack")
 	}),
 	/**
-	 * Spanish and extended Spanish card symbol. <p> Translations:<br/>
+	 * Spanish and extended Spanish card symbol.
+	 * <p>
+	 * Translations:<br/>
 	 * <pre>
 	 *     English: "Page"
 	 *     Spanish: "Sota"
@@ -268,7 +306,9 @@ public enum CardSymbol{
 		new Tuple2(Locale.FRENCH, "Jack")
 	}),
 	/**
-	 * French card symbol. <p> Translations:<br/>
+	 * French card symbol.
+	 * <p>
+	 * Translations:<br/>
 	 * <pre>
 	 *     English: "Queen"
 	 *     Spanish: "Dama"
@@ -285,7 +325,9 @@ public enum CardSymbol{
 		new Tuple2(Locale.FRENCH, "Dame")
 	}),
 	/**
-	 * Spanish and extended Spanish card symbol. <p> Translations:<br/>
+	 * Spanish and extended Spanish card symbol.
+	 * <p>
+	 * Translations:<br/>
 	 * <pre>
 	 *     English: "Knight"
 	 *     Spanish: "Caballo"
@@ -304,7 +346,8 @@ public enum CardSymbol{
 		new Tuple2(Locale.FRENCH, "Cheval")
 	}),
 	/**
-	 * French, Spanish and extended Spanish card symbol. <p>
+	 * French, Spanish and extended Spanish card symbol.
+	 * <p>
 	 * Translations:<br/>
 	 * <pre>
 	 *     English: "King"
@@ -383,8 +426,10 @@ public enum CardSymbol{
 	}
 
 	/**
-	 * Returns the name of this CardSymbol constant. The first letter is
-	 * uppercase, and all the others are lowercase.
+	 * Returns the name of this {@code CardSymbol} constant. The first letter
+	 * is uppercase, and all the others are lowercase.
+	 *
+	 * @return the name of this {@code CardSymbol}
 	 */
 	@Override
 	public String toString(){
@@ -392,36 +437,57 @@ public enum CardSymbol{
 	}
 
 	/**
-	 * Returns the name of this CardSymbol constant in the language specified
-	 * by the passed {@link java.util.Locale Locale}. The first letter is
-	 * uppercase, and all the others are lowercase.
+	 * Returns the name of this {@code CardSymbol} constant in the language
+	 * specified by the passed {@link java.util.Locale Locale}. The first
+	 * letter is uppercase, and all the others are lowercase.
+	 *
+	 * @param locale the {@code Locale} specifying the language to translate
+	 * this {@code CardSymbol}
+	 *
+	 * @return the string representation of this {@code CardSymbol} in the
+	 * specified {@code Locale}
 	 *
 	 * @throws IllegalArgumentException if the specified {@code Locale} is not
-	 * supported.
-	 * @throws NullPointerException if locale is null.
+	 * supported
+	 * @throws NullPointerException if {@code locale} is {@code null}
 	 *
 	 * @see es.iguanod.games.cards.CardSymbol#supported_locale
 	 */
-	public String toString(Locale locale){
-		if(!supported_locale.contains(locale))
+	public String toString(Locale locale) throws IllegalArgumentException{
+		if(locale == null){
+			throw new NullPointerException("Locale can't be null");
+		}
+		if(!supported_locale.contains(locale)){
 			throw new IllegalArgumentException("Unsupported Locale");
+		}
 
 		return translations.get(locale);
 	}
 
 	/**
 	 * Returns the {@code CardSymbol} constant with the specified name (case
-	 * insensitive).
+	 * insensitive). The {@code name} may be in any of the {@link
+	 * #supported_locale supported locales}.
 	 *
 	 * @param name the name corresponding to the searched {@code CardSymbol}.
+	 * @param locale the {@code Locale} specifying the language of
+	 * {@code name}
 	 *
 	 * @return the {@code CardSymbol} corresponding with {@code name}.
 	 *
 	 * @throws IllegalArgumentException if this {@link java.lang.Enum Enum}
-	 * does not have a constant with the specified name.
-	 * @throws NullPointerException if name is null.
+	 * does not have a constant with the specified name, or if {@code locale}
+	 * is not supported
+	 * @throws NullPointerException if {@code name} or {@code locale} is
+	 * {@code null}
 	 */
 	public static Maybe<CardSymbol> fromString(String name, Locale locale){
+		if(name == null || locale == null){
+			throw new NullPointerException("Null values not accepted");
+		}
+		if(!supported_locale.contains(locale)){
+			throw new IllegalArgumentException("Locale not supported");
+		}
 		CardSymbol ret=mappings.get(locale).get(name.toUpperCase());
 		if(ret == null){
 			return Maybe.ABSENT;
