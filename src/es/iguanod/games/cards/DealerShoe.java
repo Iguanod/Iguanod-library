@@ -32,7 +32,7 @@ public class DealerShoe implements Iterator<Card>, Serializable{
 	}
 
 	public DealerShoe(int decks, DeckType type){
-		Deck deck=Deck.getUniformDeck(type);
+		Deck deck=new Deck(type);
 		for(int i=0; i < decks; i++){
 			for(Card card:deck.getCards()){
 				cards.add(new Tuple2<>(card, count));

@@ -27,24 +27,17 @@ public class Deck implements Serializable{
 		this(deck.cards);
 	}
 
-	protected Deck(){
-	}
-
-	public static Deck getUniformDeck(DeckType type){
-
-		Deck ret=new Deck();
+	public Deck(DeckType type){
 
 		for(CardSuit suit:CardSuit.values()){
 			if(suit.types.contains(type)){
 				for(CardSymbol symbol:CardSymbol.values()){
 					if(symbol.types.contains(type)){
-						ret.cards.add(new Card(type, symbol, suit));
+						cards.add(new Card(type, symbol, suit));
 					}
 				}
 			}
 		}
-
-		return ret;
 	}
 
 	public Deck sort(){
