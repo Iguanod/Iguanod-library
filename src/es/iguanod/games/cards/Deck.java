@@ -20,6 +20,9 @@ public class Deck implements Serializable{
 	private ArrayList<Card> cards=new ArrayList<>();
 
 	public Deck(Collection<? extends Card> cards){
+		if(cards == null){
+			throw new NullPointerException("The collection can't be null");
+		}
 		this.cards.addAll(cards);
 	}
 
@@ -28,6 +31,10 @@ public class Deck implements Serializable{
 	}
 
 	public Deck(DeckType type){
+
+		if(type == null){
+			throw new NullPointerException("The type can't be null");
+		}
 
 		for(CardSuit suit:CardSuit.values()){
 			if(suit.types.contains(type)){
