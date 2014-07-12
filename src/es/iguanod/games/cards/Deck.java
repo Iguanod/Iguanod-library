@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -13,7 +14,7 @@ import java.util.List;
  * @since 0.0.1.1.a
  * @version
  */
-public class Deck implements Serializable{
+public class Deck implements Serializable, Iterable<Card>{
 
 	private static final long serialVersionUID=1514154583449501651L;
 	//************
@@ -74,5 +75,10 @@ public class Deck implements Serializable{
 
 	public Collection<Card> getCards(){
 		return new ArrayList<>(cards);
+	}
+
+	@Override
+	public Iterator<Card> iterator(){
+		return cards.iterator();
 	}
 }
