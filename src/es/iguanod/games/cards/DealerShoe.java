@@ -25,6 +25,8 @@ public class DealerShoe implements Iterator<Card>, Serializable{
 	private LinkedList<Tuple2<Card, Long>> discarded=new LinkedList<>();
 	private long count=0;
 	private boolean remove_allowed=true;
+	
+	// DOC REMAINDER: Decks are copied, modifications dont get reflected
 
 	public DealerShoe(){
 	}
