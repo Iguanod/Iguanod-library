@@ -13,8 +13,5 @@ dist/
 # Backup files
 *~
 
-# Alpha versions
-*a.zip
-
 # Dev test file
 src/Prueba.java
