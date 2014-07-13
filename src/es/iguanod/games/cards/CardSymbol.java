@@ -59,11 +59,13 @@ public enum CardSymbol{
 	ACE(new DeckType[]{
 		FRENCH,
 		SPANISH,
-		SPANISH_EXTENDED
+		SPANISH_EXTENDED,
+		GERMAN
 	}, new Tuple2[]{
 		new Tuple2(Locale.ENGLISH, "Ace"),
 		new Tuple2(new Locale("ES"), "As"),
-		new Tuple2(Locale.FRENCH, "As")
+		new Tuple2(Locale.FRENCH, "As"),
+		new Tuple2(Locale.GERMAN, "As")
 	}),
 	/**
 	 * French, Spanish, extended Spanish and German card symbol.
@@ -83,11 +85,13 @@ public enum CardSymbol{
 	TWO(new DeckType[]{
 		FRENCH,
 		SPANISH,
-		SPANISH_EXTENDED
+		SPANISH_EXTENDED,
+		GERMAN
 	}, new Tuple2[]{
 		new Tuple2(Locale.ENGLISH, "Two"),
 		new Tuple2(new Locale("ES"), "Dos"),
-		new Tuple2(Locale.FRENCH, "Deux")
+		new Tuple2(Locale.FRENCH, "Deux"),
+		new Tuple2(Locale.GERMAN, "Zwei")
 	}),
 	/**
 	 * French, Spanish, extended Spanish and German card symbol.
@@ -107,11 +111,13 @@ public enum CardSymbol{
 	THREE(new DeckType[]{
 		FRENCH,
 		SPANISH,
-		SPANISH_EXTENDED
+		SPANISH_EXTENDED,
+		GERMAN
 	}, new Tuple2[]{
 		new Tuple2(Locale.ENGLISH, "Three"),
 		new Tuple2(new Locale("ES"), "Tres"),
-		new Tuple2(Locale.FRENCH, "Trois")
+		new Tuple2(Locale.FRENCH, "Trois"),
+		new Tuple2(Locale.GERMAN, "Drei")
 	}),
 	/**
 	 * French, Spanish, extended Spanish and German card symbol.
@@ -131,11 +137,13 @@ public enum CardSymbol{
 	FOUR(new DeckType[]{
 		FRENCH,
 		SPANISH,
-		SPANISH_EXTENDED
+		SPANISH_EXTENDED,
+		GERMAN
 	}, new Tuple2[]{
 		new Tuple2(Locale.ENGLISH, "Four"),
 		new Tuple2(new Locale("ES"), "Cuatro"),
-		new Tuple2(Locale.FRENCH, "Quatre")
+		new Tuple2(Locale.FRENCH, "Quatre"),
+		new Tuple2(Locale.GERMAN, "Vier")
 	}),
 	/**
 	 * French, Spanish, extended Spanish and German card symbol.
@@ -155,11 +163,13 @@ public enum CardSymbol{
 	FIVE(new DeckType[]{
 		FRENCH,
 		SPANISH,
-		SPANISH_EXTENDED
+		SPANISH_EXTENDED,
+		GERMAN
 	}, new Tuple2[]{
 		new Tuple2(Locale.ENGLISH, "Five"),
 		new Tuple2(new Locale("ES"), "Cinco"),
-		new Tuple2(Locale.FRENCH, "Cinq")
+		new Tuple2(Locale.FRENCH, "Cinq"),
+		new Tuple2(Locale.GERMAN, "Fünf")
 	}),
 	/**
 	 * French, Spanish, extended Spanish and German card symbol.
@@ -179,11 +189,13 @@ public enum CardSymbol{
 	SIX(new DeckType[]{
 		FRENCH,
 		SPANISH,
-		SPANISH_EXTENDED
+		SPANISH_EXTENDED,
+		GERMAN
 	}, new Tuple2[]{
 		new Tuple2(Locale.ENGLISH, "Six"),
 		new Tuple2(new Locale("ES"), "Seis"),
-		new Tuple2(Locale.FRENCH, "Six")
+		new Tuple2(Locale.FRENCH, "Six"),
+		new Tuple2(Locale.GERMAN, "Sechs")
 	}),
 	/**
 	 * French, Spanish, extended Spanish and German card symbol.
@@ -203,11 +215,13 @@ public enum CardSymbol{
 	SEVEN(new DeckType[]{
 		FRENCH,
 		SPANISH,
-		SPANISH_EXTENDED
+		SPANISH_EXTENDED,
+		GERMAN
 	}, new Tuple2[]{
 		new Tuple2(Locale.ENGLISH, "Seven"),
 		new Tuple2(new Locale("ES"), "Siete"),
-		new Tuple2(Locale.FRENCH, "Sept")
+		new Tuple2(Locale.FRENCH, "Sept"),
+		new Tuple2(Locale.GERMAN, "Sieben")
 	}),
 	/**
 	 * French, extended Spanish and German card symbol.
@@ -225,11 +239,13 @@ public enum CardSymbol{
 	 */
 	EIGHT(new DeckType[]{
 		FRENCH,
-		SPANISH_EXTENDED
+		SPANISH_EXTENDED,
+		GERMAN
 	}, new Tuple2[]{
 		new Tuple2(Locale.ENGLISH, "Eight"),
 		new Tuple2(new Locale("ES"), "Ocho"),
-		new Tuple2(Locale.FRENCH, "Huit")
+		new Tuple2(Locale.FRENCH, "Huit"),
+		new Tuple2(Locale.GERMAN, "Acht")
 	}),
 	/**
 	 * French, extended Spanish and German card symbol.
@@ -247,11 +263,13 @@ public enum CardSymbol{
 	 */
 	NINE(new DeckType[]{
 		FRENCH,
-		SPANISH_EXTENDED
+		SPANISH_EXTENDED,
+		GERMAN
 	}, new Tuple2[]{
 		new Tuple2(Locale.ENGLISH, "Nine"),
 		new Tuple2(new Locale("ES"), "Nueve"),
-		new Tuple2(Locale.FRENCH, "Neuf")
+		new Tuple2(Locale.FRENCH, "Neuf"),
+		new Tuple2(Locale.GERMAN, "Neun")
 	}),
 	/**
 	 * French, extended Spanish and German card symbol.
@@ -269,11 +287,13 @@ public enum CardSymbol{
 	 */
 	TEN(new DeckType[]{
 		FRENCH,
-		SPANISH_EXTENDED
+		SPANISH_EXTENDED,
+		GERMAN
 	}, new Tuple2[]{
 		new Tuple2(Locale.ENGLISH, "Ten"),
 		new Tuple2(new Locale("ES"), "Diez"),
-		new Tuple2(Locale.FRENCH, "Dix")
+		new Tuple2(Locale.FRENCH, "Dix"),
+		new Tuple2(Locale.GERMAN, "Zehn")
 	}),
 	/**
 	 * French and German card symbol.
@@ -289,11 +309,13 @@ public enum CardSymbol{
 	 * @see es.iguanod.games.cards.DeckType#GERMAN
 	 */
 	JACK(new DeckType[]{
-		FRENCH
+		FRENCH,
+		GERMAN
 	}, new Tuple2[]{
 		new Tuple2(Locale.ENGLISH, "Jack"),
 		new Tuple2(new Locale("ES"), "Jota"),
-		new Tuple2(Locale.FRENCH, "Jack")
+		new Tuple2(Locale.FRENCH, "Jack"),
+		new Tuple2(Locale.GERMAN, "Bube")
 	}),
 	/**
 	 * Spanish and extended Spanish card symbol.
@@ -314,7 +336,8 @@ public enum CardSymbol{
 	}, new Tuple2[]{
 		new Tuple2(Locale.ENGLISH, "Page"),
 		new Tuple2(new Locale("ES"), "Sota"),
-		new Tuple2(Locale.FRENCH, "Jack")
+		new Tuple2(Locale.FRENCH, "Jack"),
+		new Tuple2(Locale.GERMAN, "Bube")
 	}),
 	/**
 	 * French and German card symbol.
@@ -330,11 +353,13 @@ public enum CardSymbol{
 	 * @see es.iguanod.games.cards.DeckType#GERMAN
 	 */
 	QUEEN(new DeckType[]{
-		FRENCH
+		FRENCH,
+		GERMAN
 	}, new Tuple2[]{
 		new Tuple2(Locale.ENGLISH, "Queen"),
 		new Tuple2(new Locale("ES"), "Dama"),
-		new Tuple2(Locale.FRENCH, "Dame")
+		new Tuple2(Locale.FRENCH, "Dame"),
+		new Tuple2(Locale.GERMAN, "Dame")
 	}),
 	/**
 	 * Spanish and extended Spanish card symbol.
@@ -355,7 +380,8 @@ public enum CardSymbol{
 	}, new Tuple2[]{
 		new Tuple2(Locale.ENGLISH, "Knight"),
 		new Tuple2(new Locale("ES"), "Caballo"),
-		new Tuple2(Locale.FRENCH, "Cheval")
+		new Tuple2(Locale.FRENCH, "Cheval"),
+		new Tuple2(Locale.GERMAN, "Pferd")
 	}),
 	/**
 	 * French, Spanish, extended Spanish and German card symbol.
@@ -375,11 +401,13 @@ public enum CardSymbol{
 	KING(new DeckType[]{
 		FRENCH,
 		SPANISH,
-		SPANISH_EXTENDED
+		SPANISH_EXTENDED,
+		GERMAN
 	}, new Tuple2[]{
 		new Tuple2(Locale.ENGLISH, "King"),
 		new Tuple2(new Locale("ES"), "Rey"),
-		new Tuple2(Locale.FRENCH, "Roi")
+		new Tuple2(Locale.FRENCH, "Roi"),
+		new Tuple2(Locale.GERMAN, "König")
 	});
 	/**
 	 * List containing all the {@link java.util.Locale Locales} to whose
@@ -388,7 +416,8 @@ public enum CardSymbol{
 	public static final List<Locale> supported_locale=Collections.unmodifiableList(Arrays.asList(new Locale[]{
 		Locale.ENGLISH,
 		new Locale("ES"),
-		Locale.FRENCH
+		Locale.FRENCH,
+		Locale.GERMAN
 	}));
 	/**
 	 * List containing all the {@link es.iguanod.games.cards.DeckType
