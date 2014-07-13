@@ -105,7 +105,7 @@ public class HashCounter<K, V extends Number> extends AbstractCounter<K, V>{
 	 *
 	 * @author <a href="mailto:rubiof.david@gmail.com">David Rubio
 	 * Fernández</a>
-	 * @since 1.0.1.1.cb
+	 * @since 1.0.1.b
 	 * @version 1.0.1.b
 	 */
 	public static class HashCounterBuilder<K, V extends Number> implements Serializable{

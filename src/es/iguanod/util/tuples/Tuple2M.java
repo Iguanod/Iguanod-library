@@ -27,7 +27,7 @@ package es.iguanod.util.tuples;
  * @param <S> the class of the second element
  *
  * @author <a href="mailto:rubiof.david@gmail.com">David Rubio Fernández</a>
- * @since 1.0.1.1.cb
+ * @since 1.0.1.b
  * @version 1.0.1.b
  *
  * @see java.lang.Comparable

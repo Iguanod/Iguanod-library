@@ -43,7 +43,7 @@ import org.junit.runners.Parameterized.Parameters;
  * Unit tests for all classes in {@code es.iguanod.util.tuples}.
  *
  * @author <a href="mailto:rubiof.david@gmail.com">David Rubio Fernández</a>
- * @since 1.0.1.1.cb
+ * @since 1.0.1.b
  * @version 1.0.1.b
  */
 @RunWith(Enclosed.class)

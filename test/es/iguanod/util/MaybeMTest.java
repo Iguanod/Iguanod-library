@@ -28,7 +28,7 @@ import org.junit.Test;
  * Unit tests for {@link es.iguanod.util.MaybeM} class.
  *
  * @author <a href="mailto:rubiof.david@gmail.com">David Rubio Fernández</a>
- * @since 1.0.1.1.cb
+ * @since 1.0.1.b
  * @version 1.0.1.b
  */
 public class MaybeMTest extends MaybeTest{
