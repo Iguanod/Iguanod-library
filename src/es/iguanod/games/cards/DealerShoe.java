@@ -25,7 +25,7 @@ public class DealerShoe implements Iterator<Card>, Serializable{
 	private LinkedList<Tuple2<Card, Long>> cards=new LinkedList<>();
 	private LinkedList<Tuple2<Card, Long>> discarded=new LinkedList<>();
 	private long count=0;
-	private boolean remove_allowed=true;
+	private boolean remove_allowed=false;
 	
 	// DOC REMAINDER: Decks are copied, modifications dont get reflected
 
@@ -117,6 +117,8 @@ public class DealerShoe implements Iterator<Card>, Serializable{
 		}
 
 		this.clear();
+		
+		remove_allowed=false;
 
 		return ret;
 	}
@@ -132,6 +134,7 @@ public class DealerShoe implements Iterator<Card>, Serializable{
 	public DealerShoe shuffle(){
 
 		Collections.shuffle(cards);
+		remove_allowed=false;
 		return this;
 	}
 
@@ -158,6 +161,8 @@ public class DealerShoe implements Iterator<Card>, Serializable{
 		for(int i=0; i < n; i++){
 			nextForced();
 		}
+		
+		remove_allowed=false;
 
 		return this;
 	}
@@ -219,6 +224,7 @@ public class DealerShoe implements Iterator<Card>, Serializable{
 
 		Card ret=nextForced();
 		discarded.removeLast();
+		remove_allowed=false;
 		return ret;
 	}
 }
