@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map.Entry;
 import java.util.NoSuchElementException;
 
@@ -41,8 +42,8 @@ public class DealerShoe implements Iterator<Card>, Serializable{
 		}
 	}
 
-	public DealerShoe(Collection<? extends Deck> decks) throws IllegalArgumentException{
-		for(Deck deck:decks){
+	public DealerShoe(Collection<? extends List<? extends Card>> decks) throws IllegalArgumentException{
+		for(List<? extends Card> deck:decks){
 			for(Card card:deck){
 				cards.add(new Tuple2<>(card, count));
 			}
@@ -62,7 +63,7 @@ public class DealerShoe implements Iterator<Card>, Serializable{
 		}
 	}
 
-	public DealerShoe add(Deck deck){
+	public DealerShoe add(List<? extends Card> deck){
 		for(Card card:deck){
 			cards.add(new Tuple2<>(card, count));
 		}
@@ -71,14 +72,14 @@ public class DealerShoe implements Iterator<Card>, Serializable{
 		return this;
 	}
 
-	public DealerShoe add(Collection<? extends Deck> decks){
-		for(Deck deck:decks){
+	public DealerShoe add(Collection<? extends List<? extends Card>> decks){
+		for(List<? extends Card> deck:decks){
 			add(deck);
 		}
 		return this;
 	}
 
-	public DealerShoe addToDiscardPile(Deck deck){
+	public DealerShoe addToDiscardPile(List<? extends Card> deck){
 		for(Card card:deck){
 			discarded.add(new Tuple2<>(card, count));
 		}
@@ -87,14 +88,14 @@ public class DealerShoe implements Iterator<Card>, Serializable{
 		return this;
 	}
 
-	public DealerShoe addToDiscardPile(Collection<? extends Deck> decks){
-		for(Deck deck:decks){
+	public DealerShoe addToDiscardPile(Collection<? extends List<? extends Card>> decks){
+		for(List<? extends Card> deck:decks){
 			addToDiscardPile(deck);
 		}
 		return this;
 	}
 
-	public Collection<? extends Deck> returnDecks(){
+	public Collection<List<Card>> returnDecks(){
 
 		restore();
 
@@ -110,7 +111,7 @@ public class DealerShoe implements Iterator<Card>, Serializable{
 			}
 		}
 
-		ArrayList<Deck> ret=new ArrayList<>();
+		ArrayList<List<Card>> ret=new ArrayList<>();
 		for(Entry<Long, ArrayList<Card>> entry:map.entrySet()){
 			ret.add(new Deck(entry.getValue()));
 		}
