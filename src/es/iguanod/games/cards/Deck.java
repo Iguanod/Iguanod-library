@@ -81,4 +81,9 @@ public class Deck implements Serializable, Iterable<Card>{
 	public Iterator<Card> iterator(){
 		return cards.iterator();
 	}
+	
+	@Override
+	public String toString(){
+		return cards.toString();
+	}
 }
