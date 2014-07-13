@@ -32,9 +32,9 @@ public class DealerShoe implements Iterator<Card>, Serializable{
 	}
 
 	public DealerShoe(int decks, DeckType type){
-		Deck deck=Deck.getUniformDeck(type);
+		Deck deck=new Deck(type);
 		for(int i=0; i < decks; i++){
-			for(Card card:deck.getCards()){
+			for(Card card:deck){
 				cards.add(new Tuple2<>(card, count));
 			}
 			count++;
@@ -43,7 +43,7 @@ public class DealerShoe implements Iterator<Card>, Serializable{
 
 	public DealerShoe(Collection<? extends Deck> decks) throws IllegalArgumentException{
 		for(Deck deck:decks){
-			for(Card card:deck.getCards()){
+			for(Card card:deck){
 				cards.add(new Tuple2<>(card, count));
 			}
 			count++;
@@ -63,7 +63,7 @@ public class DealerShoe implements Iterator<Card>, Serializable{
 	}
 
 	public DealerShoe add(Deck deck){
-		for(Card card:deck.getCards()){
+		for(Card card:deck){
 			cards.add(new Tuple2<>(card, count));
 		}
 		count++;
@@ -79,7 +79,7 @@ public class DealerShoe implements Iterator<Card>, Serializable{
 	}
 
 	public DealerShoe addToDiscardPile(Deck deck){
-		for(Card card:deck.getCards()){
+		for(Card card:deck){
 			discarded.add(new Tuple2<>(card, count));
 		}
 		count++;
