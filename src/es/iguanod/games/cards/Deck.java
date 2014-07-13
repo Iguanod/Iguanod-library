@@ -14,21 +14,13 @@ import java.util.List;
  * @since 0.0.1.1.a
  * @version
  */
-public class Deck implements Serializable, Iterable<Card>{
+public class Deck extends ArrayList<Card>{
 
 	private static final long serialVersionUID=1514154583449501651L;
 	//************
-	private ArrayList<Card> cards=new ArrayList<>();
 
 	public Deck(Collection<? extends Card> cards){
-		if(cards == null){
-			throw new NullPointerException("The collection can't be null");
-		}
-		this.cards.addAll(cards);
-	}
-
-	public Deck(Deck deck){
-		this(deck.cards);
+		super(cards);
 	}
 
 	public Deck(DeckType type){
@@ -36,6 +28,8 @@ public class Deck implements Serializable, Iterable<Card>{
 		if(type == null){
 			throw new NullPointerException("The type can't be null");
 		}
+		
+		ArrayList<Card> cards=new ArrayList<>();
 
 		for(CardSuit suit:CardSuit.values()){
 			if(suit.types.contains(type)){
@@ -46,15 +40,12 @@ public class Deck implements Serializable, Iterable<Card>{
 				}
 			}
 		}
-	}
-
-	public Deck sort(){
-		Collections.sort(cards);
-		return this;
+		
+		super.addAll(cards);
 	}
 
 	public Deck sort(final List<CardSymbol> symbols, final List<CardSuit> suits){
-		Collections.sort(cards, new Comparator<Card>(){
+		Collections.sort(this, new Comparator<Card>(){
 			@Override
 			public int compare(Card o1, Card o2){
 				int cmp=suits.indexOf(o1.suit) - suits.indexOf(o2.suit);
@@ -66,24 +57,5 @@ public class Deck implements Serializable, Iterable<Card>{
 			}
 		});
 		return this;
-	}
-
-	public Deck shuffle(){
-		Collections.shuffle(cards);
-		return this;
-	}
-
-	public Collection<Card> getCards(){
-		return new ArrayList<>(cards);
-	}
-
-	@Override
-	public Iterator<Card> iterator(){
-		return cards.iterator();
-	}
-	
-	@Override
-	public String toString(){
-		return cards.toString();
 	}
 }
