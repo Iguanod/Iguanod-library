@@ -49,6 +49,7 @@ public class Card implements Comparable<Card>, Serializable{
 			put(Locale.ENGLISH, " of ");
 			put(new Locale("ES"), " de ");
 			put(Locale.FRENCH, " du ");
+			put(Locale.GERMAN, " der ");
 		}
 	};
 	/**
@@ -60,7 +61,8 @@ public class Card implements Comparable<Card>, Serializable{
 	public static final List<Locale> supported_locale=Collections.unmodifiableList(Arrays.asList(new Locale[]{
 		Locale.ENGLISH,
 		new Locale("ES"),
-		Locale.FRENCH
+		Locale.FRENCH,
+		Locale.GERMAN
 	}));
 	//
 	//************
