@@ -65,7 +65,7 @@ public enum CardSuit{
 		new Tuple2(Locale.FRENCH, "Piques")
 	}),
 	/**
-	 * French deck suit.
+	 * French and German deck suit.
 	 * <p>
 	 * Translations:<br/>
 	 * <pre>
@@ -75,9 +75,11 @@ public enum CardSuit{
 	 * </pre> </p>
 	 *
 	 * @see es.iguanod.games.cards.DeckType#FRENCH
+	 * @see es.iguanod.games.cards.DeckType#GERMAN
 	 */
 	HEARTS(new DeckType[]{
-		FRENCH
+		FRENCH,
+		GERMAN
 	}, new Tuple2[]{
 		new Tuple2(Locale.ENGLISH, "Hearts"),
 		new Tuple2(new Locale("ES"), "Corazones"),
@@ -204,6 +206,63 @@ public enum CardSuit{
 		new Tuple2(Locale.ENGLISH, "Batons"),
 		new Tuple2(new Locale("ES"), "Bastos"),
 		new Tuple2(Locale.FRENCH, "Bâtons")
+	}),
+	/**
+	 * German deck suit.
+	 * <p>
+	 * Translations:<br/>
+	 * <pre>
+	 *     English: "Bells"
+	 *     Spanish: "Campanas"
+	 *     French: "Cloche"
+	 * </pre> </p>
+	 *
+	 * @see es.iguanod.games.cards.DeckType#GERMAN
+	 */
+	BELLS(new DeckType[]{
+		GERMAN
+	}, new Tuple2[]{
+		new Tuple2(Locale.ENGLISH, "Bells"),
+		new Tuple2(new Locale("ES"), "Campanas"),
+		new Tuple2(Locale.FRENCH, "Cloche")
+	}),
+	/**
+	 * German deck suit.
+	 * <p>
+	 * Translations:<br/>
+	 * <pre>
+	 *     English: "Leaves"
+	 *     Spanish: "Hojas"
+	 *     French: "Feuilles"
+	 * </pre> </p>
+	 *
+	 * @see es.iguanod.games.cards.DeckType#GERMAN
+	 */
+	LEAVES(new DeckType[]{
+		GERMAN
+	}, new Tuple2[]{
+		new Tuple2(Locale.ENGLISH, "Leaves"),
+		new Tuple2(new Locale("ES"), "Hojas"),
+		new Tuple2(Locale.FRENCH, "Feuilles")
+	}),
+	/**
+	 * German deck suit.
+	 * <p>
+	 * Translations:<br/>
+	 * <pre>
+	 *     English: "Acorns"
+	 *     Spanish: "Bellotas"
+	 *     French: "Glands"
+	 * </pre> </p>
+	 *
+	 * @see es.iguanod.games.cards.DeckType#GERMAN
+	 */
+	ACORNS(new DeckType[]{
+		GERMAN
+	}, new Tuple2[]{
+		new Tuple2(Locale.ENGLISH, "Acorns"),
+		new Tuple2(new Locale("ES"), "Bellotas"),
+		new Tuple2(Locale.FRENCH, "Glands")
 	});
 	//
 	//**********

@@ -42,7 +42,7 @@ import java.util.Set;
 public enum CardSymbol{
 
 	/**
-	 * French, Spanish and extended Spanish card symbol.
+	 * French, Spanish, extended Spanish and German card symbol.
 	 * <p>
 	 * Translations:<br/>
 	 * <pre>
@@ -54,6 +54,7 @@ public enum CardSymbol{
 	 * @see es.iguanod.games.cards.DeckType#FRENCH
 	 * @see es.iguanod.games.cards.DeckType#SPANISH
 	 * @see es.iguanod.games.cards.DeckType#SPANISH_EXTENDED
+	 * @see es.iguanod.games.cards.DeckType#GERMAN
 	 */
 	ACE(new DeckType[]{
 		FRENCH,
@@ -65,7 +66,7 @@ public enum CardSymbol{
 		new Tuple2(Locale.FRENCH, "As")
 	}),
 	/**
-	 * French, Spanish and extended Spanish card symbol.
+	 * French, Spanish, extended Spanish and German card symbol.
 	 * <p>
 	 * Translations:<br/>
 	 * <pre>
@@ -77,6 +78,7 @@ public enum CardSymbol{
 	 * @see es.iguanod.games.cards.DeckType#FRENCH
 	 * @see es.iguanod.games.cards.DeckType#SPANISH
 	 * @see es.iguanod.games.cards.DeckType#SPANISH_EXTENDED
+	 * @see es.iguanod.games.cards.DeckType#GERMAN
 	 */
 	TWO(new DeckType[]{
 		FRENCH,
@@ -88,7 +90,7 @@ public enum CardSymbol{
 		new Tuple2(Locale.FRENCH, "Deux")
 	}),
 	/**
-	 * French, Spanish and extended Spanish card symbol.
+	 * French, Spanish, extended Spanish and German card symbol.
 	 * <p>
 	 * Translations:<br/>
 	 * <pre>
@@ -100,6 +102,7 @@ public enum CardSymbol{
 	 * @see es.iguanod.games.cards.DeckType#FRENCH
 	 * @see es.iguanod.games.cards.DeckType#SPANISH
 	 * @see es.iguanod.games.cards.DeckType#SPANISH_EXTENDED
+	 * @see es.iguanod.games.cards.DeckType#GERMAN
 	 */
 	THREE(new DeckType[]{
 		FRENCH,
@@ -111,7 +114,7 @@ public enum CardSymbol{
 		new Tuple2(Locale.FRENCH, "Trois")
 	}),
 	/**
-	 * French, Spanish and extended Spanish card symbol.
+	 * French, Spanish, extended Spanish and German card symbol.
 	 * <p>
 	 * Translations:<br/>
 	 * <pre>
@@ -123,6 +126,7 @@ public enum CardSymbol{
 	 * @see es.iguanod.games.cards.DeckType#FRENCH
 	 * @see es.iguanod.games.cards.DeckType#SPANISH
 	 * @see es.iguanod.games.cards.DeckType#SPANISH_EXTENDED
+	 * @see es.iguanod.games.cards.DeckType#GERMAN
 	 */
 	FOUR(new DeckType[]{
 		FRENCH,
@@ -134,7 +138,7 @@ public enum CardSymbol{
 		new Tuple2(Locale.FRENCH, "Quatre")
 	}),
 	/**
-	 * French, Spanish and extended Spanish card symbol.
+	 * French, Spanish, extended Spanish and German card symbol.
 	 * <p>
 	 * Translations:<br/>
 	 * <pre>
@@ -146,6 +150,7 @@ public enum CardSymbol{
 	 * @see es.iguanod.games.cards.DeckType#FRENCH
 	 * @see es.iguanod.games.cards.DeckType#SPANISH
 	 * @see es.iguanod.games.cards.DeckType#SPANISH_EXTENDED
+	 * @see es.iguanod.games.cards.DeckType#GERMAN
 	 */
 	FIVE(new DeckType[]{
 		FRENCH,
@@ -157,7 +162,7 @@ public enum CardSymbol{
 		new Tuple2(Locale.FRENCH, "Cinq")
 	}),
 	/**
-	 * French, Spanish and extended Spanish card symbol.
+	 * French, Spanish, extended Spanish and German card symbol.
 	 * <p>
 	 * Translations:<br/>
 	 * <pre>
@@ -169,6 +174,7 @@ public enum CardSymbol{
 	 * @see es.iguanod.games.cards.DeckType#FRENCH
 	 * @see es.iguanod.games.cards.DeckType#SPANISH
 	 * @see es.iguanod.games.cards.DeckType#SPANISH_EXTENDED
+	 * @see es.iguanod.games.cards.DeckType#GERMAN
 	 */
 	SIX(new DeckType[]{
 		FRENCH,
@@ -180,7 +186,7 @@ public enum CardSymbol{
 		new Tuple2(Locale.FRENCH, "Six")
 	}),
 	/**
-	 * French, Spanish and extended Spanish card symbol.
+	 * French, Spanish, extended Spanish and German card symbol.
 	 * <p>
 	 * Translations:<br/>
 	 * <pre>
@@ -192,6 +198,7 @@ public enum CardSymbol{
 	 * @see es.iguanod.games.cards.DeckType#FRENCH
 	 * @see es.iguanod.games.cards.DeckType#SPANISH
 	 * @see es.iguanod.games.cards.DeckType#SPANISH_EXTENDED
+	 * @see es.iguanod.games.cards.DeckType#GERMAN
 	 */
 	SEVEN(new DeckType[]{
 		FRENCH,
@@ -203,7 +210,7 @@ public enum CardSymbol{
 		new Tuple2(Locale.FRENCH, "Sept")
 	}),
 	/**
-	 * French and extended Spanish card symbol.
+	 * French, extended Spanish and German card symbol.
 	 * <p>
 	 * Translations:<br/>
 	 * <pre>
@@ -214,6 +221,7 @@ public enum CardSymbol{
 	 *
 	 * @see es.iguanod.games.cards.DeckType#FRENCH
 	 * @see es.iguanod.games.cards.DeckType#SPANISH_EXTENDED
+	 * @see es.iguanod.games.cards.DeckType#GERMAN
 	 */
 	EIGHT(new DeckType[]{
 		FRENCH,
@@ -224,7 +232,7 @@ public enum CardSymbol{
 		new Tuple2(Locale.FRENCH, "Huit")
 	}),
 	/**
-	 * French and extended Spanish card symbol.
+	 * French, extended Spanish and German card symbol.
 	 * <p>
 	 * Translations:<br/>
 	 * <pre>
@@ -235,6 +243,7 @@ public enum CardSymbol{
 	 *
 	 * @see es.iguanod.games.cards.DeckType#FRENCH
 	 * @see es.iguanod.games.cards.DeckType#SPANISH_EXTENDED
+	 * @see es.iguanod.games.cards.DeckType#GERMAN
 	 */
 	NINE(new DeckType[]{
 		FRENCH,
@@ -245,7 +254,7 @@ public enum CardSymbol{
 		new Tuple2(Locale.FRENCH, "Neuf")
 	}),
 	/**
-	 * French and extended Spanish card symbol.
+	 * French, extended Spanish and German card symbol.
 	 * <p>
 	 * Translations:<br/>
 	 * <pre>
@@ -256,6 +265,7 @@ public enum CardSymbol{
 	 *
 	 * @see es.iguanod.games.cards.DeckType#FRENCH
 	 * @see es.iguanod.games.cards.DeckType#SPANISH_EXTENDED
+	 * @see es.iguanod.games.cards.DeckType#GERMAN
 	 */
 	TEN(new DeckType[]{
 		FRENCH,
@@ -266,7 +276,7 @@ public enum CardSymbol{
 		new Tuple2(Locale.FRENCH, "Dix")
 	}),
 	/**
-	 * French card symbol.
+	 * French and German card symbol.
 	 * <p>
 	 * Translations:<br/>
 	 * <pre>
@@ -276,6 +286,7 @@ public enum CardSymbol{
 	 * </pre> </p>
 	 *
 	 * @see es.iguanod.games.cards.DeckType#FRENCH
+	 * @see es.iguanod.games.cards.DeckType#GERMAN
 	 */
 	JACK(new DeckType[]{
 		FRENCH
@@ -306,7 +317,7 @@ public enum CardSymbol{
 		new Tuple2(Locale.FRENCH, "Jack")
 	}),
 	/**
-	 * French card symbol.
+	 * French and German card symbol.
 	 * <p>
 	 * Translations:<br/>
 	 * <pre>
@@ -316,6 +327,7 @@ public enum CardSymbol{
 	 * </pre> </p>
 	 *
 	 * @see es.iguanod.games.cards.DeckType#FRENCH
+	 * @see es.iguanod.games.cards.DeckType#GERMAN
 	 */
 	QUEEN(new DeckType[]{
 		FRENCH
@@ -346,7 +358,7 @@ public enum CardSymbol{
 		new Tuple2(Locale.FRENCH, "Cheval")
 	}),
 	/**
-	 * French, Spanish and extended Spanish card symbol.
+	 * French, Spanish, extended Spanish and German card symbol.
 	 * <p>
 	 * Translations:<br/>
 	 * <pre>
@@ -358,6 +370,7 @@ public enum CardSymbol{
 	 * @see es.iguanod.games.cards.DeckType#FRENCH
 	 * @see es.iguanod.games.cards.DeckType#SPANISH
 	 * @see es.iguanod.games.cards.DeckType#SPANISH_EXTENDED
+	 * @see es.iguanod.games.cards.DeckType#GERMAN
 	 */
 	KING(new DeckType[]{
 		FRENCH,

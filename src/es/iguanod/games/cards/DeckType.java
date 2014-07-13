@@ -44,12 +44,17 @@ public enum DeckType{
 	/**
 	 * The traditional French deck.
 	 */
-	FRENCH;
+	FRENCH,
+	/**
+	 * The ancient German deck. Even still used for some games, French deck
+	 * has been mostly adopted.
+	 */
+	GERMAN;
 
 	/**
 	 * Returns the name of this {@code DeckType} constant. The first letter is
 	 * uppercase, and all the others are lowercase.
-	 * 
+	 *
 	 * @return the name of this {@code DeckType}
 	 */
 	@Override
