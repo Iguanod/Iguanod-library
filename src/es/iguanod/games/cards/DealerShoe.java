@@ -95,7 +95,7 @@ public class DealerShoe implements Iterator<Card>, Serializable{
 		return this;
 	}
 
-	public Collection<List<Card>> returnDecks(){
+	public Collection<Deck> retrieveDecks(){
 
 		restore();
 
@@ -111,7 +111,7 @@ public class DealerShoe implements Iterator<Card>, Serializable{
 			}
 		}
 
-		ArrayList<List<Card>> ret=new ArrayList<>();
+		ArrayList<Deck> ret=new ArrayList<>();
 		for(Entry<Long, ArrayList<Card>> entry:map.entrySet()){
 			ret.add(new Deck(entry.getValue()));
 		}
