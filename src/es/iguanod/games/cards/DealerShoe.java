@@ -42,9 +42,12 @@ public class DealerShoe implements Iterator<Card>, Serializable{
 		}
 	}
 
-	public DealerShoe(Collection<? extends Collection<? extends Card>> decks) throws IllegalArgumentException{
+	public DealerShoe(Collection<? extends Collection<? extends Card>> decks){
 		for(Collection<? extends Card> deck:decks){
 			for(Card card:deck){
+				if(card == null){
+					throw new NullPointerException("Cards cannot be null");
+				}
 				cards.add(new Tuple2<>(card, count));
 			}
 			count++;
@@ -65,6 +68,9 @@ public class DealerShoe implements Iterator<Card>, Serializable{
 
 	public DealerShoe add(Collection<? extends Card> deck){
 		for(Card card:deck){
+			if(card == null){
+				throw new NullPointerException("Cards cannot be null");
+			}
 			cards.add(new Tuple2<>(card, count));
 		}
 		count++;
@@ -74,6 +80,9 @@ public class DealerShoe implements Iterator<Card>, Serializable{
 
 	public DealerShoe addToDiscardPile(Collection<? extends Card> deck){
 		for(Card card:deck){
+			if(card == null){
+				throw new NullPointerException("Cards cannot be null");
+			}
 			discarded.add(new Tuple2<>(card, count));
 		}
 		count++;
