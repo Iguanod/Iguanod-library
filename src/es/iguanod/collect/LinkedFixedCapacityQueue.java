@@ -15,14 +15,14 @@ import java.util.LinkedList;
  * @since
  * @version
  */
-public class LinkedFixedSizeQueue<T> extends AbstractCollection<T> implements FixedSizeQueue<T>, Serializable{
+public class LinkedFixedCapacityQueue<T> extends AbstractCollection<T> implements FixedCapacityQueue<T>, Serializable{
 
 	private static final long serialVersionUID=1249212336486513005L;
 	//**********
 	private int capacity;
 	private LinkedList<T> queue=new LinkedList<>();
 
-	public LinkedFixedSizeQueue(int capacity){
+	public LinkedFixedCapacityQueue(int capacity){
 		if(capacity<=0){
 			throw new IllegalArgumentException("The capacity has to be possitive");
 		}

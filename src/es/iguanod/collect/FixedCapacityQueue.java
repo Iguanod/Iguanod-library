@@ -31,9 +31,9 @@ import java.util.Collection;
  * constructor that accepts as a parameter the capacity of the queue (which must
  * be possitive).</p>
  * <p>
- * {@code FixedSizeQueues} may or may not accept {@code null} values, but unlike
- * in the regular {@link java.util.Queue}, nothing in its design discourage
- * it.</p>
+ * {@code FixedCapacityQueues} may or may not accept {@code null} values, but
+ * unlike in the regular {@link java.util.Queue}, nothing in its design
+ * discourage it.</p>
  *
  * @param <T> the class of the elements being stored
  *
@@ -42,7 +42,7 @@ import java.util.Collection;
  * @since 1.0.1.b
  * @version 1.0.1.b
  */
-public interface FixedSizeQueue<T> extends Collection<T>{
+public interface FixedCapacityQueue<T> extends Collection<T>{
 
 	/**
 	 * Inserts the specified element in the queue, retrieving and removing the
@@ -55,7 +55,7 @@ public interface FixedSizeQueue<T> extends Collection<T>{
 	 * containing the removed element if it was
 	 *
 	 * @throws NullPointerException if {@code elem} is {@code null} and the
-	 * implementation of {@code FixedSizeQueue} doesn't allow {@code null}
+	 * implementation of {@code FixedCapacityQueue} doesn't allow {@code null}
 	 * elements
 	 */
 	public Maybe<T> push(T elem);
@@ -82,7 +82,7 @@ public interface FixedSizeQueue<T> extends Collection<T>{
 	public Maybe<T> peek();
 
 	/**
-	 * Returns the maximum capacity of this {@code FixedSizeQueue}. If the
+	 * Returns the maximum capacity of this {@code FixedCapacityQueue}. If the
 	 * capacity is higher than {@link java.lang.Integer#MAX_VALUE}, then
 	 * {@code Integer.MAX_VALUE} is returned.
 	 *
@@ -111,9 +111,9 @@ public interface FixedSizeQueue<T> extends Collection<T>{
 	 * @param elem the element to be inserted
 	 *
 	 * @return true
-	 * 
+	 *
 	 * @throws NullPointerException if {@code elem} is {@code null} and the
-	 * implementation of {@code FixedSizeQueue} doesn't allow {@code null}
+	 * implementation of {@code FixedCapacityQueue} doesn't allow {@code null}
 	 * elements
 	 */
 	@Override
