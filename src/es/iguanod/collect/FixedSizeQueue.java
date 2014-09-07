@@ -21,4 +21,7 @@ public interface FixedSizeQueue<T> extends Collection<T>{
 	public int capacity();
 	
 	public boolean isFull();
+	
+	@Override
+	public boolean add(T elem);
 }
