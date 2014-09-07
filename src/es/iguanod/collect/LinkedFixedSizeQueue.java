@@ -66,6 +66,11 @@ public class LinkedFixedSizeQueue<T> extends AbstractCollection<T> implements Fi
 	public int size(){
 		return queue.size();
 	}
+	
+	@Override
+	public boolean isFull(){
+		return queue.size()==capacity;
+	}
 
 	@Override
 	public Iterator<T> iterator(){

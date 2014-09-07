@@ -19,4 +19,6 @@ public interface FixedSizeQueue<T> extends Collection<T>{
 	public Maybe<T> peek();
 	
 	public int capacity();
+	
+	public boolean isFull();
 }
