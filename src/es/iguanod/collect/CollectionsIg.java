@@ -11,6 +11,7 @@ import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -678,6 +679,125 @@ public final class CollectionsIg{
 		@Override
 		public boolean retainAll(TreeNode node, Collection<?> col){
 			throw new UnsupportedOperationException("Unmodifiable tree");
+		}
+	}
+
+	private static class UnmodifiableFixedCapacityQueue<T> implements FixedCapacityQueue<T>, Serializable{
+
+		private static final long serialVersionUID=-982310296149207480L;
+		//**********
+		private FixedCapacityQueue<T> queue;
+
+		public UnmodifiableFixedCapacityQueue(FixedCapacityQueue<T> queue){
+			this.queue=queue;
+		}
+
+		@Override
+		public Maybe<T> peek(){
+			return queue.peek();
+		}
+
+		@Override
+		public int capacity(){
+			return queue.capacity();
+		}
+
+		@Override
+		public boolean isFull(){
+			return queue.isFull();
+		}
+
+		@Override
+		public int size(){
+			return queue.size();
+		}
+
+		@Override
+		public boolean isEmpty(){
+			return queue.isEmpty();
+		}
+
+		@Override
+		public boolean contains(Object obj){
+			return queue.contains(obj);
+		}
+
+		@Override
+		public Iterator<T> iterator(){
+			return new Iterator<T>(){
+
+				Iterator<T> iter=queue.iterator();
+
+				@Override
+				public boolean hasNext(){
+					return iter.hasNext();
+				}
+
+				@Override
+				public T next(){
+					return iter.next();
+				}
+
+				@Override
+				public void remove(){
+					throw new UnsupportedOperationException("Unmodifiable queue");
+				}
+			};
+		}
+
+		@Override
+		public Object[] toArray(){
+			return queue.toArray();
+		}
+
+		@Override
+		public <T> T[] toArray(T[] a){
+			return queue.toArray(a);
+		}
+
+		@Override
+		public boolean containsAll(Collection<?> col){
+			return queue.containsAll(col);
+		}
+
+		@Override
+		public Maybe<T> push(T elem){
+			throw new UnsupportedOperationException("Unmodifiable queue");
+		}
+
+		@Override
+		public Maybe<T> pop(){
+			throw new UnsupportedOperationException("Unmodifiable queue");
+		}
+
+		@Override
+		public boolean add(T elem){
+			throw new UnsupportedOperationException("Unmodifiable queue");
+		}
+
+		@Override
+		public boolean remove(Object o){
+			throw new UnsupportedOperationException("Unmodifiable queue");
+		}
+
+		@Override
+		public boolean addAll(Collection<? extends T> c){
+			throw new UnsupportedOperationException("Unmodifiable queue");
+		}
+
+		@Override
+		public boolean removeAll(Collection<?> c){
+			throw new UnsupportedOperationException("Unmodifiable queue");
+		}
+
+		@Override
+		public boolean retainAll(Collection<?> c){
+			throw new UnsupportedOperationException("Unmodifiable queue");
+		}
+
+		@Override
+		public void clear(){
+			throw new UnsupportedOperationException("Unmodifiable queue");
 		}
 	}
 }
