@@ -29,6 +29,8 @@ import java.util.LinkedList;
 /**
  * Implementation of the {@link es.iguanod.collect.FixedCapacityQueue} interface
  * based on a {@link java.util.LinkedList}.
+ * <p>
+ * This implementation accepts {@code null} elements.</p>
  *
  * @author <a href="mailto:rubiof.david@gmail.com">David Rubio Fernández</a>
  * @param <T> the class of the elements being stored
@@ -85,7 +87,11 @@ public class LinkedFixedCapacityQueue<T> extends AbstractCollection<T> implement
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Retrieves and removes the oldest element of the queue, if there's any.
+	 *
+	 * @return {@link es.iguanod.util.Maybe#ABSENT Maybe.ABSENT} if the queue
+	 * was empty prior to this call, or a {@link es.iguanod.util.Maybe}
+	 * containing the removed element if it wasn't
 	 */
 	@Override
 	public Maybe<T> pop(){
@@ -167,12 +173,9 @@ public class LinkedFixedCapacityQueue<T> extends AbstractCollection<T> implement
 
 	/**
 	 * Inserts the specified element in the queue, removing the oldest element
-	 * in case the queue is full. This method behaves just as
-	 * {@link #push(Object) push(elem)} except it doesn't retrieve the removed
-	 * element (if any) and should always returns true.
-	 * <p>
-	 * Note that unlike {@link java.util.Collection#add(Object)}, this
-	 * operation is not optional.</p>
+	 * in case the queue is full (optional operation). This method behaves
+	 * just as {@link #push(Object) push(elem)} except it doesn't retrieve the
+	 * removed element (if any) and should always returns true.
 	 *
 	 * @param elem the element to be inserted
 	 *
