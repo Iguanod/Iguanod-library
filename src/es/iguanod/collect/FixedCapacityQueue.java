@@ -102,7 +102,7 @@ public interface FixedCapacityQueue<T> extends Collection<T>{
 	/**
 	 * Inserts the specified element in the queue, removing the oldest element
 	 * in case the queue is full. This method behaves just as
-	 * {@link #push(Object)} except it doesn't retrieve the removed element
+	 * {@link #push(Object) push(elem)} except it doesn't retrieve the removed element
 	 * (if any) and should always returns true.
 	 * <p>
 	 * Note that unlike {@link java.util.Collection#add(Object)}, this
