@@ -1,8 +1,10 @@
 package es.iguanod.collect;
 
 import es.iguanod.collect.DoubleHashCounter.DoubleHashCounterBuilder;
+import es.iguanod.collect.DoubleTreeCounter.DoubleTreeCounterBuilder;
 import es.iguanod.collect.HashCounter.HashCounterBuilder;
 import es.iguanod.collect.IntTreeCounter.IntTreeCounterBuilder;
+import es.iguanod.collect.TreeCounter.TreeCounterBuilder;
 import es.iguanod.util.Caster;
 import es.iguanod.util.Maybe;
 import es.iguanod.util.tuples.Tuple2;
@@ -27,8 +29,9 @@ public final class CollectionsIg{
 
 	private CollectionsIg(){
 	}
-	
-	public static final Counter EMPTY_COUNTER=new UnmodifiableSortedCounter(new DoubleHashCounterBuilder().build());
+
+	public static final Counter EMPTY_COUNTER=new UnmodifiableCounter(new DoubleHashCounterBuilder().build());
+	public static final SortedCounter EMPTY_SORTED_COUNTER=new UnmodifiableSortedCounter(new DoubleTreeCounterBuilder().build());
 	public static final Tree EMPTY_TREE=new UnmodifiableTree(new LinkedTree());
 	public static final FixedCapacityQueue EMPTY_FIXED_CAPACITY_QUEUE=new UnmodifiableFixedCapacityQueue(new LinkedFixedCapacityQueue(0));
 
@@ -36,16 +39,32 @@ public final class CollectionsIg{
 		return EMPTY_COUNTER;
 	}
 
+	public static <T, V extends Number> SortedCounter<T, V> emptySortedCounter(){
+		return EMPTY_SORTED_COUNTER;
+	}
+
 	public static <T> Tree<T> emptyTree(){
 		return EMPTY_TREE;
 	}
-	
+
 	public static <T> FixedCapacityQueue<T> emptyFixedCapacityQueue(){
 		return EMPTY_FIXED_CAPACITY_QUEUE;
 	}
 
 	public static <K, V extends Number> Counter<K, V> singletonCounter(K key, V value){
 		Counter<K, V> counter=new HashCounterBuilder<K, V>(new Caster<BigDecimal, V>(){
+			private static final long serialVersionUID=-858620261254526366L;
+
+			@Override
+			public V cast(BigDecimal t){
+				return null;
+			}
+		}).build();
+		return new UnmodifiableCounter<>(counter);
+	}
+
+	public static <K, V extends Number> SortedCounter<K, V> singletonSortedCounter(K key, V value){
+		SortedCounter<K, V> counter=new TreeCounterBuilder<K, V>(new Caster<BigDecimal, V>(){
 			private static final long serialVersionUID=-858620261254526366L;
 
 			@Override
@@ -61,7 +80,7 @@ public final class CollectionsIg{
 		tree.push(item);
 		return new UnmodifiableTree(tree);
 	}
-	
+
 	public static <T> FixedCapacityQueue<T> singletonFixedCapacityQueue(T item){
 		FixedCapacityQueue<T> queue=new LinkedFixedCapacityQueue<>(1);
 		queue.push(item);
@@ -88,10 +107,10 @@ public final class CollectionsIg{
 	}
 
 	public static <T, V extends Number> Counter<T, V> unmodifiableCounter(Counter<T, V> counter){
-		if(counter instanceof UnmodifiableSortedCounter){
+		if(counter instanceof UnmodifiableCounter){
 			return counter;
 		}else{
-			return new UnmodifiableSortedCounter<>(counter);
+			return new UnmodifiableCounter<>(counter);
 		}
 	}
 
@@ -106,18 +125,18 @@ public final class CollectionsIg{
 	public static <T> Tree<T> unmodifiableTree(Tree<T> tree){
 		return new UnmodifiableTree<>(tree);
 	}
-	
+
 	public static <T> FixedCapacityQueue<T> unmodifiableFixedCapacityQueue(FixedCapacityQueue<T> queue){
 		return new UnmodifiableFixedCapacityQueue<>(queue);
 	}
 
-	private static class UnmodifiableSortedCounter<K, V extends Number> implements SortedCounter<K, V>, Serializable{
+	private static class UnmodifiableCounter<K, V extends Number> implements Counter<K, V>, Serializable{
 
 		private static final long serialVersionUID=336498287123521094L;
 		//************
-		private Counter<K, V> counter;
+		Counter<K, V> counter;
 
-		public UnmodifiableSortedCounter(Counter<K, V> counter){
+		public UnmodifiableCounter(Counter<K, V> counter){
 			this.counter=counter;
 		}
 
@@ -142,26 +161,6 @@ public final class CollectionsIg{
 		}
 
 		@Override
-		public Set<K> maxKeySet(){
-			return Collections.unmodifiableSet(((SortedCounter<K, V>)counter).maxKeySet());
-		}
-
-		@Override
-		public Set<K> minKeySet(){
-			return Collections.unmodifiableSet(((SortedCounter<K, V>)counter).minKeySet());
-		}
-
-		@Override
-		public V maxValue(){
-			return ((SortedCounter<K, V>)counter).maxValue();
-		}
-
-		@Override
-		public V minValue(){
-			return ((SortedCounter<K, V>)counter).minValue();
-		}
-
-		@Override
 		public Set<K> keySet(){
 			return Collections.unmodifiableSet(counter.keySet());
 		}
@@ -177,48 +176,8 @@ public final class CollectionsIg{
 		}
 
 		@Override
-		public Set<K> keySet(V value){
-			return Collections.unmodifiableSet(((SortedCounter<K, V>)counter).keySet(value));
-		}
-
-		@Override
-		public Set<Entry<V, Set<K>>> inverseEntrySet(){
-			return Collections.unmodifiableSet(((SortedCounter<K, V>)counter).inverseEntrySet());
-		}
-
-		@Override
 		public V get(Object key){
 			return counter.get(key);
-		}
-
-		@Override
-		public SortedCounter<K, V> tailCounter(V from_value){
-			return CollectionsIg.unmodifiableSortedCounter(((SortedCounter<K, V>)counter).tailCounter(from_value));
-		}
-
-		@Override
-		public SortedCounter<K, V> tailCounter(V from_value, boolean inclusive){
-			return CollectionsIg.unmodifiableSortedCounter(((SortedCounter<K, V>)counter).tailCounter(from_value, inclusive));
-		}
-
-		@Override
-		public SortedCounter<K, V> headCounter(V to_value){
-			return CollectionsIg.unmodifiableSortedCounter(((SortedCounter<K, V>)counter).headCounter(to_value));
-		}
-
-		@Override
-		public SortedCounter<K, V> headCounter(V to_value, boolean inclusive){
-			return CollectionsIg.unmodifiableSortedCounter(((SortedCounter<K, V>)counter).headCounter(to_value, inclusive));
-		}
-
-		@Override
-		public SortedCounter<K, V> subCounter(V from_value, V to_value){
-			return CollectionsIg.unmodifiableSortedCounter(((SortedCounter<K, V>)counter).subCounter(from_value, to_value));
-		}
-
-		@Override
-		public SortedCounter<K, V> subCounter(V from_value, boolean from_inclusive, V to_value, boolean to_inclusive){
-			return CollectionsIg.unmodifiableSortedCounter(((SortedCounter<K, V>)counter).subCounter(from_value, from_inclusive, to_value, to_inclusive));
 		}
 
 		@Override
@@ -419,6 +378,75 @@ public final class CollectionsIg{
 		@Override
 		public void balancedDeductToAll(V value){
 			throw new UnsupportedOperationException("Unmodifiable Counter");
+		}
+	}
+
+	private static class UnmodifiableSortedCounter<K, V extends Number> extends UnmodifiableCounter<K, V> implements SortedCounter<K, V>{
+		
+		private static final long serialVersionUID=4208105930154054870L;
+
+		public UnmodifiableSortedCounter(SortedCounter<K, V> counter){
+			super(counter);
+		}
+
+		@Override
+		public Set<K> maxKeySet(){
+			return Collections.unmodifiableSet(((SortedCounter<K, V>)counter).maxKeySet());
+		}
+
+		@Override
+		public Set<K> minKeySet(){
+			return Collections.unmodifiableSet(((SortedCounter<K, V>)counter).minKeySet());
+		}
+
+		@Override
+		public V maxValue(){
+			return ((SortedCounter<K, V>)counter).maxValue();
+		}
+
+		@Override
+		public V minValue(){
+			return ((SortedCounter<K, V>)counter).minValue();
+		}
+
+		@Override
+		public Set<K> keySet(V value){
+			return Collections.unmodifiableSet(((SortedCounter<K, V>)counter).keySet(value));
+		}
+
+		@Override
+		public Set<Entry<V, Set<K>>> inverseEntrySet(){
+			return Collections.unmodifiableSet(((SortedCounter<K, V>)counter).inverseEntrySet());
+		}
+
+		@Override
+		public SortedCounter<K, V> tailCounter(V from_value){
+			return CollectionsIg.unmodifiableSortedCounter(((SortedCounter<K, V>)counter).tailCounter(from_value));
+		}
+
+		@Override
+		public SortedCounter<K, V> tailCounter(V from_value, boolean inclusive){
+			return CollectionsIg.unmodifiableSortedCounter(((SortedCounter<K, V>)counter).tailCounter(from_value, inclusive));
+		}
+
+		@Override
+		public SortedCounter<K, V> headCounter(V to_value){
+			return CollectionsIg.unmodifiableSortedCounter(((SortedCounter<K, V>)counter).headCounter(to_value));
+		}
+
+		@Override
+		public SortedCounter<K, V> headCounter(V to_value, boolean inclusive){
+			return CollectionsIg.unmodifiableSortedCounter(((SortedCounter<K, V>)counter).headCounter(to_value, inclusive));
+		}
+
+		@Override
+		public SortedCounter<K, V> subCounter(V from_value, V to_value){
+			return CollectionsIg.unmodifiableSortedCounter(((SortedCounter<K, V>)counter).subCounter(from_value, to_value));
+		}
+
+		@Override
+		public SortedCounter<K, V> subCounter(V from_value, boolean from_inclusive, V to_value, boolean to_inclusive){
+			return CollectionsIg.unmodifiableSortedCounter(((SortedCounter<K, V>)counter).subCounter(from_value, from_inclusive, to_value, to_inclusive));
 		}
 	}
 
