@@ -27,8 +27,10 @@ public final class CollectionsIg{
 
 	private CollectionsIg(){
 	}
+	
 	public static final Counter EMPTY_COUNTER=new UnmodifiableSortedCounter(new DoubleHashCounterBuilder().build());
 	public static final Tree EMPTY_TREE=new UnmodifiableTree(new LinkedTree());
+	public static final FixedCapacityQueue EMPTY_FIXED_CAPACITY_QUEUE=new UnmodifiableFixedCapacityQueue(new LinkedFixedCapacityQueue(0));
 
 	public static <T, V extends Number> Counter<T, V> emptyCounter(){
 		return EMPTY_COUNTER;
@@ -36,6 +38,10 @@ public final class CollectionsIg{
 
 	public static <T> Tree<T> emptyTree(){
 		return EMPTY_TREE;
+	}
+	
+	public static <T> FixedCapacityQueue<T> emptyFixedCapacityQueue(){
+		return EMPTY_FIXED_CAPACITY_QUEUE;
 	}
 
 	public static <K, V extends Number> Counter<K, V> singletonCounter(K key, V value){
@@ -54,6 +60,12 @@ public final class CollectionsIg{
 		Tree<T> tree=new LinkedTree();
 		tree.push(item);
 		return new UnmodifiableTree(tree);
+	}
+	
+	public static <T> FixedCapacityQueue<T> singletonFixedCapacityQueue(T item){
+		FixedCapacityQueue<T> queue=new LinkedFixedCapacityQueue<>(1);
+		queue.push(item);
+		return new UnmodifiableFixedCapacityQueue<>(queue);
 	}
 
 	public static <T> T[] toGenericArray(Collection<? extends T> col){
@@ -93,6 +105,10 @@ public final class CollectionsIg{
 
 	public static <T> Tree<T> unmodifiableTree(Tree<T> tree){
 		return new UnmodifiableTree<>(tree);
+	}
+	
+	public static <T> FixedCapacityQueue<T> unmodifiableFixedCapacityQueue(FixedCapacityQueue<T> queue){
+		return new UnmodifiableFixedCapacityQueue<>(queue);
 	}
 
 	private static class UnmodifiableSortedCounter<K, V extends Number> implements SortedCounter<K, V>, Serializable{
