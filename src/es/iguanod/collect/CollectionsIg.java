@@ -33,6 +33,7 @@ public final class CollectionsIg{
 	public static final Counter EMPTY_COUNTER=new UnmodifiableCounter(new DoubleHashCounterBuilder().build());
 	public static final SortedCounter EMPTY_SORTED_COUNTER=new UnmodifiableSortedCounter(new DoubleTreeCounterBuilder().build());
 	public static final Tree EMPTY_TREE=new UnmodifiableTree(new LinkedTree());
+	public static final BinaryTree EMPTY_BINARY_TREE=new UnmodifiableBinaryTree(null);
 	public static final FixedCapacityQueue EMPTY_FIXED_CAPACITY_QUEUE=new UnmodifiableFixedCapacityQueue(new LinkedFixedCapacityQueue(1));
 
 	public static <T> T[] toGenericArray(Collection<? extends T> col){
@@ -64,6 +65,10 @@ public final class CollectionsIg{
 
 	public static <T> Tree<T> emptyTree(){
 		return EMPTY_TREE;
+	}
+
+	public static <T> BinaryTree<T> emptyBinaryTree(){
+		return EMPTY_BINARY_TREE;
 	}
 
 	public static <T> FixedCapacityQueue<T> emptyFixedCapacityQueue(){
@@ -100,6 +105,12 @@ public final class CollectionsIg{
 		return new UnmodifiableTree(tree);
 	}
 
+	public static <T> BinaryTree<T> singletonBinaryTree(T item){
+		BinaryTree<T> tree=null;
+		tree.push(item);
+		return new UnmodifiableBinaryTree<>(tree);
+	}
+
 	public static <T> FixedCapacityQueue<T> singletonFixedCapacityQueue(T item){
 		FixedCapacityQueue<T> queue=new LinkedFixedCapacityQueue<>(1);
 		queue.push(item);
@@ -114,7 +125,7 @@ public final class CollectionsIg{
 		}
 	}
 
-	public static <T ,V extends Number> SortedCounter<T, V> unmodifiableSortedCounter(SortedCounter<T, V> counter){
+	public static <T, V extends Number> SortedCounter<T, V> unmodifiableSortedCounter(SortedCounter<T, V> counter){
 		if(counter instanceof UnmodifiableSortedCounter){
 			return counter;
 		}else{
@@ -123,11 +134,27 @@ public final class CollectionsIg{
 	}
 
 	public static <T> Tree<T> unmodifiableTree(Tree<T> tree){
-		return new UnmodifiableTree<>(tree);
+		if(tree instanceof UnmodifiableSortedCounter){
+			return tree;
+		}else{
+			return new UnmodifiableTree<>(tree);
+		}
+	}
+
+	public static <T> BinaryTree<T> unmodifiableBinaryTree(BinaryTree<T> tree){
+		if(tree instanceof UnmodifiableSortedCounter){
+			return tree;
+		}else{
+			return new UnmodifiableBinaryTree<>(tree);
+		}
 	}
 
 	public static <T> FixedCapacityQueue<T> unmodifiableFixedCapacityQueue(FixedCapacityQueue<T> queue){
-		return new UnmodifiableFixedCapacityQueue<>(queue);
+		if(queue instanceof UnmodifiableSortedCounter){
+			return queue;
+		}else{
+			return new UnmodifiableFixedCapacityQueue<>(queue);
+		}
 	}
 
 	public static <K, V extends Number> Counter<K, V> synchronizedCounter(Counter<K, V> counter){
@@ -153,7 +180,7 @@ public final class CollectionsIg{
 			return new SynchronizedTree<>(tree);
 		}
 	}
-	
+
 	public static <T> BinaryTree<T> synchronizedBinaryTree(BinaryTree<T> tree){
 		if(tree instanceof SynchronizedTree){
 			return tree;
@@ -161,7 +188,7 @@ public final class CollectionsIg{
 			return new SynchronizedBinaryTree<>(tree);
 		}
 	}
-	
+
 	public static <T> FixedCapacityQueue<T> synchronizedFixedCapacityQueue(FixedCapacityQueue<T> queue){
 		if(queue instanceof SynchronizedFixedCapacityQueue){
 			return queue;
@@ -494,7 +521,7 @@ public final class CollectionsIg{
 
 		private static final long serialVersionUID=-649494554005020202L;
 		//************
-		private Tree<T> tree;
+		Tree<T> tree;
 
 		public UnmodifiableTree(Tree<T> tree){
 			this.tree=tree;
@@ -766,11 +793,40 @@ public final class CollectionsIg{
 		}
 	}
 
+	private static class UnmodifiableBinaryTree<T> extends UnmodifiableTree<T> implements BinaryTree<T>{
+
+		private static final long serialVersionUID=1L;
+
+		public UnmodifiableBinaryTree(BinaryTree<T> tree){
+			super(tree);
+		}
+
+		@Override
+		public List<T> inOrderDeepFirstTraversal(TreeNode node){
+			return ((BinaryTree<T>)tree).inOrderDeepFirstTraversal(node);
+		}
+
+		@Override
+		public TreeNode inOrderDeepFirstSearch(TreeNode node, T value){
+			return ((BinaryTree<T>)tree).inOrderDeepFirstSearch(node, value);
+		}
+
+		@Override
+		public TreeNode left(TreeNode node){
+			return ((BinaryTree<T>)tree).left(node);
+		}
+
+		@Override
+		public TreeNode right(TreeNode node){
+			return ((BinaryTree<T>)tree).right(node);
+		}
+	}
+
 	private static class UnmodifiableFixedCapacityQueue<T> implements FixedCapacityQueue<T>, Serializable{
 
 		private static final long serialVersionUID=-982310296149207480L;
 		//**********
-		private FixedCapacityQueue<T> queue;
+		FixedCapacityQueue<T> queue;
 
 		public UnmodifiableFixedCapacityQueue(FixedCapacityQueue<T> queue){
 			this.queue=queue;
@@ -1789,8 +1845,8 @@ public final class CollectionsIg{
 
 		private static final long serialVersionUID=7032878403121147486L;
 		//**********
-		private FixedCapacityQueue<T> queue;
-		private final Object mutex;
+		FixedCapacityQueue<T> queue;
+		final Object mutex;
 
 		public SynchronizedFixedCapacityQueue(FixedCapacityQueue<T> queue){
 			this.queue=queue;
