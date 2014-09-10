@@ -34,6 +34,11 @@ import java.util.Collection;
  * {@code FixedCapacityQueues} may or may not accept {@code null} values, but
  * unlike in the regular {@link java.util.Queue}, nothing in its design
  * discourage it.</p>
+ * <p>
+ * The {@code FixedCapacityQueue} specify some methods as optional (following
+ * the pattern of {@code Collection}), so they can always throw
+ * {@code UnsupportedOperationException} if the concrete implementation of this
+ * interface is unmodifiable.<p>
  *
  * @param <T> the class of the elements being stored
  *
@@ -46,7 +51,7 @@ public interface FixedCapacityQueue<T> extends Collection<T>{
 
 	/**
 	 * Inserts the specified element in the queue, retrieving and removing the
-	 * oldest element in case the queue is full.
+	 * oldest element in case the queue is full (optional operation).
 	 *
 	 * @param elem the element to be inserted
 	 *
@@ -61,7 +66,8 @@ public interface FixedCapacityQueue<T> extends Collection<T>{
 	public Maybe<T> push(T elem);
 
 	/**
-	 * Retrieves and removes the oldest element of the queue, if there's any.
+	 * Retrieves and removes the oldest element of the queue, if there's any
+	 * (optional operation).
 	 *
 	 * @return {@link es.iguanod.util.Maybe#ABSENT Maybe.ABSENT} if the queue
 	 * was empty prior to this call, or a {@link es.iguanod.util.Maybe}
@@ -101,16 +107,13 @@ public interface FixedCapacityQueue<T> extends Collection<T>{
 
 	/**
 	 * Inserts the specified element in the queue, removing the oldest element
-	 * in case the queue is full. This method behaves just as
-	 * {@link #push(Object) push(elem)} except it doesn't retrieve the removed element
-	 * (if any) and should always returns true.
-	 * <p>
-	 * Note that unlike {@link java.util.Collection#add(Object)}, this
-	 * operation is not optional.</p>
+	 * in case the queue is full (optional operation). This method behaves
+	 * just as {@link #push(Object) push(elem)} except it doesn't retrieve the
+	 * removed element (if any) and should always returns true.
 	 *
 	 * @param elem the element to be inserted
 	 *
-	 * @return true
+	 * @return {@code true}
 	 *
 	 * @throws NullPointerException if {@code elem} is {@code null} and the
 	 * implementation of {@code FixedCapacityQueue} doesn't allow {@code null}
