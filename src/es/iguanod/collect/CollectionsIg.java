@@ -807,17 +807,17 @@ public final class CollectionsIg{
 		}
 
 		@Override
-		public TreeNode inOrderDeepFirstSearch(TreeNode node, T value){
+		public Maybe<TreeNode> inOrderDeepFirstSearch(TreeNode node, T value){
 			return ((BinaryTree<T>)tree).inOrderDeepFirstSearch(node, value);
 		}
 
 		@Override
-		public TreeNode left(TreeNode node){
+		public Maybe<TreeNode> left(TreeNode node){
 			return ((BinaryTree<T>)tree).left(node);
 		}
 
 		@Override
-		public TreeNode right(TreeNode node){
+		public Maybe<TreeNode> right(TreeNode node){
 			return ((BinaryTree<T>)tree).right(node);
 		}
 	}
@@ -1820,21 +1820,21 @@ public final class CollectionsIg{
 		}
 
 		@Override
-		public TreeNode inOrderDeepFirstSearch(TreeNode node, T value){
+		public Maybe<TreeNode> inOrderDeepFirstSearch(TreeNode node, T value){
 			synchronized(mutex){
 				return ((BinaryTree<T>)tree).inOrderDeepFirstSearch(node, value);
 			}
 		}
 
 		@Override
-		public TreeNode left(TreeNode node){
+		public Maybe<TreeNode> left(TreeNode node){
 			synchronized(mutex){
 				return ((BinaryTree<T>)tree).left(node);
 			}
 		}
 
 		@Override
-		public TreeNode right(TreeNode node){
+		public Maybe<TreeNode> right(TreeNode node){
 			synchronized(mutex){
 				return ((BinaryTree<T>)tree).right(node);
 			}
