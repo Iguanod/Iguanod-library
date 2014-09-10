@@ -143,7 +143,7 @@ public abstract class AbstractTree<T> implements Tree<T>, Serializable{
 	public boolean containsChild(TreeNode node, Object obj){
 		node.checkNode(this);
 		for(TreeNode son:this.children(node)){
-			if(equalsValue(node, obj)){
+			if(equalsValue(son, obj)){
 				return true;
 			}
 		}
