@@ -9,12 +9,6 @@ import es.iguanod.collect.IntHashCounter;
 import es.iguanod.collect.IntHashCounter.IntHashCounterBuilder;
 import es.iguanod.collect.Tree.TreeNode;
 import es.iguanod.util.Maybe;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
@@ -109,8 +103,8 @@ public class ResultsTree extends AscendingTree<String[]>{
 	@Override
 	public TreeNode push(String[] results){
 
-		for(int i=0; i < results.length; i++){
-			if(results[i].contains("-")){
+		for(String result:results){
+			if(result.contains("-")){
 				throw new StringFormatException("Hyphens not allowed");
 			}
 		}
@@ -179,7 +173,7 @@ public class ResultsTree extends AscendingTree<String[]>{
 			for(String str:value.get()){
 				acc+=str.length();
 			}
-			acc+=value.get().length-1;
+			acc+=value.get().length;
 		}else{
 			acc=1;
 		}
@@ -223,17 +217,13 @@ public class ResultsTree extends AscendingTree<String[]>{
 			int height=this.pvtHeight(node);
 
 			String results_str="";
-			boolean flag=false;
-			for(String result:getValue(node).get()){
-				results_str+=result;
-				if(flag){
-					results_str+=" ";
-				}
-				flag=true;
+			String[] results=getValue(node).get();
+			for(String result:results){
+				results_str+=result + " ";
 			}
 
 			if(!this.getChildren(node).iterator().hasNext()){
-				return carry_mid + spaces_str.substring(0, spaces_str.length() - results_str.length()) + results_str + "\n";
+				return carry_mid + results_str + spaces_str.substring(0, spaces_str.length() - results_str.length()) + "\n";
 			}
 
 			str+=pvtToString(sons.get(this.maxSons() - 1), depth + 1, carry_top + spaces_str + "   ", carry_top + spaces_str + " ┌ ", carry_top + spaces_str + " │ ");
