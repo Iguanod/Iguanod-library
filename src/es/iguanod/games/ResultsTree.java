@@ -100,26 +100,9 @@ public class ResultsTree extends AscendingTree<Character[]>{
 		this.prune_lvls=prune_lvls;
 	}
 
-	public ResultsTree(int num_players){
-		this(num_players == 2?4:num_players * 2 - 1, 3);
-	}
-
 	@Override
 	protected ResultsTNode provideNode(Maybe<? extends Character[]> value, LinkedTNode<Character[]> parent){
 		return new ResultsTNode(value, parent, this);
-	}
-
-	public void loadFromFile(File file) throws FileNotFoundException, IOException, StringFormatException{
-
-		try(BufferedReader in=new BufferedReader(new InputStreamReader(new FileInputStream(file)))){
-			String line;
-			while((line=in.readLine()) != null){
-				for(String str:line.split("\\s")){
-					if(!str.isEmpty())
-						this.push(str);
-				}
-			}
-		}
 	}
 
 	public TreeNode push(String results){
