@@ -21,19 +21,21 @@ import java.util.Map.Entry;
  */
 public class EloScoreTable<T> implements Iterable<Tuple2<T, Integer>>, Serializable{
 
-	private static final long serialVersionUID=818005879329498513L;
+	private static final long serialVersionUID=818005879329498514L;
 	//************
 	private static final int TIMES_BETTER=2;
 	private static final int DIFFERENCE_BETTER=150;
 	//************
-	private static final double INITIAL_SCORE=1000;
 	private static final int BASE_CHANGE=30;
 	private static final double INITIAL_K_FACTOR=1.66;
 	private static final int DEFAULT_POSITIONING_GAMES=8;
 	private static final int RECORD_SIZE=16;
 	//************
+	public static final double INITIAL_SCORE=1000;
+	//************
 	private SortedCounter<T, Double> table;
 	private Map<T, Stats> stats;
+	private int games=0;
 	private double mean=INITIAL_SCORE;
 	private final boolean use_k_factor;
 	private final int positioning_games;
@@ -46,11 +48,14 @@ public class EloScoreTable<T> implements Iterable<Tuple2<T, Integer>>, Serializa
 		private double k_factor;
 		private int wins=0;
 		private int losses=0;
+		private int ties=0;
 
-		public double addGame(int num_players, boolean win){
+		public double addGame(int num_players, double win){
 
-			if(win){
+			if(win>0){
 				wins++;
+			}else if(win==0){
+				ties++;
 			}else{
 				losses++;
 			}
@@ -59,7 +64,7 @@ public class EloScoreTable<T> implements Iterable<Tuple2<T, Integer>>, Serializa
 				return 1;
 			}
 
-			double next=win?1.0:-1.0 / (num_players - 1);
+			double next=Math.signum(win) / (num_players - 1);
 			games.addFirst(next);
 			k_factor+=next;
 
@@ -67,8 +72,8 @@ public class EloScoreTable<T> implements Iterable<Tuple2<T, Integer>>, Serializa
 				k_factor-=games.removeLast();
 			}
 
-			if(wins + losses > positioning_games){
-				return Math.abs((k_factor / positioning_games) + (win?1.1:-1.1));
+			if(wins + ties + losses > positioning_games){
+				return Math.abs((k_factor / positioning_games) + Math.signum(win)*1.1);
 			}else{
 				return INITIAL_K_FACTOR;
 			}
@@ -125,22 +130,24 @@ public class EloScoreTable<T> implements Iterable<Tuple2<T, Integer>>, Serializa
 		}
 
 		for(T player:winner_players){
-			updatePlayer(player, scores_sum, 1.0 / winner_players.size(), winner_players.size() + loser_players.size(), acc, BASE_CHANGE);
+			updatePlayer(player, scores_sum, 1.0 / winner_players.size(), winner_players.size() + loser_players.size(), acc, BASE_CHANGE, loser_players.isEmpty());
 		}
 
 		for(T player:loser_players){
-			updatePlayer(player, scores_sum, 0, winner_players.size() + loser_players.size(), acc, BASE_CHANGE);
+			updatePlayer(player, scores_sum, 0, winner_players.size() + loser_players.size(), acc, BASE_CHANGE, loser_players.isEmpty());
 		}
 
 		for(Entry<T, Double> change:acc.entrySet()){
 			table.sum(change.getKey(), change.getValue());
 			mean+=change.getValue() / table.size();
 		}
+		
+		games++;
 	}
 	
-	private void updatePlayer(T player, double scores_sum, double actual_score, int num_players, Map<T, Double> acc, double change){
+	private void updatePlayer(T player, double scores_sum, double actual_score, int num_players, Map<T, Double> acc, double change, boolean tie){
 
-		double k_factor=stats.get(player).addGame(num_players, actual_score > 0);
+		double k_factor=stats.get(player).addGame(num_players, tie?0:actual_score);
 		double expected_score=Math.pow(TIMES_BETTER, table.get(player) / DIFFERENCE_BETTER) / scores_sum;
 
 		acc.put(player, (actual_score - expected_score) * change * k_factor);
@@ -220,13 +227,13 @@ public class EloScoreTable<T> implements Iterable<Tuple2<T, Integer>>, Serializa
 
 		int i=0;
 		for(Collection<? extends T> team:winner_teams){
-			updateTeam(team, winner_elos.get(i), scores_sum, 1.0 / winner_teams.size(), winner_teams.size() + loser_teams.size(), acc);
+			updateTeam(team, winner_elos.get(i), scores_sum, 1.0 / winner_teams.size(), winner_teams.size() + loser_teams.size(), acc, loser_teams.isEmpty());
 			i++;
 		}
 
 		i=0;
 		for(Collection<? extends T> team:loser_teams){
-			updateTeam(team, loser_elos.get(i), scores_sum, 1.0 / winner_teams.size(), winner_teams.size() + loser_teams.size(), acc);
+			updateTeam(team, loser_elos.get(i), scores_sum, 1.0 / winner_teams.size(), winner_teams.size() + loser_teams.size(), acc, loser_teams.isEmpty());
 			i++;
 		}
 
@@ -234,9 +241,11 @@ public class EloScoreTable<T> implements Iterable<Tuple2<T, Integer>>, Serializa
 			table.sum(change.getKey(), change.getValue());
 			mean+=change.getValue() / table.size();
 		}
+		
+		games++;
 	}
 
-	private void updateTeam(Collection<? extends T> team, double team_elo, double scores_sum, double actual_score, int num_teams, Map<T, Double> acc){
+	private void updateTeam(Collection<? extends T> team, double team_elo, double scores_sum, double actual_score, int num_teams, Map<T, Double> acc, boolean tie){
 
 		double expected_score=Math.pow(TIMES_BETTER, team_elo / DIFFERENCE_BETTER) / scores_sum;
 
@@ -245,8 +254,12 @@ public class EloScoreTable<T> implements Iterable<Tuple2<T, Integer>>, Serializa
 			scores_sum_players+=Math.pow(TIMES_BETTER, table.get(player) / DIFFERENCE_BETTER);
 		}
 		for(T player:team){
-			updatePlayer(player, scores_sum_players, actual_score, num_teams, acc, (actual_score - expected_score) * BASE_CHANGE * team.size());
+			updatePlayer(player, scores_sum_players, actual_score, num_teams, acc, (actual_score - expected_score) * BASE_CHANGE * team.size(), tie);
 		}
+	}
+	
+	public int totalGames(){
+		return games;
 	}
 
 	public int wins(T player){
@@ -259,9 +272,14 @@ public class EloScoreTable<T> implements Iterable<Tuple2<T, Integer>>, Serializa
 		return s == null?0:s.losses;
 	}
 
+	public int ties(T player){
+		Stats s=stats.get(player);
+		return s == null?0:s.ties;
+	}
+
 	public int numGames(T player){
 		Stats s=stats.get(player);
-		return s == null?0:s.wins + s.losses;
+		return s == null?0:s.wins + s.losses + s.ties;
 	}
 
 	public int score(T player){
