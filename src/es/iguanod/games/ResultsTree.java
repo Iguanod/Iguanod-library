@@ -25,22 +25,22 @@ import java.util.Map.Entry;
  * @since 0.0.0.1.a
  * @version
  */
-public class ResultsTree extends AscendingTree<Character[]>{
+public class ResultsTree extends AscendingTree<String[]>{
 
 	private static final long serialVersionUID=1816100213659613130L;
 	//************
 	private IntHashCounter<Integer> spaces=new IntHashCounterBuilder<Integer>().build();
-	private DoubleTreeCounter<Character> sons_results=new DoubleTreeCounterBuilder<Character>().reverse(true).build();
+	private DoubleTreeCounter<String> sons_results=new DoubleTreeCounterBuilder<String>().reverse(true).build();
 	private int prune_lvls;
 
-	protected static class ResultsTNode extends LinkedTNode<Character[]>{
+	protected static class ResultsTNode extends LinkedTNode<String[]>{
 
 		private static final long serialVersionUID=-2184813009761211777L;
 		//************
-		public ArrayList<LinkedTNode<Character[]>> rsons=null;
+		public ArrayList<LinkedTNode<String[]>> rsons=null;
 		private static final ArrayList EMPTY_SONS=new ArrayList(0);
 
-		public ResultsTNode(Maybe<? extends Character[]> value, LinkedTNode<Character[]> parent, AbstractTree<Character[]> tree){
+		public ResultsTNode(Maybe<? extends String[]> value, LinkedTNode<String[]> parent, AbstractTree<String[]> tree){
 			super(value, parent, tree);
 		}
 
@@ -89,8 +89,9 @@ public class ResultsTree extends AscendingTree<Character[]>{
 		int acc=0;
 		for(TreeNode son:this.getChildren(node)){
 			acc=Math.max(acc, this.pvtHeight(son));
-			if(acc < 0)
+			if(acc < 0){
 				return Integer.MAX_VALUE;
+			}
 		}
 		return acc + 1;
 	}
@@ -101,26 +102,17 @@ public class ResultsTree extends AscendingTree<Character[]>{
 	}
 
 	@Override
-	protected ResultsTNode provideNode(Maybe<? extends Character[]> value, LinkedTNode<Character[]> parent){
+	protected ResultsTNode provideNode(Maybe<? extends String[]> value, LinkedTNode<String[]> parent){
 		return new ResultsTNode(value, parent, this);
 	}
 
-	public TreeNode push(String results){
-		Character[] array=new Character[results.length()];
-		int i=0;
-		for(char ch:results.toCharArray()){
-			array[i]=ch;
-			i++;
-		}
-		return this.push(array);
-	}
-
 	@Override
-	public TreeNode push(Character[] results){
+	public TreeNode push(String[] results){
 
 		for(int i=0; i < results.length; i++){
-			if(results[i] == '-')
+			if(results[i].contains("-")){
 				throw new StringFormatException("Hyphens not allowed");
+			}
 		}
 
 		if(prune_lvls > 0 && root != null && this.isFull(root) && this.height() == prune_lvls + 1){
@@ -139,26 +131,27 @@ public class ResultsTree extends AscendingTree<Character[]>{
 		for(TreeNode son:getChildren(parent)){
 			sons_results.balancedSum(getValue(son).get());
 		}
-		Entry<Character, Double>[] sorted=sons_results.entrySet().toArray(new Entry[]{});
+		Entry<String, Double>[] sorted=sons_results.entrySet().toArray(new Entry[]{});
 
 		if((sorted.length == 1 && sorted[0].getValue() > this.maxSons() / 2.0)
 		|| (sorted.length > 1 && sorted[0].getValue() > sorted[1].getValue() + this.maxSons() - childrenSize(parent))){
 			ArrayList<ResultsTNode> list=new ArrayList<>();
-			for(int i=childrenSize(parent); i < this.maxSons(); i++)
-				list.add(provideNode(Maybe.from(new Character[]{'-'}), (ResultsTNode)parent));
+			for(int i=childrenSize(parent); i < this.maxSons(); i++){
+				list.add(provideNode(Maybe.from(new String[]{"-"}), (ResultsTNode)parent));
+			}
 			((ResultsTNode)parent).fill(list);
-			this.push(new Character[]{sorted[0].getKey()});
+			this.push(new String[]{sorted[0].getKey()});
 		}else if(isFull(parent)){
-			ArrayList<Character> tmp=new ArrayList<>();
+			ArrayList<String> tmp=new ArrayList<>();
 			double highest=sorted[0].getValue();
-			for(Entry<Character, Double> ch:sorted){
+			for(Entry<String, Double> ch:sorted){
 				if(ch.getValue() == highest){
 					tmp.add(ch.getKey());
 				}else{
 					break;
 				}
 			}
-			this.push(tmp.toArray(new Character[]{}));
+			this.push(tmp.toArray(new String[]{}));
 		}
 
 		return node;
@@ -175,28 +168,40 @@ public class ResultsTree extends AscendingTree<Character[]>{
 
 	private void calculateSpaces(){
 
-		calculateSpacesRec(this.root, 0);
+		calculateSpaces(this.root, 0);
 	}
 
-	private void calculateSpacesRec(TreeNode node, int depth){
+	private void calculateSpaces(TreeNode node, int depth){
 
-		spaces.putMax(depth, getValue(node).isPresent()?getValue(node).get().length:1);
-		for(TreeNode son:getChildren(node))
-			calculateSpacesRec(son, depth + 1);
+		int acc=0;
+		Maybe<String[]> value=getValue(node);
+		if(value.isPresent()){
+			for(String str:value.get()){
+				acc+=str.length();
+			}
+			acc+=value.get().length-1;
+		}else{
+			acc=1;
+		}
+		spaces.putMax(depth, acc);
+		for(TreeNode son:getChildren(node)){
+			calculateSpaces(son, depth + 1);
+		}
 	}
 
-	//TODO: generic for all trees
+	//TODO: generic for all trees?
 	private String pvtToString(){
-		return pvtToStringRec(this.root, 0, "", "", "");
+		return pvtToString(this.root, 0, "", "", "");
 	}
 
-	private String pvtToStringRec(TreeNode node, int depth, String carry_top, String carry_mid, String carry_bot){
+	private String pvtToString(TreeNode node, int depth, String carry_top, String carry_mid, String carry_bot){
 
 		String str="";
 
 		String spaces_str="";
-		for(int i=0; i < spaces.get(depth); i++)
+		for(int i=0; i < spaces.get(depth); i++){
 			spaces_str+=" ";
+		}
 
 		List<TreeNode> sons=(List<TreeNode>)getChildrenCopy(node);
 		if(getValue(node).isAbsent()){
@@ -204,47 +209,56 @@ public class ResultsTree extends AscendingTree<Character[]>{
 				if(i != 0){
 					str+="\n";
 				}
-				str+=pvtToStringRec(sons.get(i), depth + 1, carry_top + spaces_str + "   ", carry_top + spaces_str + "   ", carry_top + spaces_str + "   ");
+				str+=pvtToString(sons.get(i), depth + 1, carry_top + spaces_str + "   ", carry_top + spaces_str + "   ", carry_top + spaces_str + "   ");
 			}
 			if((this.maxSons() / 2) < sons.size()){
 				str+="\n";
-				str+=pvtToStringRec(sons.get(this.maxSons() / 2), depth + 1, carry_top + spaces_str + "   ", carry_mid + spaces_str + "   ", carry_bot + spaces_str + "   ");
+				str+=pvtToString(sons.get(this.maxSons() / 2), depth + 1, carry_top + spaces_str + "   ", carry_mid + spaces_str + "   ", carry_bot + spaces_str + "   ");
 			}
 			for(int i=Math.min(sons.size() - 1, (this.maxSons() / 2) - 1); i >= 0; i--){
 				str+="\n";
-				str+=pvtToStringRec(sons.get(i), depth + 1, carry_bot + spaces_str + "   ", carry_bot + spaces_str + "   ", carry_bot + spaces_str + "   ");
+				str+=pvtToString(sons.get(i), depth + 1, carry_bot + spaces_str + "   ", carry_bot + spaces_str + "   ", carry_bot + spaces_str + "   ");
 			}
 		}else{
 			int height=this.pvtHeight(node);
 
 			String results_str="";
-			for(Character ch:getValue(node).get())
-				results_str+=ch;
+			boolean flag=false;
+			for(String result:getValue(node).get()){
+				results_str+=result;
+				if(flag){
+					results_str+=" ";
+				}
+				flag=true;
+			}
 
 			if(!this.getChildren(node).iterator().hasNext()){
 				return carry_mid + spaces_str.substring(0, spaces_str.length() - results_str.length()) + results_str + "\n";
 			}
 
-			str+=pvtToStringRec(sons.get(this.maxSons() - 1), depth + 1, carry_top + spaces_str + "   ", carry_top + spaces_str + " ┌ ", carry_top + spaces_str + " │ ");
+			str+=pvtToString(sons.get(this.maxSons() - 1), depth + 1, carry_top + spaces_str + "   ", carry_top + spaces_str + " ┌ ", carry_top + spaces_str + " │ ");
 			if(this.maxSons() > 2){
 				for(int i=this.maxSons() - 2; i >= (int)Math.ceil(this.maxSons() / 2.0); i--){
-					if(height != 2)
+					if(height != 2){
 						str+=carry_top + spaces_str + " │\n";
-					str+=pvtToStringRec(sons.get(i), depth + 1, carry_top + spaces_str + " │ ", carry_top + spaces_str + " │ ", carry_top + spaces_str + " │ ");
+					}
+					str+=pvtToString(sons.get(i), depth + 1, carry_top + spaces_str + " │ ", carry_top + spaces_str + " │ ", carry_top + spaces_str + " │ ");
 				}
-				if(height != 2)
+				if(height != 2){
 					str+=carry_top + spaces_str + " │\n";
+				}
 
 				if(this.maxSons() % 2 != 0){
-					str+=pvtToStringRec(sons.get(this.maxSons() / 2), depth + 1, carry_top + spaces_str + " │ ", carry_mid + spaces_str.substring(0, spaces_str.length() - results_str.length()) + results_str + "─┤ ", carry_bot + spaces_str + " │ ");
+					str+=pvtToString(sons.get(this.maxSons() / 2), depth + 1, carry_top + spaces_str + " │ ", carry_mid + spaces_str.substring(0, spaces_str.length() - results_str.length()) + results_str + "─┤ ", carry_bot + spaces_str + " │ ");
 				}else{
 					str+=carry_mid + spaces_str.substring(0, spaces_str.length() - results_str.length()) + results_str + "─┤\n";
 				}
 
 				for(int i=(this.maxSons() / 2) - 1; i >= 1; i--){
-					if(height != 2)
+					if(height != 2){
 						str+=carry_bot + spaces_str + " │\n";
-					str+=pvtToStringRec(sons.get(i), depth + 1, carry_bot + spaces_str + " │ ", carry_bot + spaces_str + " │ ", carry_bot + spaces_str + " │ ");
+					}
+					str+=pvtToString(sons.get(i), depth + 1, carry_bot + spaces_str + " │ ", carry_bot + spaces_str + " │ ", carry_bot + spaces_str + " │ ");
 				}
 				if(height != 2){
 					str+=carry_bot + spaces_str + " │\n";
@@ -252,7 +266,7 @@ public class ResultsTree extends AscendingTree<Character[]>{
 			}else{
 				str+=carry_mid + spaces_str.substring(0, spaces_str.length() - results_str.length()) + results_str + "─┤\n";
 			}
-			str+=pvtToStringRec(sons.get(0), depth + 1, carry_bot + spaces_str + " │ ", carry_bot + spaces_str + " └ ", carry_bot + spaces_str + "   ");
+			str+=pvtToString(sons.get(0), depth + 1, carry_bot + spaces_str + " │ ", carry_bot + spaces_str + " └ ", carry_bot + spaces_str + "   ");
 		}
 
 		return str;
