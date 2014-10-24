@@ -23,12 +23,10 @@ public class LinkedTree<T> extends AbstractLinkedTree<T>{
 		super(max_sons);
 	}
 
-	@SuppressWarnings("LeakingThisInConstructor") // There is no leak because copyStructure is just a private auxiliary function
 	public LinkedTree(Tree<? extends T> tree){
 		super(tree);
 	}
 
-	@SuppressWarnings("LeakingThisInConstructor") // There is no leak because copyStructure is just a private auxiliary function
 	public LinkedTree(Tree<? extends T> tree, int max_sons){
 		super(tree, max_sons);
 	}
