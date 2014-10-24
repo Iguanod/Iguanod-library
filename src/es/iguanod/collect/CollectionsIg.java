@@ -528,11 +528,6 @@ public final class CollectionsIg{
 		}
 
 		@Override
-		public boolean nullsAllowed(){
-			return tree.nullsAllowed();
-		}
-
-		@Override
 		public int maxSons(){
 			return tree.maxSons();
 		}
@@ -1430,13 +1425,6 @@ public final class CollectionsIg{
 		public SynchronizedTree(Tree<T> tree, Object mutex){
 			this.tree=tree;
 			this.mutex=mutex;
-		}
-
-		@Override
-		public boolean nullsAllowed(){
-			synchronized(mutex){
-				return tree.nullsAllowed();
-			}
 		}
 
 		@Override

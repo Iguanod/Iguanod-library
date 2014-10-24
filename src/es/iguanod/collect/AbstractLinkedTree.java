@@ -54,23 +54,23 @@ public abstract class AbstractLinkedTree<T> extends AbstractTree<T>{
 		return new LinkedTNode(value, parent, this);
 	}
 
-	public AbstractLinkedTree(){
-		this(0, true);
+	public AbstractLinkedTree(int max_sons){
+		super(max_sons);
+		this.root=null;
 	}
 
-	public AbstractLinkedTree(int max_sons, boolean nulls_allowed){
-		super(max_sons, nulls_allowed);
-		this.root=null;
+	public AbstractLinkedTree(){
+		this(0);
 	}
 
 	@SuppressWarnings("LeakingThisInConstructor") // There is no leak because copyStructure is just a private auxiliary function
 	public AbstractLinkedTree(Tree<? extends T> tree){
-		this(tree, tree.maxSons(), tree.nullsAllowed());
+		this(tree, tree.maxSons());
 	}
 
 	@SuppressWarnings("LeakingThisInConstructor") // There is no leak because copyStructure is just a private auxiliary function
-	public AbstractLinkedTree(Tree<? extends T> tree, int max_sons, boolean nulls_allowed){
-		super(max_sons, nulls_allowed);
+	public AbstractLinkedTree(Tree<? extends T> tree, int max_sons){
+		super(max_sons);
 		if(tree.isEmpty()){
 			root=null;
 			return;
@@ -82,6 +82,8 @@ public abstract class AbstractLinkedTree<T> extends AbstractTree<T>{
 			throw new IllegalArgumentException("A node of the passed tree has more children than the accepted by this tree (" + this.maxSons() + ")");
 		this.copyStructure(tree, tree_root);
 	}
+	
+	protected abstract boolean nodeValueModifiable();
 
 	private void copyStructure(Tree<? extends T> tree_src, TreeNode node){
 		//TODO: test this function
@@ -139,6 +141,9 @@ public abstract class AbstractLinkedTree<T> extends AbstractTree<T>{
 	@Override
 	public Maybe<T> setValue(TreeNode node, T value){
 		node.checkNode(this);
+		if(!this.nodeValueModifiable()){
+			throw new UnsupportedOperationException("Node values not modifiables");
+		}
 		if(!this.nullsAllowed() && value == null){
 			throw new NullPointerException("The tree doesn't accept null values");
 		}
@@ -243,8 +248,6 @@ public abstract class AbstractLinkedTree<T> extends AbstractTree<T>{
 		return ((LinkedTNode<T>)node).parent == null?Maybe.ABSENT:Maybe.from(((LinkedTNode<T>)node).parent);
 	}
 
-	protected abstract boolean supportsDirectModification();
-
 	protected LinkedTNode<T> pvtAdd(TreeNode node, T value){
 		if(!nullsAllowed() && value == null)
 			throw new NullPointerException("The tree doesn't accept null values");
@@ -260,7 +263,7 @@ public abstract class AbstractLinkedTree<T> extends AbstractTree<T>{
 
 	@Override
 	public boolean add(TreeNode node, T value){
-		if(!supportsDirectModification()){
+		if(!structureModifiable()){
 			throw new UnsupportedOperationException("Addition and removal directly to nodes unsupported");
 		}
 		node.checkNode(this);
@@ -272,7 +275,7 @@ public abstract class AbstractLinkedTree<T> extends AbstractTree<T>{
 	@Override
 	public boolean remove(Object obj){
 
-		if(!supportsDirectModification()){
+		if(!structureModifiable()){
 			throw new UnsupportedOperationException("Addition and removal directly to nodes unsupported");
 		}
 
@@ -305,7 +308,7 @@ public abstract class AbstractLinkedTree<T> extends AbstractTree<T>{
 
 	@Override
 	public void removeSons(TreeNode node){
-		if(!supportsDirectModification()){
+		if(!structureModifiable()){
 			throw new UnsupportedOperationException("Addition and removal directly to nodes unsupported");
 		}
 		node.checkNode(this);
@@ -317,7 +320,7 @@ public abstract class AbstractLinkedTree<T> extends AbstractTree<T>{
 
 	@Override
 	public boolean remove(TreeNode node, Object obj){
-		if(!supportsDirectModification()){
+		if(!structureModifiable()){
 			throw new UnsupportedOperationException("Addition and removal directly to nodes unsupported");
 		}
 		node.checkNode(this);
@@ -335,7 +338,7 @@ public abstract class AbstractLinkedTree<T> extends AbstractTree<T>{
 
 	@Override
 	public Maybe<T> remove(TreeNode node, int index){
-		if(!supportsDirectModification()){
+		if(!structureModifiable()){
 			throw new UnsupportedOperationException("Addition and removal directly to nodes unsupported");
 		}
 		node.checkNode(this);
@@ -351,7 +354,7 @@ public abstract class AbstractLinkedTree<T> extends AbstractTree<T>{
 
 	@Override
 	public boolean retainAll(TreeNode node, Collection<?> col){
-		if(!supportsDirectModification()){
+		if(!structureModifiable()){
 			throw new UnsupportedOperationException("Addition and removal directly to nodes unsupported");
 		}
 		node.checkNode(this);

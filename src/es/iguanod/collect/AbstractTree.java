@@ -12,6 +12,7 @@ import java.util.NoSuchElementException;
 
 /**
  * @param <T>
+ *
  * @author <a href="mailto:rubiof.david@gmail.com">David Rubio Fernández</a>
  * @since 0.0.6.1.a
  * @version
@@ -23,7 +24,6 @@ public abstract class AbstractTree<T> implements Tree<T>, Serializable{
 	private static final long serialVersionUID=-31230909014986462L;
 	//************
 	private int max_sons;
-	private boolean nulls_allowed;
 
 	protected static abstract class TNode<T> extends TreeNode implements Serializable{
 
@@ -62,29 +62,27 @@ public abstract class AbstractTree<T> implements Tree<T>, Serializable{
 		node.invalidate(this);
 	}
 
-	public AbstractTree(int max_sons, boolean nulls_allowed){
+	public AbstractTree(int max_sons){
 		this.max_sons=max_sons;
-		this.nulls_allowed=nulls_allowed;
 	}
 
 	public AbstractTree(){
-		this(0, true);
+		this(0);
 	}
+	
+	protected abstract boolean nullsAllowed();
+
+	protected abstract boolean structureModifiable();
 
 	@Override
 	public void pushAll(Collection<? extends T> col){
-		if(!nulls_allowed && col.contains(null)){
+		if(!nullsAllowed() && col.contains(null)){
 			throw new NullPointerException("The tree doesn't accept null values");
 		}
 
 		for(T elem:col){
 			push(elem);
 		}
-	}
-
-	@Override
-	public boolean nullsAllowed(){
-		return nulls_allowed;
 	}
 
 	@Override
@@ -106,7 +104,7 @@ public abstract class AbstractTree<T> implements Tree<T>, Serializable{
 		node.checkNode(this);
 		if(max_sons > 0 && this.childrenSize(node) + col.size() > max_sons)
 			throw new IllegalStateException("The node has no space for all the elements");
-		if(!nulls_allowed){
+		if(!nullsAllowed()){
 			for(T elem:col){
 				if(elem == null)
 					throw new NullPointerException("The tree doesn't accept null values");

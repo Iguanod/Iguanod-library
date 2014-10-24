@@ -20,8 +20,6 @@ public interface Tree<T>{
 		protected abstract void invalidate(Tree tree);
 	}
 
-	public boolean nullsAllowed();
-
 	public int maxSons();
 
 	/**
@@ -206,7 +204,8 @@ public interface Tree<T>{
 	 * particular, {@code t1.equals(t2)} implies that
 	 * {@code t1.hashCode()==t2.hashCode()}.
 	 *
-	 * <p> However, it is not necessary to override equals, and the simplest
+	 * <p>
+	 * However, it is not necessary to override equals, and the simplest
 	 * course of action is to rely on {@code Object}'s implementation, but the
 	 * implementor may wish to implement a "value comparison" in place of the
 	 * default "reference comparison."</p>

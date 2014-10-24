@@ -2,8 +2,6 @@ package es.iguanod.collect;
 
 import es.iguanod.collect.Tree.TreeNode;
 import es.iguanod.util.Maybe;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.LinkedList;
 
 /**
@@ -21,8 +19,8 @@ public class LinkedTree<T> extends AbstractLinkedTree<T>{
 		super();
 	}
 
-	public LinkedTree(int max_sons, boolean nulls_allowed){
-		super(max_sons, nulls_allowed);
+	public LinkedTree(int max_sons){
+		super(max_sons);
 	}
 
 	@SuppressWarnings("LeakingThisInConstructor") // There is no leak because copyStructure is just a private auxiliary function
@@ -31,13 +29,28 @@ public class LinkedTree<T> extends AbstractLinkedTree<T>{
 	}
 
 	@SuppressWarnings("LeakingThisInConstructor") // There is no leak because copyStructure is just a private auxiliary function
-	public LinkedTree(Tree<? extends T> tree, int max_sons, boolean nulls_allowed){
-		super(tree, max_sons, nulls_allowed);
+	public LinkedTree(Tree<? extends T> tree, int max_sons){
+		super(tree, max_sons);
+	}
+	
+	@Override
+	protected final boolean nullsAllowed(){
+		return true;
+	}
+
+	@Override
+	protected final boolean structureModifiable(){
+		return true;
+	}
+	
+	@Override
+	protected final boolean nodeValueModifiable(){
+		return true;
 	}
 
 	@Override
 	public LinkedTree<T> toTree(TreeNode node){
-		LinkedTree<T> ret=new LinkedTree<>(this.maxSons(), this.nullsAllowed());
+		LinkedTree<T> ret=new LinkedTree<>(this.maxSons());
 		super.toTree(node, ret);
 		return ret;
 	}
@@ -102,10 +115,5 @@ public class LinkedTree<T> extends AbstractLinkedTree<T>{
 		}
 
 		return ret;
-	}
-
-	@Override
-	protected boolean supportsDirectModification(){
-		return true;
 	}
 }
