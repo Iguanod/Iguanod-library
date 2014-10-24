@@ -35,6 +35,7 @@ public class EloScoreTable<T> implements Iterable<Tuple2<T, Integer>>, Serializa
 	//************
 	private SortedCounter<T, Double> table;
 	private Map<T, Stats> stats;
+	private int games=0;
 	private double mean=INITIAL_SCORE;
 	private final boolean use_k_factor;
 	private final int positioning_games;
@@ -137,6 +138,8 @@ public class EloScoreTable<T> implements Iterable<Tuple2<T, Integer>>, Serializa
 			table.sum(change.getKey(), change.getValue());
 			mean+=change.getValue() / table.size();
 		}
+		
+		games++;
 	}
 	
 	private void updatePlayer(T player, double scores_sum, double actual_score, int num_players, Map<T, Double> acc, double change){
@@ -235,6 +238,8 @@ public class EloScoreTable<T> implements Iterable<Tuple2<T, Integer>>, Serializa
 			table.sum(change.getKey(), change.getValue());
 			mean+=change.getValue() / table.size();
 		}
+		
+		games++;
 	}
 
 	private void updateTeam(Collection<? extends T> team, double team_elo, double scores_sum, double actual_score, int num_teams, Map<T, Double> acc){
@@ -248,6 +253,10 @@ public class EloScoreTable<T> implements Iterable<Tuple2<T, Integer>>, Serializa
 		for(T player:team){
 			updatePlayer(player, scores_sum_players, actual_score, num_teams, acc, (actual_score - expected_score) * BASE_CHANGE * team.size());
 		}
+	}
+	
+	public int totalGames(){
+		return games;
 	}
 
 	public int wins(T player){
