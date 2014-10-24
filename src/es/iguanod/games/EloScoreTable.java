@@ -21,16 +21,17 @@ import java.util.Map.Entry;
  */
 public class EloScoreTable<T> implements Iterable<Tuple2<T, Integer>>, Serializable{
 
-	private static final long serialVersionUID=818005879329498513L;
+	private static final long serialVersionUID=818005879329498514L;
 	//************
 	private static final int TIMES_BETTER=2;
 	private static final int DIFFERENCE_BETTER=150;
 	//************
-	private static final double INITIAL_SCORE=1000;
 	private static final int BASE_CHANGE=30;
 	private static final double INITIAL_K_FACTOR=1.66;
 	private static final int DEFAULT_POSITIONING_GAMES=8;
 	private static final int RECORD_SIZE=16;
+	//************
+	public static final double INITIAL_SCORE=1000;
 	//************
 	private SortedCounter<T, Double> table;
 	private Map<T, Stats> stats;
