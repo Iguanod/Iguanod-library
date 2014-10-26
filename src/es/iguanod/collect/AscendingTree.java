@@ -186,7 +186,7 @@ public class AscendingTree<T> extends AbstractLinkedTree<T>{
 
 		Maybe<T> ret=this.getValue(next);
 		if(next == root){
-			this.invalidateSons(root);
+			this.invalidateBranch(root);
 			root=null;
 			return Maybe.<T>from(elem);
 		}

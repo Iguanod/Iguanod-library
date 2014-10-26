@@ -174,7 +174,7 @@ public abstract class AbstractLinkedTree<T> extends AbstractTree<T>{
 	public void clear(){
 		if(this.isEmpty())
 			return;
-		this.invalidateSons(root);
+		this.invalidateBranch(root);
 		this.root=null;
 	}
 
@@ -257,7 +257,7 @@ public abstract class AbstractLinkedTree<T> extends AbstractTree<T>{
 	}
 
 	protected void pvtRemove(TreeNode node, int index){
-		this.invalidateSons(node);
+		invalidateBranch(node);
 		((LinkedTNode<T>)node).sons.remove(index);
 	}
 
@@ -297,7 +297,7 @@ public abstract class AbstractLinkedTree<T> extends AbstractTree<T>{
 				LinkedTNode<T> son=iter.next();
 				if(equalsValue(son, obj)){
 					iter.remove();
-					this.invalidateSons(son);
+					invalidateBranch(son);
 					return true;
 				}
 				queue.add(son);
@@ -313,7 +313,7 @@ public abstract class AbstractLinkedTree<T> extends AbstractTree<T>{
 		}
 		node.checkNode(this);
 		for(TreeNode son:this.children(node)){
-			this.invalidateSons(son);
+		invalidateBranch(son);
 		}
 		((LinkedTNode<T>)node).sons.clear();
 	}
@@ -329,7 +329,7 @@ public abstract class AbstractLinkedTree<T> extends AbstractTree<T>{
 			LinkedTNode<T> son=iter.next();
 			if(equalsValue(son, obj)){
 				iter.remove();
-				this.invalidateSons(son);
+				invalidateBranch(son);
 				return true;
 			}
 		}
@@ -345,7 +345,7 @@ public abstract class AbstractLinkedTree<T> extends AbstractTree<T>{
 		Maybe<T> ret;
 		if(((LinkedTNode<T>)node).sons.size() > index){
 			ret=this.getValue(((LinkedTNode<T>)node).sons.remove(index));
-			this.invalidateSons(node);
+			invalidateBranch(node);
 		}else{
 			ret=Maybe.ABSENT;
 		}
@@ -372,7 +372,7 @@ public abstract class AbstractLinkedTree<T> extends AbstractTree<T>{
 			}
 			if(!contained){
 				iter.remove();
-				this.invalidateSons(son);
+				invalidateBranch(son);
 				modif=true;
 				break;
 			}

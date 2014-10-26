@@ -55,9 +55,9 @@ public abstract class AbstractTree<T> implements Tree<T>, Serializable{
 		return this.getValue(node).isPresent() && Objects.equals(this.getValue(node).get(), value);
 	}
 
-	protected final void invalidateSons(TreeNode node){
+	protected final void invalidateBranch(TreeNode node){
 		for(TreeNode son:this.children(node)){
-			this.invalidateSons(son);
+			this.invalidateBranch(son);
 		}
 		node.invalidate(this);
 	}
