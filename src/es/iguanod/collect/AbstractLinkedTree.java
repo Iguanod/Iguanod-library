@@ -227,12 +227,6 @@ public abstract class AbstractLinkedTree<T> extends AbstractTree<T>{
 	}
 
 	@Override
-	public List<TreeNode> childrenCopy(TreeNode node){
-		node.checkNode(this);
-		return new ArrayList<TreeNode>(((LinkedTNode<T>)node).sons);
-	}
-
-	@Override
 	public Maybe<TreeNode> getChild(TreeNode node, int index){
 		node.checkNode(this);
 		if(((LinkedTNode<T>)node).sons.size() > index){

@@ -253,13 +253,6 @@ public abstract class AbstractTree<T> implements Tree<T>, Serializable{
 		return acc;
 	}
 
-	/**
-	 * Overriding classes probably want to override
-	 *
-	 * @param node
-	 *
-	 * @return
-	 */
 	@Override
 	public List<TreeNode> childrenCopy(TreeNode node){
 		node.checkNode(this);
