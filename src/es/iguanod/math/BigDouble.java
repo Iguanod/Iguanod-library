@@ -31,7 +31,7 @@ import java.util.Random;
  *
  * @author <a href="mailto:rubiof.david@gmail.com">David Rubio Fernández</a>
  * @since 0.0.8.1.a
- * @version 
+ * @version
  */
 public class BigDouble extends Number implements Comparable<BigDouble>{
 
@@ -130,6 +130,9 @@ public class BigDouble extends Number implements Comparable<BigDouble>{
 	 * Minimum value for a {@code BigDouble}.
 	 */
 	public static final BigDouble MIN_VALUE;
+	public static final BigDouble POS_SMALLEST_VALUE;
+	public static final BigDouble NEG_SMALLEST_VALUE;
+
 	/**
 	 * Maximum value for the exponent of a BigDouble.
 	 */
@@ -212,6 +215,8 @@ public class BigDouble extends Number implements Comparable<BigDouble>{
 		TEN=new BigDouble(10);
 		MAX_VALUE=new BigDouble(true, false, false, MAX_EXPONENT, 0x7FFFFFFFFFFFFFFFL, 0x7FFFFFFFFFFFFFFFL);
 		MIN_VALUE=new BigDouble(false, false, false, MAX_EXPONENT, 0x7FFFFFFFFFFFFFFFL, 0x7FFFFFFFFFFFFFFFL);
+		POS_SMALLEST_VALUE=new BigDouble(true, false, false, MIN_EXPONENT, 0x4000000000000000L, 0x4000000000000000L);
+		NEG_SMALLEST_VALUE=new BigDouble(false, false, false, MIN_EXPONENT, 0x4000000000000000L, 0x4000000000000000L);
 	}
 
 	/**
@@ -448,7 +453,6 @@ public class BigDouble extends Number implements Comparable<BigDouble>{
 	private void shiftLeftMant(){
 
 		// TODO: why is it slower with numberOfLeadingZeros?
-
 		if(mant1 == 0){
 			if(mant2 == 0){
 				return;
@@ -940,12 +944,10 @@ public class BigDouble extends Number implements Comparable<BigDouble>{
 			long res;
 
 			//************
-
 			r.r4=op14 * op24;
 			r.restructure();
 
 			//************
-
 			res=op14 * op23;
 			r.r4+=(res & 0x7FFFFFFFL) << 32;
 			r.restructure();
@@ -957,7 +959,6 @@ public class BigDouble extends Number implements Comparable<BigDouble>{
 			r.r3+=(res & 0x7FFFFFFF80000000L) >>> 31;
 
 			//************
-
 			res=op14 * op22;
 			if(res < 0){
 				r.r2++;
@@ -980,7 +981,6 @@ public class BigDouble extends Number implements Comparable<BigDouble>{
 			r.restructure();
 
 			//************
-
 			res=op14 * op21;
 			r.r3+=(res & 0x7FFFFFFFL) << 32;
 			r.restructure();
@@ -1002,7 +1002,6 @@ public class BigDouble extends Number implements Comparable<BigDouble>{
 			r.r2+=(res & 0x7FFFFFFF80000000L) >>> 31;
 
 			//************
-
 			res=op13 * op21;
 			res<<=1;
 			r.r2+=res;
@@ -1022,7 +1021,6 @@ public class BigDouble extends Number implements Comparable<BigDouble>{
 			r.restructure();
 
 			//************
-
 			res=op12 * op21;
 			r.r2+=(res & 0x7FFFFFFFL) << 32;
 			r.restructure();
@@ -1034,7 +1032,6 @@ public class BigDouble extends Number implements Comparable<BigDouble>{
 			r.r1+=(res & 0x7FFFFFFF80000000L) >>> 31;
 
 			//************
-
 			res=op11 * op21;
 			res<<=1;
 			boolean carry=false;
@@ -1055,7 +1052,6 @@ public class BigDouble extends Number implements Comparable<BigDouble>{
 			}
 
 			//************
-
 			r.shiftLeft();
 			mant1=r.r1;
 			mant2=r.r2;
