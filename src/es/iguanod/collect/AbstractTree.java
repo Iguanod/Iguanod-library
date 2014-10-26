@@ -244,8 +244,6 @@ public abstract class AbstractTree<T> implements Tree<T>, Serializable{
 
 	@Override
 	public int size(TreeNode node){
-		if(this.isEmpty())
-			return 1;
 		int acc=1;
 		for(TreeNode son:this.children(node)){
 			acc+=this.size(son);
