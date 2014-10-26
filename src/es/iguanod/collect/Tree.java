@@ -77,16 +77,14 @@ public interface Tree<T>{
 	 *
 	 * @return
 	 */
-	public boolean add(TreeNode node, T value);
+	public TreeNode add(TreeNode node, T value);
 
 	/**
 	 * optional
 	 *
 	 * @param col
-	 *
-	 * @return
 	 */
-	public boolean addAll(TreeNode node, Collection<? extends T> col);
+	public void addAll(TreeNode node, Collection<? extends T> col);
 
 	public boolean contains(Object obj);
 

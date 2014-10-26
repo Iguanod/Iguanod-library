@@ -100,7 +100,7 @@ public abstract class AbstractTree<T> implements Tree<T>, Serializable{
 	}
 
 	@Override
-	public boolean addAll(TreeNode node, Collection<? extends T> col){
+	public void addAll(TreeNode node, Collection<? extends T> col){
 		node.checkNode(this);
 		if(max_sons > 0 && this.childrenSize(node) + col.size() > max_sons)
 			throw new IllegalStateException("The node has no space for all the elements");
@@ -110,11 +110,9 @@ public abstract class AbstractTree<T> implements Tree<T>, Serializable{
 					throw new NullPointerException("The tree doesn't accept null values");
 			}
 		}
-		boolean ret=false;
 		for(T elem:col){
-			ret|=this.add(node, elem);
+			this.add(node, elem);
 		}
-		return ret;
 	}
 
 	@Override

@@ -256,14 +256,17 @@ public abstract class AbstractLinkedTree<T> extends AbstractTree<T>{
 	}
 
 	@Override
-	public boolean add(TreeNode node, T value){
+	public TreeNode add(TreeNode node, T value){
 		if(!structureModifiable()){
 			throw new UnsupportedOperationException("Addition and removal directly to nodes unsupported");
 		}
 		node.checkNode(this);
-		if(!nullsAllowed() && value == null)
+		if(!nullsAllowed() && value == null){
 			throw new NullPointerException("The tree doesn't accept null values");
-		return ((LinkedTNode<T>)node).sons.add(provideNode(Maybe.from(value), ((LinkedTNode<T>)node)));
+		}
+		LinkedTNode<T> next=provideNode(Maybe.from(value), ((LinkedTNode<T>)node));
+		((LinkedTNode<T>)node).sons.add(next);
+		return next;
 	}
 
 	@Override

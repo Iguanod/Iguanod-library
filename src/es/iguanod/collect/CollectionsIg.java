@@ -771,12 +771,12 @@ public final class CollectionsIg{
 		}
 
 		@Override
-		public boolean add(TreeNode node, T value){
+		public TreeNode add(TreeNode node, T value){
 			throw new UnsupportedOperationException("Unmodifiable tree");
 		}
 
 		@Override
-		public boolean addAll(TreeNode node, Collection<? extends T> col){
+		public void addAll(TreeNode node, Collection<? extends T> col){
 			throw new UnsupportedOperationException("Unmodifiable tree");
 		}
 
@@ -1531,16 +1531,16 @@ public final class CollectionsIg{
 		}
 
 		@Override
-		public boolean add(TreeNode node, T value){
+		public TreeNode add(TreeNode node, T value){
 			synchronized(mutex){
 				return tree.add(node, value);
 			}
 		}
 
 		@Override
-		public boolean addAll(TreeNode node, Collection<? extends T> col){
+		public void addAll(TreeNode node, Collection<? extends T> col){
 			synchronized(mutex){
-				return tree.addAll(node, col);
+				tree.addAll(node, col);
 			}
 		}
 
