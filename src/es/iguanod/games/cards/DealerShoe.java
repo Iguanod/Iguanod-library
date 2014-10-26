@@ -52,8 +52,8 @@ import java.util.NoSuchElementException;
  * with {@link #remove} or {@link #removeNext}).</p>
  *
  * @author <a href="mailto:rubiof.david@gmail.com">David Rubio Fernández</a>
- * @since 0.0.1.1.a
- * @version 1.0.1.b
+ * @since 1.0.1
+ * @version 1.0.1
  */
 public class DealerShoe implements Iterator<Card>, Serializable{
 

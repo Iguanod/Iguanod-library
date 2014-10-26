@@ -23,8 +23,8 @@ import java.util.TreeMap;
 /**
  *
  * @author <a href="mailto:rubiof.david@gmail.com">David Rubio Fernández</a>
- * @since
- * @version
+ * @since 1.0.1
+ * @version 1.0.1
  */
 public class TreeCounter<K, V extends Number> extends AbstractSortedCounter<K, V>{
 

@@ -8,8 +8,8 @@ import java.util.Set;
 /**
  *
  * @author <a href="mailto:rubiof.david@gmail.com">David Rubio Fernández</a>
- * @since
- * @version
+ * @since 1.0.1
+ * @version 1.0.1
  */
 public abstract class AbstractSortedCounter<K, V extends Number> extends AbstractCounter<K, V> implements SortedCounter<K, V>{
 

@@ -24,8 +24,8 @@ package es.iguanod.base;
  * not have the appropriate format.
  *
  * @author <a href="mailto:rubiof.david@gmail.com">David Rubio Fernández</a>
- * @since 0.0.4.1.a
- * @version 1.0.1.b
+ * @since 1.0.1
+ * @version 1.0.1
  */
 public class StringFormatException extends IllegalArgumentException{
 

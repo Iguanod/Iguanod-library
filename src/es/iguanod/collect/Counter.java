@@ -72,8 +72,8 @@ import java.util.Map;
  * @see es.iguanod.util.Caster
  *
  * @author <a href="mailto:rubiof.david@gmail.com">David Rubio Fernández</a>
- * @since 0.0.2.1.a
- * @version 1.0.1.b
+ * @since 1.0.1
+ * @version 1.0.1
  */
 public interface Counter<K, V extends Number> extends Map<K, V>{
 

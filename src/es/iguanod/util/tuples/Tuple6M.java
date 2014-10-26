@@ -31,8 +31,8 @@ package es.iguanod.util.tuples;
  * @param <Sth> the class of the sixth element
  *
  * @author <a href="mailto:rubiof.david@gmail.com">David Rubio Fernández</a>
- * @since 1.0.1.b
- * @version 1.0.1.b
+ * @since 1.0.1
+ * @version 1.0.1
  *
  * @see java.lang.Comparable
  * @see java.io.Serializable

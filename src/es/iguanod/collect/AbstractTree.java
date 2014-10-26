@@ -14,8 +14,8 @@ import java.util.NoSuchElementException;
  * @param <T>
  *
  * @author <a href="mailto:rubiof.david@gmail.com">David Rubio Fernández</a>
- * @since 0.0.6.1.a
- * @version
+ * @since 1.0.1
+ * @version 1.0.1
  */
 public abstract class AbstractTree<T> implements Tree<T>, Serializable{
 

@@ -35,8 +35,8 @@ import java.util.LinkedList;
  * @author <a href="mailto:rubiof.david@gmail.com">David Rubio Fernández</a>
  * @param <T> the class of the elements being stored
  *
- * @since 1.0.1.b
- * @version 1.0.1.b
+ * @since 1.0.1
+ * @version 1.0.1
  */
 public class LinkedFixedCapacityQueue<T> extends AbstractCollection<T> implements FixedCapacityQueue<T>, Serializable{
 

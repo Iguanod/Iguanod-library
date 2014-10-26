@@ -52,8 +52,8 @@ package es.iguanod.util;
  * @see java.lang.Comparable
  *
  * @author <a href="mailto:rubiof.david@gmail.com">David Rubio Fernández</a>
- * @since 0.0.8.1.a
- * @version 1.0.1.b
+ * @since 1.0.1
+ * @version 1.0.1
  */
 public class MaybeM<T> extends Maybe<T>{
 

@@ -40,8 +40,8 @@ import java.util.Map;
  * language is English). </p>
  *
  * @author <a href="mailto:rubiof.david@gmail.com">David Rubio Fernández</a>
- * @since 0.0.1.1.a
- * @version 1.0.1.b
+ * @since 1.0.1
+ * @version 1.0.1
  */
 public enum CardSuit{
 

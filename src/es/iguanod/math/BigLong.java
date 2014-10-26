@@ -7,8 +7,8 @@ import java.util.Random;
 /**
  *
  * @author <a href="mailto:rubiof.david@gmail.com">David Rubio Fernández</a>
- * @since 0.0.8.1.a
- * @version
+ * @since 1.0.1
+ * @version 1.0.1
  */
 public class BigLong extends Number implements Comparable<BigLong>{
 

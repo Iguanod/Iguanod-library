@@ -14,8 +14,8 @@ import java.util.List;
  * an instance of said TreeNode.
  *
  * @author <a href="mailto:rubiof.david@gmail.com">David Rubio Fernández</a>
- * @since
- * @version
+ * @since 1.0.1
+ * @version 1.0.1
  */
 public abstract class AbstractLinkedTree<T> extends AbstractTree<T>{
 
