@@ -6,7 +6,7 @@ import java.util.List;
 
 //TODO: al hacer la pasada final de todos los archivos, comprobar que todas las funciones hagan checkNode
 /**
- *
+ * Especificar como construir árbol a partir de parte de otro
  * @author <a href="mailto:rubiof.david@gmail.com">David Rubio Fernández</a>
  * @since 0.0.6.1.a
  * @version
@@ -21,11 +21,6 @@ public interface Tree<T>{
 	}
 
 	public int maxSons();
-
-	/**
-	 * optional
-	 */
-	public Tree<T> toTree(TreeNode node);
 
 	/**
 	 * Is not optional but as is a best effort function can simply return.

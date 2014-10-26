@@ -47,13 +47,6 @@ public class LinkedTree<T> extends AbstractLinkedTree<T>{
 	}
 
 	@Override
-	public LinkedTree<T> toTree(TreeNode node){
-		LinkedTree<T> ret=new LinkedTree<>(this.maxSons());
-		super.toTree(node, ret);
-		return ret;
-	}
-
-	@Override
 	public TreeNode push(T value){
 		if(root!=null && this.maxSons() <= 0){
 			throw new UnsupportedOperationException("If maximum of sons per node is not specified push is only supported to set the root");

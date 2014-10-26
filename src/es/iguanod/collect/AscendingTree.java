@@ -41,13 +41,6 @@ public class AscendingTree<T> extends AbstractLinkedTree<T>{
 	}
 
 	@Override
-	public Tree<T> toTree(TreeNode node){
-		AscendingTree<T> ret=new AscendingTree(this.maxSons());
-		toTree(node, ret);
-		return ret;
-	}
-
-	@Override
 	public boolean isFull(TreeNode node){
 		return super.isFull(node) && !this.hasUncompleteChilden(node);
 	}
