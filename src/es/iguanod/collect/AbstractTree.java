@@ -272,14 +272,16 @@ public abstract class AbstractTree<T> implements Tree<T>, Serializable{
 	 */
 	@Override
 	public Maybe<TreeNode> getChild(TreeNode node, int i){
-		node.checkNode(this);
+		if(childrenSize(node)>i+1){
+			return Maybe.ABSENT;
+		}
 		int count=0;
 		for(TreeNode child:children(node)){
 			if(count == i){
 				return Maybe.<TreeNode>from(child);
 			}
 		}
-		return Maybe.ABSENT;
+		return null; // Unreachable
 	}
 
 	@Override
