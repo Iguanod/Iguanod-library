@@ -6,7 +6,7 @@ import java.util.List;
 
 //TODO: al hacer la pasada final de todos los archivos, comprobar que todas las funciones hagan checkNode
 /**
- *
+ * Especificar como construir árbol a partir de parte de otro
  * @author <a href="mailto:rubiof.david@gmail.com">David Rubio Fernández</a>
  * @since 0.0.6.1.a
  * @version
@@ -20,14 +20,7 @@ public interface Tree<T>{
 		protected abstract void invalidate(Tree tree);
 	}
 
-	public boolean nullsAllowed();
-
 	public int maxSons();
-
-	/**
-	 * optional
-	 */
-	public Tree<T> toTree(TreeNode node);
 
 	/**
 	 * Is not optional but as is a best effort function can simply return.
@@ -84,16 +77,14 @@ public interface Tree<T>{
 	 *
 	 * @return
 	 */
-	public boolean add(TreeNode node, T value);
+	public TreeNode add(TreeNode node, T value);
 
 	/**
 	 * optional
 	 *
 	 * @param col
-	 *
-	 * @return
 	 */
-	public boolean addAll(TreeNode node, Collection<? extends T> col);
+	public void addAll(TreeNode node, Collection<? extends T> col);
 
 	public boolean contains(Object obj);
 
@@ -206,7 +197,8 @@ public interface Tree<T>{
 	 * particular, {@code t1.equals(t2)} implies that
 	 * {@code t1.hashCode()==t2.hashCode()}.
 	 *
-	 * <p> However, it is not necessary to override equals, and the simplest
+	 * <p>
+	 * However, it is not necessary to override equals, and the simplest
 	 * course of action is to rely on {@code Object}'s implementation, but the
 	 * implementor may wish to implement a "value comparison" in place of the
 	 * default "reference comparison."</p>

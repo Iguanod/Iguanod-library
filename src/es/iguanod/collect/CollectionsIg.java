@@ -1,9 +1,11 @@
 package es.iguanod.collect;
 
+import es.iguanod.collect.AbstractTree.TNode;
 import es.iguanod.collect.DoubleHashCounter.DoubleHashCounterBuilder;
 import es.iguanod.collect.DoubleTreeCounter.DoubleTreeCounterBuilder;
 import es.iguanod.collect.HashCounter.HashCounterBuilder;
 import es.iguanod.collect.IntTreeCounter.IntTreeCounterBuilder;
+import es.iguanod.collect.Tree.TreeNode;
 import es.iguanod.collect.TreeCounter.TreeCounterBuilder;
 import es.iguanod.util.Caster;
 import es.iguanod.util.Maybe;
@@ -17,6 +19,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.NoSuchElementException;
 import java.util.Set;
 
 /**
@@ -55,6 +58,14 @@ public final class CollectionsIg{
 		return col.toArray((T[])Array.newInstance(min_class, col.size()));
 	}
 
+	public static <T> Tree<T> treeReference(Tree<T> tree, TreeNode node){
+
+		node.checkNode(tree);
+		return new TreeRef<>(tree,node);
+	}
+
+	//<editor-fold defaultstate="collapsed" desc="Collections methods">
+	//<editor-fold defaultstate="collapsed" desc="Empty methods">
 	public static <T, V extends Number> Counter<T, V> emptyCounter(){
 		return EMPTY_COUNTER;
 	}
@@ -73,8 +84,9 @@ public final class CollectionsIg{
 
 	public static <T> FixedCapacityQueue<T> emptyFixedCapacityQueue(){
 		return EMPTY_FIXED_CAPACITY_QUEUE;
-	}
+	}//</editor-fold>
 
+	//<editor-fold defaultstate="collapsed" desc="Singleton methods">
 	public static <K, V extends Number> Counter<K, V> singletonCounter(K key, V value){
 		Counter<K, V> counter=new HashCounterBuilder<K, V>(new Caster<BigDecimal, V>(){
 			private static final long serialVersionUID=-858620261254526366L;
@@ -115,8 +127,9 @@ public final class CollectionsIg{
 		FixedCapacityQueue<T> queue=new LinkedFixedCapacityQueue<>(1);
 		queue.push(item);
 		return new UnmodifiableFixedCapacityQueue<>(queue);
-	}
+	}//</editor-fold>
 
+	//<editor-fold defaultstate="collapsed" desc="Unmodifiable methods">
 	public static <T, V extends Number> Counter<T, V> unmodifiableCounter(Counter<T, V> counter){
 		if(counter instanceof UnmodifiableCounter){
 			return counter;
@@ -155,8 +168,9 @@ public final class CollectionsIg{
 		}else{
 			return new UnmodifiableFixedCapacityQueue<>(queue);
 		}
-	}
+	}//</editor-fold>
 
+	//<editor-fold defaultstate="collapsed" desc="Synchronized methods">
 	public static <K, V extends Number> Counter<K, V> synchronizedCounter(Counter<K, V> counter){
 		if(counter instanceof SynchronizedCounter){
 			return counter;
@@ -195,8 +209,12 @@ public final class CollectionsIg{
 		}else{
 			return new SynchronizedFixedCapacityQueue<>(queue);
 		}
-	}
+	}//</editor-fold>
+	//</editor-fold>
 
+	//<editor-fold defaultstate="collapsed" desc="Classes for methods">
+	//<editor-fold defaultstate="collapsed" desc="Unmodifiable classes">
+	//<editor-fold defaultstate="collapsed" desc="UnmodifiableCounter">
 	private static class UnmodifiableCounter<K, V extends Number> implements Counter<K, V>, Serializable{
 
 		private static final long serialVersionUID=336498287123521094L;
@@ -252,6 +270,7 @@ public final class CollectionsIg{
 			return counter.toString();
 		}
 
+		//<editor-fold defaultstate="collapsed" desc="Unsupported methods">
 		@Override
 		public Tuple2<V, V> sum(K key){
 			throw new UnsupportedOperationException("Unmodifiable Counter");
@@ -445,9 +464,11 @@ public final class CollectionsIg{
 		@Override
 		public void balancedDeductToAll(V value){
 			throw new UnsupportedOperationException("Unmodifiable Counter");
-		}
+		}//</editor-fold>
 	}
+//</editor-fold>
 
+	//<editor-fold defaultstate="collapsed" desc="UnmodifiableSortedCounter">
 	private static class UnmodifiableSortedCounter<K, V extends Number> extends UnmodifiableCounter<K, V> implements SortedCounter<K, V>{
 
 		private static final long serialVersionUID=4208105930154054870L;
@@ -515,8 +536,9 @@ public final class CollectionsIg{
 		public SortedCounter<K, V> subCounter(V from_value, boolean from_inclusive, V to_value, boolean to_inclusive){
 			return CollectionsIg.unmodifiableSortedCounter(((SortedCounter<K, V>)counter).subCounter(from_value, from_inclusive, to_value, to_inclusive));
 		}
-	}
+	}//</editor-fold>
 
+	//<editor-fold defaultstate="collapsed" desc="UnmodifiableTree">
 	private static class UnmodifiableTree<T> implements Tree<T>, Serializable{
 
 		private static final long serialVersionUID=-649494554005020202L;
@@ -528,18 +550,8 @@ public final class CollectionsIg{
 		}
 
 		@Override
-		public boolean nullsAllowed(){
-			return tree.nullsAllowed();
-		}
-
-		@Override
 		public int maxSons(){
 			return tree.maxSons();
-		}
-
-		@Override
-		public Tree<T> toTree(TreeNode node){
-			return tree.toTree(node);
 		}
 
 		@Override
@@ -722,6 +734,7 @@ public final class CollectionsIg{
 			return tree.breedFirstSearch(node, value);
 		}
 
+		//<editor-fold defaultstate="collapsed" desc="Unsupported methods">
 		@Override
 		public TreeNode push(T elem){
 			throw new UnsupportedOperationException("Unmodifiable tree");
@@ -758,12 +771,12 @@ public final class CollectionsIg{
 		}
 
 		@Override
-		public boolean add(TreeNode node, T value){
+		public TreeNode add(TreeNode node, T value){
 			throw new UnsupportedOperationException("Unmodifiable tree");
 		}
 
 		@Override
-		public boolean addAll(TreeNode node, Collection<? extends T> col){
+		public void addAll(TreeNode node, Collection<? extends T> col){
 			throw new UnsupportedOperationException("Unmodifiable tree");
 		}
 
@@ -790,9 +803,10 @@ public final class CollectionsIg{
 		@Override
 		public boolean retainAll(TreeNode node, Collection<?> col){
 			throw new UnsupportedOperationException("Unmodifiable tree");
-		}
-	}
+		}//</editor-fold>
+	}//</editor-fold>
 
+	//<editor-fold defaultstate="collapsed" desc="UnmodifiableBinaryTree">
 	private static class UnmodifiableBinaryTree<T> extends UnmodifiableTree<T> implements BinaryTree<T>{
 
 		private static final long serialVersionUID=1L;
@@ -807,21 +821,22 @@ public final class CollectionsIg{
 		}
 
 		@Override
-		public TreeNode inOrderDeepFirstSearch(TreeNode node, T value){
+		public Maybe<TreeNode> inOrderDeepFirstSearch(TreeNode node, T value){
 			return ((BinaryTree<T>)tree).inOrderDeepFirstSearch(node, value);
 		}
 
 		@Override
-		public TreeNode left(TreeNode node){
+		public Maybe<TreeNode> left(TreeNode node){
 			return ((BinaryTree<T>)tree).left(node);
 		}
 
 		@Override
-		public TreeNode right(TreeNode node){
+		public Maybe<TreeNode> right(TreeNode node){
 			return ((BinaryTree<T>)tree).right(node);
 		}
-	}
+	}//</editor-fold>
 
+	//<editor-fold defaultstate="collapsed" desc="UnmodifiableFixedCapacityQueue">
 	private static class UnmodifiableFixedCapacityQueue<T> implements FixedCapacityQueue<T>, Serializable{
 
 		private static final long serialVersionUID=-982310296149207480L;
@@ -900,6 +915,7 @@ public final class CollectionsIg{
 			return queue.containsAll(col);
 		}
 
+		//<editor-fold defaultstate="collapsed" desc="Unsupported methods">
 		@Override
 		public Maybe<T> push(T elem){
 			throw new UnsupportedOperationException("Unmodifiable queue");
@@ -938,9 +954,12 @@ public final class CollectionsIg{
 		@Override
 		public void clear(){
 			throw new UnsupportedOperationException("Unmodifiable queue");
-		}
-	}
+		}//</editor-fold>
+	}//</editor-fold>
+	//</editor-fold>
 
+	//<editor-fold defaultstate="collapsed" desc="Synchronized classes">
+	//<editor-fold defaultstate="collapsed" desc="SynchronizedCounter">
 	private static class SynchronizedCounter<K, V extends Number> implements Counter<K, V>, Serializable{
 
 		private static final long serialVersionUID=1982623946131654815L;
@@ -1299,8 +1318,9 @@ public final class CollectionsIg{
 				return entryset;
 			}
 		}
-	}
+	}//</editor-fold>
 
+	//<editor-fold defaultstate="collapsed" desc="SynchronizedSortedCounter">
 	private static class SynchronizedSortedCounter<K, V extends Number> extends SynchronizedCounter<K, V> implements SortedCounter<K, V>{
 
 		private static final long serialVersionUID=-5162398716784325168L;
@@ -1413,8 +1433,9 @@ public final class CollectionsIg{
 				return new SynchronizedSortedCounter<>(((SortedCounter<K, V>)counter).subCounter(from_value, from_inclusive, to_value, to_inclusive), mutex);
 			}
 		}
-	}
+	}//</editor-fold>
 
+	//<editor-fold defaultstate="collapsed" desc="SynchronizedTree">
 	private static class SynchronizedTree<T> implements Tree<T>, Serializable{
 
 		private static final long serialVersionUID=4321673216498431349L;
@@ -1433,23 +1454,9 @@ public final class CollectionsIg{
 		}
 
 		@Override
-		public boolean nullsAllowed(){
-			synchronized(mutex){
-				return tree.nullsAllowed();
-			}
-		}
-
-		@Override
 		public int maxSons(){
 			synchronized(mutex){
 				return tree.maxSons();
-			}
-		}
-
-		@Override
-		public Tree<T> toTree(TreeNode node){
-			synchronized(mutex){
-				return tree.toTree(node);
 			}
 		}
 
@@ -1524,16 +1531,16 @@ public final class CollectionsIg{
 		}
 
 		@Override
-		public boolean add(TreeNode node, T value){
+		public TreeNode add(TreeNode node, T value){
 			synchronized(mutex){
 				return tree.add(node, value);
 			}
 		}
 
 		@Override
-		public boolean addAll(TreeNode node, Collection<? extends T> col){
+		public void addAll(TreeNode node, Collection<? extends T> col){
 			synchronized(mutex){
-				return tree.addAll(node, col);
+				tree.addAll(node, col);
 			}
 		}
 
@@ -1802,8 +1809,9 @@ public final class CollectionsIg{
 				return tree.breedFirstSearch(node, value);
 			}
 		}
-	}
+	}//</editor-fold>
 
+	//<editor-fold defaultstate="collapsed" desc="SynchronizedBinaryTree">
 	private static class SynchronizedBinaryTree<T> extends SynchronizedTree<T> implements BinaryTree<T>{
 
 		private static final long serialVersionUID=4506521387995421301L;
@@ -1820,27 +1828,28 @@ public final class CollectionsIg{
 		}
 
 		@Override
-		public TreeNode inOrderDeepFirstSearch(TreeNode node, T value){
+		public Maybe<TreeNode> inOrderDeepFirstSearch(TreeNode node, T value){
 			synchronized(mutex){
 				return ((BinaryTree<T>)tree).inOrderDeepFirstSearch(node, value);
 			}
 		}
 
 		@Override
-		public TreeNode left(TreeNode node){
+		public Maybe<TreeNode> left(TreeNode node){
 			synchronized(mutex){
 				return ((BinaryTree<T>)tree).left(node);
 			}
 		}
 
 		@Override
-		public TreeNode right(TreeNode node){
+		public Maybe<TreeNode> right(TreeNode node){
 			synchronized(mutex){
 				return ((BinaryTree<T>)tree).right(node);
 			}
 		}
-	}
+	}//</editor-fold>
 
+	//<editor-fold defaultstate="collapsed" desc="SynchronizedFixedCapacityQueue">
 	private static class SynchronizedFixedCapacityQueue<T> implements FixedCapacityQueue<T>, Serializable{
 
 		private static final long serialVersionUID=7032878403121147486L;
@@ -2007,5 +2016,259 @@ public final class CollectionsIg{
 				queue.clear();
 			}
 		}
+	}//</editor-fold>
+	//</editor-fold>
+
+	//<editor-fold defaultstate="collapsed" desc="TreeRef">
+	/**
+	 * Warning: all methods that accept a TreeNode may have an O(log(N))
+	 * overhead.
+	 *
+	 * @param <T>
+	 */
+	private static class TreeRef<T> extends UnmodifiableTree<T> implements Serializable{
+
+		private static final long serialVersionUID=-4367946102315120519L;
+		//************
+		protected TreeNode root;
+
+		public TreeRef(Tree<T> tree, TreeNode node){
+			super(tree);
+			this.root=node;
+		}
+
+		private void searchNode(TreeNode node){
+			node.checkNode(tree);
+			Maybe<TreeNode> parent;
+			while((parent=tree.parent(node)).isPresent()){
+				if(node == root){
+					return;
+				}
+				node=parent.get();
+			}
+			throw new NoSuchElementException("The node doesn't belong to the tree");
+		}
+
+		@Override
+		public int maxSons(){
+			root.checkNode(tree);
+			return tree.maxSons();
+		}
+
+		@Override
+		public Maybe<TreeNode> root(){
+			root.checkNode(tree);
+			return Maybe.from(root);
+		}
+
+		@Override
+		public Maybe<T> getValue(TreeNode node){
+			root.checkNode(tree);
+			searchNode(node);
+			return tree.getValue(node);
+		}
+
+		@Override
+		public boolean contains(Object obj){
+			return tree.contains(root, obj);
+		}
+
+		@Override
+		public boolean containsAll(Collection<?> col){
+			return tree.containsAll(root, col);
+		}
+
+		@Override
+		public boolean contains(TreeNode node, Object obj){
+			searchNode(node);
+			return tree.contains(node, obj);
+		}
+
+		@Override
+		public boolean containsChild(TreeNode node, Object obj){
+			searchNode(node);
+			return tree.containsChild(node, obj);
+		}
+
+		@Override
+		public boolean containsDescendant(TreeNode node, Object obj){
+			searchNode(node);
+			return tree.containsDescendant(node, obj);
+		}
+
+		@Override
+		public boolean containsAll(TreeNode node, Collection<?> col){
+			searchNode(node);
+			return tree.containsAll(node, col);
+		}
+
+		@Override
+		public boolean containsAllChildren(TreeNode node, Collection<?> col){
+			searchNode(node);
+			return tree.containsAllChildren(node, col);
+		}
+
+		@Override
+		public boolean containsAllDescendants(TreeNode node, Collection<?> col){
+			searchNode(node);
+			return tree.containsAllDescendants(node, col);
+		}
+
+		@Override
+		public boolean isEmpty(){
+			root.checkNode(tree);
+			return false;
+		}
+
+		@Override
+		public boolean hasChildren(TreeNode node){
+			searchNode(node);
+			root.checkNode(tree);
+			return tree.hasChildren(node);
+		}
+
+		@Override
+		public boolean isFull(TreeNode node){
+			searchNode(node);
+			return tree.isFull(node);
+		}
+
+		@Override
+		public int height(){
+			return tree.height(root);
+		}
+
+		@Override
+		public int height(TreeNode node){
+			searchNode(node);
+			return tree.height(node);
+		}
+
+		@Override
+		public int depth(TreeNode node){
+			node.checkNode(tree);
+			Maybe<TreeNode> parent;
+			int count=0;
+			while((parent=tree.parent(node)).isPresent()){
+				if(node == root){
+					return count;
+				}
+				node=parent.get();
+			}
+			throw new NoSuchElementException("The node doesn't belong to the tree");
+		}
+
+		@Override
+		public int size(){
+			return tree.size(root);
+		}
+
+		@Override
+		public int size(TreeNode node){
+			searchNode(node);
+			return tree.size(node);
+		}
+
+		@Override
+		public int childrenSize(TreeNode node){
+			searchNode(node);
+			return tree.childrenSize(node);
+		}
+
+		@Override
+		public Iterable<TreeNode> children(TreeNode node){
+			searchNode(node);
+			return tree.children(node);
+		}
+
+		@Override
+		public List<TreeNode> childrenCopy(TreeNode node){
+			searchNode(node);
+			return tree.childrenCopy(node);
+		}
+
+		@Override
+		public Maybe<TreeNode> getChild(TreeNode node, int index){
+			searchNode(node);
+			return tree.getChild(node, index);
+		}
+
+		@Override
+		public Maybe<TreeNode> parent(TreeNode node){
+			searchNode(node);
+			if(node != root){
+				return tree.parent(node);
+			}else{
+				return Maybe.ABSENT;
+			}
+		}
+
+		@Override
+		public List<Maybe<T>> postOrderDeepFirstTraversal(){
+			return tree.postOrderDeepFirstTraversal(root);
+		}
+
+		@Override
+		public List<Maybe<T>> preOrderDeepFirstTraversal(){
+			return tree.preOrderDeepFirstTraversal(root);
+		}
+
+		@Override
+		public List<Maybe<T>> breedFirstTraversal(){
+			return tree.breedFirstTraversal(root);
+		}
+
+		@Override
+		public Maybe<TreeNode> postOrderDeepFirstSearch(T value){
+			return tree.postOrderDeepFirstSearch(root, value);
+		}
+
+		@Override
+		public Maybe<TreeNode> preOrderDeepFirstSearch(T value){
+			return tree.preOrderDeepFirstSearch(root, value);
+		}
+
+		@Override
+		public Maybe<TreeNode> breedFirstSearch(T value){
+			return tree.breedFirstSearch(root, value);
+		}
+
+		@Override
+		public List<Maybe<T>> postOrderDeepFirstTraversal(TreeNode node){
+			searchNode(node);
+			return tree.postOrderDeepFirstTraversal(node);
+		}
+
+		@Override
+		public List<Maybe<T>> preOrderDeepFirstTraversal(TreeNode node){
+			searchNode(node);
+			return tree.preOrderDeepFirstTraversal(node);
+		}
+
+		@Override
+		public List<Maybe<T>> breedFirstTraversal(TreeNode node){
+			searchNode(node);
+			return tree.breedFirstTraversal(node);
+		}
+
+		@Override
+		public Maybe<TreeNode> postOrderDeepFirstSearch(TreeNode node, T value){
+			searchNode(node);
+			return tree.postOrderDeepFirstSearch(node, value);
+		}
+
+		@Override
+		public Maybe<TreeNode> preOrderDeepFirstSearch(TreeNode node, T value){
+			searchNode(node);
+			return tree.preOrderDeepFirstSearch(node, value);
+		}
+
+		@Override
+		public Maybe<TreeNode> breedFirstSearch(TreeNode node, T value){
+			searchNode(node);
+			return tree.breedFirstSearch(node, value);
+		}
 	}
+	//</editor-fold>
+	//</editor-fold>
 }

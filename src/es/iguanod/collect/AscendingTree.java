@@ -14,7 +14,7 @@ public class AscendingTree<T> extends AbstractLinkedTree<T>{
 	private static final long serialVersionUID=20174791549623287L;
 
 	public AscendingTree(int num_sons){
-		super(num_sons, true);
+		super(num_sons);
 	}
 
 	public AscendingTree(Tree<? extends T> tree){
@@ -22,28 +22,22 @@ public class AscendingTree<T> extends AbstractLinkedTree<T>{
 	}
 
 	public AscendingTree(Tree<? extends T> tree, int num_sons){
-		super(tree, num_sons, true);
+		super(tree, num_sons);
+	}
+	
+	@Override
+	protected final boolean nullsAllowed(){
+		return true;
 	}
 
 	@Override
-	protected boolean supportsDirectModification(){
+	protected final boolean structureModifiable(){
 		return false;
 	}
-
+	
 	@Override
-	public Tree<T> toTree(TreeNode node){
-		AscendingTree<T> ret=new AscendingTree(this.maxSons());
-		toTree(node, ret);
-		return ret;
-	}
-
-	@Override
-	public Maybe<T> setValue(TreeNode node, T value){
-		node.checkNode(this);
-		if(getValue(node).isAbsent()){
-			throw new IllegalStateException("Cannot set value of a node without a previous value");
-		}
-		return super.setValue(node, value);
+	protected final boolean nodeValueModifiable(){
+		return false;
 	}
 
 	@Override
@@ -185,7 +179,7 @@ public class AscendingTree<T> extends AbstractLinkedTree<T>{
 
 		Maybe<T> ret=this.getValue(next);
 		if(next == root){
-			this.invalidateSons(root);
+			this.invalidateBranch(root);
 			root=null;
 			return Maybe.<T>from(elem);
 		}

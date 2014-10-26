@@ -1,5 +1,6 @@
 package es.iguanod.collect;
 
+import es.iguanod.util.Maybe;
 import java.util.List;
 
 /**
@@ -12,9 +13,9 @@ public interface BinaryTree<T> extends Tree<T>{
 
 	public List<T> inOrderDeepFirstTraversal(TreeNode node);
 
-	public TreeNode inOrderDeepFirstSearch(TreeNode node, T value);
+	public Maybe<TreeNode> inOrderDeepFirstSearch(TreeNode node, T value);
 
-	public TreeNode left(TreeNode node);
+	public Maybe<TreeNode> left(TreeNode node);
 
-	public TreeNode right(TreeNode node);
+	public Maybe<TreeNode> right(TreeNode node);
 }

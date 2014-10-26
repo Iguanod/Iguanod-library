@@ -12,6 +12,7 @@ import java.util.NoSuchElementException;
 
 /**
  * @param <T>
+ *
  * @author <a href="mailto:rubiof.david@gmail.com">David Rubio Fernández</a>
  * @since 0.0.6.1.a
  * @version
@@ -23,7 +24,6 @@ public abstract class AbstractTree<T> implements Tree<T>, Serializable{
 	private static final long serialVersionUID=-31230909014986462L;
 	//************
 	private int max_sons;
-	private boolean nulls_allowed;
 
 	protected static abstract class TNode<T> extends TreeNode implements Serializable{
 
@@ -55,36 +55,34 @@ public abstract class AbstractTree<T> implements Tree<T>, Serializable{
 		return this.getValue(node).isPresent() && Objects.equals(this.getValue(node).get(), value);
 	}
 
-	protected final void invalidateSons(TreeNode node){
+	protected final void invalidateBranch(TreeNode node){
 		for(TreeNode son:this.children(node)){
-			this.invalidateSons(son);
+			this.invalidateBranch(son);
 		}
 		node.invalidate(this);
 	}
 
-	public AbstractTree(int max_sons, boolean nulls_allowed){
+	public AbstractTree(int max_sons){
 		this.max_sons=max_sons;
-		this.nulls_allowed=nulls_allowed;
 	}
 
 	public AbstractTree(){
-		this(0, true);
+		this(0);
 	}
+	
+	protected abstract boolean nullsAllowed();
+
+	protected abstract boolean structureModifiable();
 
 	@Override
 	public void pushAll(Collection<? extends T> col){
-		if(!nulls_allowed && col.contains(null)){
+		if(!nullsAllowed() && col.contains(null)){
 			throw new NullPointerException("The tree doesn't accept null values");
 		}
 
 		for(T elem:col){
 			push(elem);
 		}
-	}
-
-	@Override
-	public boolean nullsAllowed(){
-		return nulls_allowed;
 	}
 
 	@Override
@@ -102,21 +100,19 @@ public abstract class AbstractTree<T> implements Tree<T>, Serializable{
 	}
 
 	@Override
-	public boolean addAll(TreeNode node, Collection<? extends T> col){
+	public void addAll(TreeNode node, Collection<? extends T> col){
 		node.checkNode(this);
 		if(max_sons > 0 && this.childrenSize(node) + col.size() > max_sons)
 			throw new IllegalStateException("The node has no space for all the elements");
-		if(!nulls_allowed){
+		if(!nullsAllowed()){
 			for(T elem:col){
 				if(elem == null)
 					throw new NullPointerException("The tree doesn't accept null values");
 			}
 		}
-		boolean ret=false;
 		for(T elem:col){
-			ret|=this.add(node, elem);
+			this.add(node, elem);
 		}
-		return ret;
 	}
 
 	@Override
@@ -246,8 +242,6 @@ public abstract class AbstractTree<T> implements Tree<T>, Serializable{
 
 	@Override
 	public int size(TreeNode node){
-		if(this.isEmpty())
-			return 1;
 		int acc=1;
 		for(TreeNode son:this.children(node)){
 			acc+=this.size(son);
@@ -257,13 +251,6 @@ public abstract class AbstractTree<T> implements Tree<T>, Serializable{
 		return acc;
 	}
 
-	/**
-	 * Overriding classes probably want to override
-	 *
-	 * @param node
-	 *
-	 * @return
-	 */
 	@Override
 	public List<TreeNode> childrenCopy(TreeNode node){
 		node.checkNode(this);
@@ -283,14 +270,16 @@ public abstract class AbstractTree<T> implements Tree<T>, Serializable{
 	 */
 	@Override
 	public Maybe<TreeNode> getChild(TreeNode node, int i){
-		node.checkNode(this);
+		if(childrenSize(node)>i+1){
+			return Maybe.ABSENT;
+		}
 		int count=0;
 		for(TreeNode child:children(node)){
 			if(count == i){
 				return Maybe.<TreeNode>from(child);
 			}
 		}
-		return Maybe.ABSENT;
+		return null; // Unreachable
 	}
 
 	@Override
