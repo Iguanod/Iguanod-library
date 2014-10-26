@@ -33,7 +33,8 @@ import java.util.Map;
 /**
  * An {@link java.lang.Enum Enum} representing different suits in playing cards.
  *
- * <p> The suits belong to one or more {@link es.iguanod.games.cards.DeckType
+ * <p>
+ * The suits belong to one or more {@link es.iguanod.games.cards.DeckType
  * DeckTypes}, and have translations to all the languages specified by the
  * {@link java.util.Locale Locales} in {@link #supported_locale} (the default
  * language is English). </p>
@@ -45,11 +46,14 @@ import java.util.Map;
 public enum CardSuit{
 
 	/**
-	 * French deck suit. <p> Translations:<br/>
+	 * French deck suit.
+	 * <p>
+	 * Translations:<br/>
 	 * <pre>
 	 *     English: "Spades"
 	 *     Spanish: "Picas"
 	 *     French: "Piques"
+	 *     German: "Pik"
 	 * </pre> </p>
 	 *
 	 * @see es.iguanod.games.cards.DeckType#FRENCH
@@ -59,31 +63,41 @@ public enum CardSuit{
 	}, new Tuple2[]{
 		new Tuple2(Locale.ENGLISH, "Spades"),
 		new Tuple2(new Locale("ES"), "Picas"),
-		new Tuple2(Locale.FRENCH, "Piques")
+		new Tuple2(Locale.FRENCH, "Piques"),
+		new Tuple2(Locale.GERMAN, "Pik")
 	}),
 	/**
-	 * French deck suit. <p> Translations:<br/>
+	 * French and German deck suit.
+	 * <p>
+	 * Translations:<br/>
 	 * <pre>
 	 *     English: "Hearts"
 	 *     Spanish: "Corazones"
 	 *     French: "Coeurs"
+	 *     German: "Herz"
 	 * </pre> </p>
 	 *
 	 * @see es.iguanod.games.cards.DeckType#FRENCH
+	 * @see es.iguanod.games.cards.DeckType#GERMAN
 	 */
 	HEARTS(new DeckType[]{
-		FRENCH
+		FRENCH,
+		GERMAN
 	}, new Tuple2[]{
 		new Tuple2(Locale.ENGLISH, "Hearts"),
 		new Tuple2(new Locale("ES"), "Corazones"),
-		new Tuple2(Locale.FRENCH, "Coeurs")
+		new Tuple2(Locale.FRENCH, "Coeurs"),
+		new Tuple2(Locale.GERMAN, "Herz")
 	}),
 	/**
-	 * French deck suit. <p> Translations:<br/>
+	 * French deck suit.
+	 * <p>
+	 * Translations:<br/>
 	 * <pre>
 	 *     English: "Diamonds"
 	 *     Spanish: "Diamantes"
 	 *     French: "Carreaux"
+	 *     German: "Karo"
 	 * </pre> </p>
 	 *
 	 * @see es.iguanod.games.cards.DeckType#FRENCH
@@ -93,14 +107,18 @@ public enum CardSuit{
 	}, new Tuple2[]{
 		new Tuple2(Locale.ENGLISH, "Diamonds"),
 		new Tuple2(new Locale("ES"), "Diamantes"),
-		new Tuple2(Locale.FRENCH, "Carreaux")
+		new Tuple2(Locale.FRENCH, "Carreaux"),
+		new Tuple2(Locale.GERMAN, "Karo")
 	}),
 	/**
-	 * French deck suit. <p> Translations:<br/>
+	 * French deck suit.
+	 * <p>
+	 * Translations:<br/>
 	 * <pre>
 	 *     English: "Clubs"
 	 *     Spanish: "Tréboles"
 	 *     French: "Trèfles"
+	 *     German: "Kreuz"
 	 * </pre> </p>
 	 *
 	 * @see es.iguanod.games.cards.DeckType#FRENCH
@@ -110,14 +128,18 @@ public enum CardSuit{
 	}, new Tuple2[]{
 		new Tuple2(Locale.ENGLISH, "Clubs"),
 		new Tuple2(new Locale("ES"), "Tréboles"),
-		new Tuple2(Locale.FRENCH, "Trèfles")
+		new Tuple2(Locale.FRENCH, "Trèfles"),
+		new Tuple2(Locale.GERMAN, "Kreuz")
 	}),
 	/**
-	 * Spanish and extended Spanish deck suit. <p> Translations:<br/>
+	 * Spanish and extended Spanish deck suit.
+	 * <p>
+	 * Translations:<br/>
 	 * <pre>
 	 *     English: "Golds"
 	 *     Spanish: "Oros"
 	 *     French: "Or"
+	 *     German: "Karo"
 	 * </pre> </p>
 	 *
 	 * @see es.iguanod.games.cards.DeckType#SPANISH
@@ -129,14 +151,18 @@ public enum CardSuit{
 	}, new Tuple2[]{
 		new Tuple2(Locale.ENGLISH, "Golds"),
 		new Tuple2(new Locale("ES"), "Oros"),
-		new Tuple2(Locale.FRENCH, "Or")
+		new Tuple2(Locale.FRENCH, "Or"),
+		new Tuple2(Locale.GERMAN, "Karo")
 	}),
 	/**
-	 * Spanish and extended Spanish deck suit. <p> Translations:<br/>
+	 * Spanish and extended Spanish deck suit.
+	 * <p>
+	 * Translations:<br/>
 	 * <pre>
 	 *     English: "Cups"
 	 *     Spanish: "Copas"
 	 *     French: "Coupes"
+	 *     German: "Herz"
 	 * </pre> </p>
 	 *
 	 * @see es.iguanod.games.cards.DeckType#SPANISH
@@ -148,14 +174,18 @@ public enum CardSuit{
 	}, new Tuple2[]{
 		new Tuple2(Locale.ENGLISH, "Cups"),
 		new Tuple2(new Locale("ES"), "Copas"),
-		new Tuple2(Locale.FRENCH, "Coupes")
+		new Tuple2(Locale.FRENCH, "Coupes"),
+		new Tuple2(Locale.GERMAN, "Herz")
 	}),
 	/**
-	 * Spanish and extended Spanish deck suit. <p> Translations:<br/>
+	 * Spanish and extended Spanish deck suit.
+	 * <p>
+	 * Translations:<br/>
 	 * <pre>
 	 *     English: "Swords"
 	 *     Spanish: "Espadas"
 	 *     French: "Piques"
+	 *     German: "Spades"
 	 * </pre> </p>
 	 *
 	 * @see es.iguanod.games.cards.DeckType#SPANISH
@@ -167,14 +197,18 @@ public enum CardSuit{
 	}, new Tuple2[]{
 		new Tuple2(Locale.ENGLISH, "Swords"),
 		new Tuple2(new Locale("ES"), "Espadas"),
-		new Tuple2(Locale.FRENCH, "Piques")
+		new Tuple2(Locale.FRENCH, "Piques"),
+		new Tuple2(Locale.GERMAN, "Spades")
 	}),
 	/**
-	 * Spanish and extended Spanish deck suit. <p> Translations:<br/>
+	 * Spanish and extended Spanish deck suit.
+	 * <p>
+	 * Translations:<br/>
 	 * <pre>
 	 *     English: "Batons"
 	 *     Spanish: "Bastos"
 	 *     French: "Bâtons"
+	 *     German: "Kreuz"
 	 * </pre> </p>
 	 *
 	 * @see es.iguanod.games.cards.DeckType#SPANISH
@@ -186,8 +220,75 @@ public enum CardSuit{
 	}, new Tuple2[]{
 		new Tuple2(Locale.ENGLISH, "Batons"),
 		new Tuple2(new Locale("ES"), "Bastos"),
-		new Tuple2(Locale.FRENCH, "Bâtons")
+		new Tuple2(Locale.FRENCH, "Bâtons"),
+		new Tuple2(Locale.GERMAN, "Kreuz")
+	}),
+	/**
+	 * German deck suit.
+	 * <p>
+	 * Translations:<br/>
+	 * <pre>
+	 *     English: "Bells"
+	 *     Spanish: "Campanas"
+	 *     French: "Cloche"
+	 *     German: "Schellen"
+	 * </pre> </p>
+	 *
+	 * @see es.iguanod.games.cards.DeckType#GERMAN
+	 */
+	BELLS(new DeckType[]{
+		GERMAN
+	}, new Tuple2[]{
+		new Tuple2(Locale.ENGLISH, "Bells"),
+		new Tuple2(new Locale("ES"), "Campanas"),
+		new Tuple2(Locale.FRENCH, "Cloche"),
+		new Tuple2(Locale.GERMAN, "Schellen")
+	}),
+	/**
+	 * German deck suit.
+	 * <p>
+	 * Translations:<br/>
+	 * <pre>
+	 *     English: "Leaves"
+	 *     Spanish: "Hojas"
+	 *     French: "Feuilles"
+	 *     German: "Laub"
+	 * </pre> </p>
+	 *
+	 * @see es.iguanod.games.cards.DeckType#GERMAN
+	 */
+	LEAVES(new DeckType[]{
+		GERMAN
+	}, new Tuple2[]{
+		new Tuple2(Locale.ENGLISH, "Leaves"),
+		new Tuple2(new Locale("ES"), "Hojas"),
+		new Tuple2(Locale.FRENCH, "Feuilles"),
+		new Tuple2(Locale.GERMAN, "Laub")
+	}),
+	/**
+	 * German deck suit.
+	 * <p>
+	 * Translations:<br/>
+	 * <pre>
+	 *     English: "Acorns"
+	 *     Spanish: "Bellotas"
+	 *     French: "Glands"
+	 *     German: "Eichel"
+	 * </pre> </p>
+	 *
+	 * @see es.iguanod.games.cards.DeckType#GERMAN
+	 */
+	ACORNS(new DeckType[]{
+		GERMAN
+	}, new Tuple2[]{
+		new Tuple2(Locale.ENGLISH, "Acorns"),
+		new Tuple2(new Locale("ES"), "Bellotas"),
+		new Tuple2(Locale.FRENCH, "Glands"),
+		new Tuple2(Locale.GERMAN, "Eichel")
 	});
+	//
+	//**********
+	//
 	/**
 	 * List containing all the {@link java.util.Locale Locales} to whose
 	 * languages the elements of this {@code Enum} can be translated.
@@ -195,7 +296,8 @@ public enum CardSuit{
 	public static final List<Locale> supported_locale=Collections.unmodifiableList(Arrays.asList(new Locale[]{
 		Locale.ENGLISH,
 		new Locale("ES"),
-		Locale.FRENCH
+		Locale.FRENCH,
+		Locale.GERMAN
 	}));
 	/**
 	 * List containing all the {@link es.iguanod.games.cards.DeckType
@@ -246,8 +348,10 @@ public enum CardSuit{
 	}
 
 	/**
-	 * Returns the name of this CardSuit constant. The first letter is
+	 * Returns the name of this {@code CardSuit} constant. The first letter is
 	 * uppercase, and all the others are lowercase.
+	 *
+	 * @return the string representation of this {@code CardSuit}
 	 */
 	@Override
 	public String toString(){
@@ -255,19 +359,29 @@ public enum CardSuit{
 	}
 
 	/**
-	 * Returns the name of this CardSuit constant in the language specified by
-	 * the passed {@link java.util.Locale Locale}. The first letter is
-	 * uppercase, and all the others are lowercase.
+	 * Returns the name of this {@code CardSuit} constant in the language
+	 * specified by the passed {@link java.util.Locale Locale}. The first
+	 * letter is uppercase, and all the others are lowercase.
+	 *
+	 * @param locale the {@code Locale} specifying the language to translate
+	 * this {@code CardSuit}
+	 *
+	 * @return the string representation of this {@code CardSuit} in the
+	 * specified {@code Locale}
 	 *
 	 * @throws IllegalArgumentException if the specified {@code Locale} is not
-	 * supported.
-	 * @throws NullPointerException if locale is null.
+	 * supported
+	 * @throws NullPointerException if {@code locale} is {@code null}
 	 *
 	 * @see es.iguanod.games.cards.CardSymbol#supported_locale
 	 */
-	public String toString(Locale locale){
-		if(!supported_locale.contains(locale))
+	public String toString(Locale locale) throws IllegalArgumentException{
+		if(locale==null){
+			throw new NullPointerException("Locale can't be null");
+		}
+		if(!supported_locale.contains(locale)){
 			throw new IllegalArgumentException("Unsupported Locale");
+		}
 
 		return translations.get(locale);
 	}
@@ -278,14 +392,24 @@ public enum CardSuit{
 	 * #supported_locale supported locales}.
 	 *
 	 * @param name the name corresponding to the searched {@code CardSuit}.
+	 * @param locale the {@code Locale} specifying the language of
+	 * {@code name}
 	 *
 	 * @return the {@code CardSuit} corresponding with {@code name}.
 	 *
 	 * @throws IllegalArgumentException if this {@link java.lang.Enum Enum}
-	 * does not have a constant with the specified name.
-	 * @throws NullPointerException if name is null.
+	 * does not have a constant with the specified name, or if {@code locale}
+	 * is not supported
+	 * @throws NullPointerException if {@code name} or {@code locale} is
+	 * {@code null}
 	 */
-	public static Maybe<CardSuit> fromString(String name, Locale locale){
+	public static Maybe<CardSuit> fromString(String name, Locale locale) throws IllegalArgumentException{
+		if(name==null || locale==null){
+			throw new NullPointerException("Null values not accepted");
+		}
+		if(!supported_locale.contains(locale)){
+			throw new IllegalArgumentException("Locale not supported");
+		}
 		CardSuit ret=mappings.get(locale).get(name.toUpperCase());
 		if(ret == null){
 			return Maybe.ABSENT;
