@@ -139,6 +139,7 @@ public enum CardSuit{
 	 *     English: "Golds"
 	 *     Spanish: "Oros"
 	 *     French: "Or"
+	 *     German: "Karo"
 	 * </pre> </p>
 	 *
 	 * @see es.iguanod.games.cards.DeckType#SPANISH
@@ -161,6 +162,7 @@ public enum CardSuit{
 	 *     English: "Cups"
 	 *     Spanish: "Copas"
 	 *     French: "Coupes"
+	 *     German: "Herz"
 	 * </pre> </p>
 	 *
 	 * @see es.iguanod.games.cards.DeckType#SPANISH
@@ -183,6 +185,7 @@ public enum CardSuit{
 	 *     English: "Swords"
 	 *     Spanish: "Espadas"
 	 *     French: "Piques"
+	 *     German: "Spades"
 	 * </pre> </p>
 	 *
 	 * @see es.iguanod.games.cards.DeckType#SPANISH
@@ -205,6 +208,7 @@ public enum CardSuit{
 	 *     English: "Batons"
 	 *     Spanish: "Bastos"
 	 *     French: "Bâtons"
+	 *     German: "Kreuz"
 	 * </pre> </p>
 	 *
 	 * @see es.iguanod.games.cards.DeckType#SPANISH
@@ -227,6 +231,7 @@ public enum CardSuit{
 	 *     English: "Bells"
 	 *     Spanish: "Campanas"
 	 *     French: "Cloche"
+	 *     German: "Schellen"
 	 * </pre> </p>
 	 *
 	 * @see es.iguanod.games.cards.DeckType#GERMAN
@@ -247,6 +252,7 @@ public enum CardSuit{
 	 *     English: "Leaves"
 	 *     Spanish: "Hojas"
 	 *     French: "Feuilles"
+	 *     German: "Laub"
 	 * </pre> </p>
 	 *
 	 * @see es.iguanod.games.cards.DeckType#GERMAN
@@ -267,6 +273,7 @@ public enum CardSuit{
 	 *     English: "Acorns"
 	 *     Spanish: "Bellotas"
 	 *     French: "Glands"
+	 *     German: "Eichel"
 	 * </pre> </p>
 	 *
 	 * @see es.iguanod.games.cards.DeckType#GERMAN

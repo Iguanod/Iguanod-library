@@ -49,6 +49,7 @@ public enum CardSymbol{
 	 *     English: "Ace"
 	 *     Spanish: "As"
 	 *     French: "As"
+	 *     German: "As"
 	 * </pre> </p>
 	 *
 	 * @see es.iguanod.games.cards.DeckType#FRENCH
@@ -75,6 +76,7 @@ public enum CardSymbol{
 	 *     English: "Two"
 	 *     Spanish: "Dos"
 	 *     French: "Deux"
+	 *     German: "Zwei"
 	 * </pre> </p>
 	 *
 	 * @see es.iguanod.games.cards.DeckType#FRENCH
@@ -101,6 +103,7 @@ public enum CardSymbol{
 	 *     English: "Three"
 	 *     Spanish: "Tres"
 	 *     French: "Trois"
+	 *     German: "Drei"
 	 * </pre> </p>
 	 *
 	 * @see es.iguanod.games.cards.DeckType#FRENCH
@@ -127,6 +130,7 @@ public enum CardSymbol{
 	 *     English: "Four"
 	 *     Spanish: "Cuatro"
 	 *     French: "Quatre"
+	 *     German: "Vier"
 	 * </pre> </p>
 	 *
 	 * @see es.iguanod.games.cards.DeckType#FRENCH
@@ -153,6 +157,7 @@ public enum CardSymbol{
 	 *     English: "Five"
 	 *     Spanish: "Cinco"
 	 *     French: "Cinq"
+	 *     German: "Fünf"
 	 * </pre> </p>
 	 *
 	 * @see es.iguanod.games.cards.DeckType#FRENCH
@@ -179,6 +184,7 @@ public enum CardSymbol{
 	 *     English: "Six"
 	 *     Spanish: "Seis"
 	 *     French: "Six"
+	 *     German: "Sechs"
 	 * </pre> </p>
 	 *
 	 * @see es.iguanod.games.cards.DeckType#FRENCH
@@ -205,6 +211,7 @@ public enum CardSymbol{
 	 *     English: "Seven"
 	 *     Spanish: "Siete"
 	 *     French: "Sept"
+	 *     German: "Sieben"
 	 * </pre> </p>
 	 *
 	 * @see es.iguanod.games.cards.DeckType#FRENCH
@@ -231,6 +238,7 @@ public enum CardSymbol{
 	 *     English: "Eight"
 	 *     Spanish: "Ocho"
 	 *     French: "Huit"
+	 *     German: "Acht"
 	 * </pre> </p>
 	 *
 	 * @see es.iguanod.games.cards.DeckType#FRENCH
@@ -255,6 +263,7 @@ public enum CardSymbol{
 	 *     English: "Nine"
 	 *     Spanish: "Nueve"
 	 *     French: "Neuf"
+	 *     German: "Neun"
 	 * </pre> </p>
 	 *
 	 * @see es.iguanod.games.cards.DeckType#FRENCH
@@ -279,6 +288,7 @@ public enum CardSymbol{
 	 *     English: "Ten"
 	 *     Spanish: "Diez"
 	 *     French: "Dix"
+	 *     German: "Zehn"
 	 * </pre> </p>
 	 *
 	 * @see es.iguanod.games.cards.DeckType#FRENCH
@@ -303,6 +313,7 @@ public enum CardSymbol{
 	 *     English: "Jack"
 	 *     Spanish: "Jota"
 	 *     French: "Jack"
+	 *     German: "Bube"
 	 * </pre> </p>
 	 *
 	 * @see es.iguanod.games.cards.DeckType#FRENCH
@@ -325,6 +336,7 @@ public enum CardSymbol{
 	 *     English: "Page"
 	 *     Spanish: "Sota"
 	 *     French: "Jack"
+	 *     German: "Bube"
 	 * </pre> </p>
 	 *
 	 * @see es.iguanod.games.cards.DeckType#SPANISH
@@ -347,6 +359,7 @@ public enum CardSymbol{
 	 *     English: "Queen"
 	 *     Spanish: "Dama"
 	 *     French: "Dame"
+	 *     German: "Dame"
 	 * </pre> </p>
 	 *
 	 * @see es.iguanod.games.cards.DeckType#FRENCH
@@ -369,6 +382,7 @@ public enum CardSymbol{
 	 *     English: "Knight"
 	 *     Spanish: "Caballo"
 	 *     French: "Cheval"
+	 *     German: "Pferd"
 	 * </pre> </p>
 	 *
 	 * @see es.iguanod.games.cards.DeckType#SPANISH
@@ -391,6 +405,7 @@ public enum CardSymbol{
 	 *     English: "King"
 	 *     Spanish: "Rey"
 	 *     French: "Roi"
+	 *     German: "König"
 	 * </pre> </p>
 	 *
 	 * @see es.iguanod.games.cards.DeckType#FRENCH
