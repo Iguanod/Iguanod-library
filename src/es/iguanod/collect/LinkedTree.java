@@ -55,8 +55,8 @@ public class LinkedTree<T> extends AbstractLinkedTree<T>{
 
 	@Override
 	public TreeNode push(T value){
-		if(this.maxSons() <= 0){
-			throw new UnsupportedOperationException("Operation not supported if maximum of sons per node is not specified");
+		if(root!=null && this.maxSons() <= 0){
+			throw new UnsupportedOperationException("If maximum of sons per node is not specified push is only supported to set the root");
 		}
 
 		if(!this.nullsAllowed() && value == null){
