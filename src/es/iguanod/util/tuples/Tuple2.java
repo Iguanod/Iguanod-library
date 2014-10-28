@@ -133,10 +133,12 @@ public class Tuple2<F, S> implements Comparable<Tuple2<F, S>>, Serializable{
 	 */
 	@Override
 	public boolean equals(Object obj){
-		if(obj == null)
+		if(obj == null){
 			return false;
-		if(obj == this)
+		}
+		if(obj == this){
 			return true;
+		}
 		if(obj instanceof Tuple2){
 			return Objects.equals(this.getFirst(), (((Tuple2)obj).getFirst()))
 			&& Objects.equals(this.getSecond(), (((Tuple2)obj).getSecond()));

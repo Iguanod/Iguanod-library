@@ -95,10 +95,12 @@ public abstract class AbstractLinkedTree<T> extends AbstractTree<T>{
 			return;
 		}
 		TreeNode tree_root=tree.root().get();
-		if(!this.nullsAllowed() && !checkNulls(tree, tree_root))
+		if(!this.nullsAllowed() && !checkNulls(tree, tree_root)){
 			throw new IllegalArgumentException("A node of the passed tree has a null value but this tree doesn't accept them");
-		if(this.maxSons() > 0 && !checkSons(tree, tree_root, this.maxSons()))
+		}
+		if(this.maxSons() > 0 && !checkSons(tree, tree_root, this.maxSons())){
 			throw new IllegalArgumentException("A node of the passed tree has more children than the accepted by this tree (" + this.maxSons() + ")");
+		}
 		this.copyStructure(tree, tree_root);
 	}
 	
@@ -136,11 +138,13 @@ public abstract class AbstractLinkedTree<T> extends AbstractTree<T>{
 	}
 
 	private boolean checkSons(Tree tree, TreeNode node, int nsons){
-		if(tree.childrenSize(node) > nsons)
+		if(tree.childrenSize(node) > nsons){
 			return false;
+		}
 		for(TreeNode son:(Iterable<TreeNode>)tree.children(node)){
-			if(!checkSons(tree, son, nsons))
+			if(!checkSons(tree, son, nsons)){
 				return false;
+			}
 		}
 		return true;
 	}
@@ -191,8 +195,9 @@ public abstract class AbstractLinkedTree<T> extends AbstractTree<T>{
 
 	@Override
 	public void clear(){
-		if(this.isEmpty())
+		if(this.isEmpty()){
 			return;
+		}
 		this.invalidateBranch(root);
 		this.root=null;
 	}

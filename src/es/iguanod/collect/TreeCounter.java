@@ -338,14 +338,16 @@ public class TreeCounter<K, V extends Number> extends AbstractSortedCounter<K, V
 		@Override
 		public boolean equals(Object obj){
 			if(this instanceof Set){
-				if(obj == this)
+				if(obj == this){
 					return true;
-
-				if(!(obj instanceof Set))
+				}
+				if(!(obj instanceof Set)){
 					return false;
+				}
 				Collection c=(Collection)obj;
-				if(c.size() != size())
+				if(c.size() != size()){
 					return false;
+				}
 				try{
 					return containsAll(c);
 				}catch(ClassCastException | NullPointerException unused){
@@ -363,8 +365,9 @@ public class TreeCounter<K, V extends Number> extends AbstractSortedCounter<K, V
 				Iterator<T> i=iterator();
 				while(i.hasNext()){
 					T obj=i.next();
-					if(obj != null)
+					if(obj != null){
 						h+=obj.hashCode();
+					}
 				}
 				return h;
 			}else{

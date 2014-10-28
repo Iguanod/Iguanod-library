@@ -174,10 +174,12 @@ public class Tuple4<Fst, Snd, Trd, Fth> implements Comparable<Tuple4<Fst, Snd, T
 	 */
 	@Override
 	public boolean equals(Object obj){
-		if(obj == null)
+		if(obj == null){
 			return false;
-		if(obj == this)
+		}
+		if(obj == this){
 			return true;
+		}
 		if(obj instanceof Tuple4){
 			return Objects.equals(this.getFirst(), (((Tuple4)obj).getFirst()))
 			&& Objects.equals(this.getSecond(), (((Tuple4)obj).getSecond()))

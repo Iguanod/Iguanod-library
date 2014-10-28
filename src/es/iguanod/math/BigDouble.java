@@ -235,8 +235,9 @@ public class BigDouble extends Number implements Comparable<BigDouble>{
 			mant1=mant2=0;
 		}else{
 			pos=(n >= 0);
-			if(!pos)
+			if(!pos){
 				n=-n;
+			}
 			if(Double.isInfinite(n)){
 				nan=false;
 				inf=true;
@@ -263,8 +264,9 @@ public class BigDouble extends Number implements Comparable<BigDouble>{
 	public BigDouble(long n){
 
 		pos=(n >= 0);
-		if(!pos)
+		if(!pos){
 			n=-n;
+		}
 		nan=false;
 		inf=false;
 		mant2=0;
@@ -339,8 +341,9 @@ public class BigDouble extends Number implements Comparable<BigDouble>{
 
 		exp=0;
 		pos=bd.signum() > 0;
-		if(!pos)
+		if(!pos){
 			bd=bd.negate();
+		}
 
 		BigInteger bi=bd.toBigInteger();
 		BigInteger two=new BigInteger("2");
@@ -362,8 +365,9 @@ public class BigDouble extends Number implements Comparable<BigDouble>{
 			bi=bi.divide(two);
 		}
 
-		if(count == 126)
+		if(count == 126){
 			return;
+		}
 
 		bd=bd.subtract(new BigDecimal(bd.toBigInteger()));
 
@@ -448,7 +452,6 @@ public class BigDouble extends Number implements Comparable<BigDouble>{
 	private void shiftLeftMant(){
 
 		// TODO: why is it slower with numberOfLeadingZeros?
-
 		if(mant1 == 0){
 			if(mant2 == 0){
 				return;
@@ -466,8 +469,9 @@ public class BigDouble extends Number implements Comparable<BigDouble>{
 			count++;
 			mask>>=1;
 		}
-		if(count == 0)
+		if(count == 0){
 			return;
+		}
 		mask=0x8000000000000000L >> count;
 		mant1<<=count;
 		mant1|=((mask & mant2) >>> (63 - count));
@@ -503,30 +507,35 @@ public class BigDouble extends Number implements Comparable<BigDouble>{
 	public int compareTo(BigDouble n){
 
 		if(nan){
-			if(n.nan)
+			if(n.nan){
 				return pos == n.pos?0:pos?1:-1;
-			else
+			}else{
 				return pos?1:-1;
+			}
 		}
 
-		if(n.nan)
+		if(n.nan){
 			return n.pos?1:-1;
+		}
 
 		if(inf){
-			if(n.inf)
+			if(n.inf){
 				return pos == n.pos?0:pos?1:-1;
-			else
+			}else{
 				return pos?1:-1;
+			}
 		}
 
-		if(n.inf)
+		if(n.inf){
 			return pos?1:-1;
+		}
 
 		if(mant1 != mant2 || mant1 != n.mant1 || mant1 != n.mant2 || mant1 != 0){
 			int sig1=signum();
 			int sig2=n.signum();
-			if(sig1 != sig2)
+			if(sig1 != sig2){
 				return sig1 - sig2;
+			}
 		}else{
 			return 0;
 		}
@@ -940,12 +949,10 @@ public class BigDouble extends Number implements Comparable<BigDouble>{
 			long res;
 
 			//************
-
 			r.r4=op14 * op24;
 			r.restructure();
 
 			//************
-
 			res=op14 * op23;
 			r.r4+=(res & 0x7FFFFFFFL) << 32;
 			r.restructure();
@@ -957,7 +964,6 @@ public class BigDouble extends Number implements Comparable<BigDouble>{
 			r.r3+=(res & 0x7FFFFFFF80000000L) >>> 31;
 
 			//************
-
 			res=op14 * op22;
 			if(res < 0){
 				r.r2++;
@@ -980,7 +986,6 @@ public class BigDouble extends Number implements Comparable<BigDouble>{
 			r.restructure();
 
 			//************
-
 			res=op14 * op21;
 			r.r3+=(res & 0x7FFFFFFFL) << 32;
 			r.restructure();
@@ -1002,7 +1007,6 @@ public class BigDouble extends Number implements Comparable<BigDouble>{
 			r.r2+=(res & 0x7FFFFFFF80000000L) >>> 31;
 
 			//************
-
 			res=op13 * op21;
 			res<<=1;
 			r.r2+=res;
@@ -1022,7 +1026,6 @@ public class BigDouble extends Number implements Comparable<BigDouble>{
 			r.restructure();
 
 			//************
-
 			res=op12 * op21;
 			r.r2+=(res & 0x7FFFFFFFL) << 32;
 			r.restructure();
@@ -1034,7 +1037,6 @@ public class BigDouble extends Number implements Comparable<BigDouble>{
 			r.r1+=(res & 0x7FFFFFFF80000000L) >>> 31;
 
 			//************
-
 			res=op11 * op21;
 			res<<=1;
 			boolean carry=false;
@@ -1055,7 +1057,6 @@ public class BigDouble extends Number implements Comparable<BigDouble>{
 			}
 
 			//************
-
 			r.shiftLeft();
 			mant1=r.r1;
 			mant2=r.r2;
@@ -1419,17 +1420,21 @@ public class BigDouble extends Number implements Comparable<BigDouble>{
 	@Override
 	public boolean equals(Object obj){
 
-		if(obj == null)
+		if(obj == null){
 			return false;
+		}
 
-		if(!(obj instanceof BigDouble))
+		if(!(obj instanceof BigDouble)){
 			return false;
+		}
 
-		if(nan || ((BigDouble)obj).nan)
+		if(nan || ((BigDouble)obj).nan){
 			return false;
+		}
 
-		if(obj == this)
+		if(obj == this){
 			return true;
+		}
 
 		if(inf || ((BigDouble)obj).inf){
 			return inf == ((BigDouble)obj).inf && pos == ((BigDouble)obj).pos;
@@ -1708,8 +1713,9 @@ public class BigDouble extends Number implements Comparable<BigDouble>{
 			m1>>=1;
 		}
 
-		if(!pos)
+		if(!pos){
 			ret=ret.multiply(new BigDecimal(-1));
+		}
 
 		return ret;
 	}

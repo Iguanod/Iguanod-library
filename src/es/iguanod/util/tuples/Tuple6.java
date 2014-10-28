@@ -206,10 +206,12 @@ public class Tuple6<Fst, Snd, Trd, Fth, Ffth, Sth> implements Comparable<Tuple6<
 	 */
 	@Override
 	public boolean equals(Object obj){
-		if(obj == null)
+		if(obj == null){
 			return false;
-		if(obj == this)
+		}
+		if(obj == this){
 			return true;
+		}
 		if(obj instanceof Tuple6){
 			return Objects.equals(this.getFirst(), (((Tuple6)obj).getFirst()))
 			&& Objects.equals(this.getSecond(), (((Tuple6)obj).getSecond()))

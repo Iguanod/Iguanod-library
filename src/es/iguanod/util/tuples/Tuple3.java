@@ -156,10 +156,12 @@ public class Tuple3<F, S, T> implements Comparable<Tuple3<F, S, T>>, Serializabl
 	 */
 	@Override
 	public boolean equals(Object obj){
-		if(obj == null)
+		if(obj == null){
 			return false;
-		if(obj == this)
+		}
+		if(obj == this){
 			return true;
+		}
 		if(obj instanceof Tuple3){
 			return Objects.equals(this.getFirst(), (((Tuple3)obj).getFirst()))
 			&& Objects.equals(this.getSecond(), (((Tuple3)obj).getSecond()))

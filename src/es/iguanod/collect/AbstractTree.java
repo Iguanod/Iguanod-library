@@ -121,12 +121,14 @@ public abstract class AbstractTree<T> implements Tree<T>, Serializable{
 	@Override
 	public void addAll(TreeNode node, Collection<? extends T> col){
 		node.checkNode(this);
-		if(max_sons > 0 && this.childrenSize(node) + col.size() > max_sons)
+		if(max_sons > 0 && this.childrenSize(node) + col.size() > max_sons){
 			throw new IllegalStateException("The node has no space for all the elements");
+		}
 		if(!nullsAllowed()){
 			for(T elem:col){
-				if(elem == null)
+				if(elem == null){
 					throw new NullPointerException("The tree doesn't accept null values");
+				}
 			}
 		}
 		for(T elem:col){
@@ -142,8 +144,9 @@ public abstract class AbstractTree<T> implements Tree<T>, Serializable{
 	@Override
 	public boolean containsAll(Collection<?> col){
 		for(Object obj:col){
-			if(!this.contains(obj))
+			if(!this.contains(obj)){
 				return false;
+			}
 		}
 		return true;
 	}
@@ -167,11 +170,13 @@ public abstract class AbstractTree<T> implements Tree<T>, Serializable{
 
 	@Override
 	public boolean containsDescendant(TreeNode node, Object obj){
-		if(this.containsChild(node, obj))
+		if(this.containsChild(node, obj)){
 			return true;
+		}
 		for(TreeNode son:this.children(node)){
-			if(this.containsDescendant(son, obj))
+			if(this.containsDescendant(son, obj)){
 				return true;
+			}
 		}
 		return false;
 	}
@@ -179,8 +184,9 @@ public abstract class AbstractTree<T> implements Tree<T>, Serializable{
 	@Override
 	public boolean containsAll(TreeNode node, Collection<?> col){
 		for(Object obj:col){
-			if(!this.contains(node, obj))
+			if(!this.contains(node, obj)){
 				return false;
+			}
 		}
 		return true;
 	}
@@ -188,8 +194,9 @@ public abstract class AbstractTree<T> implements Tree<T>, Serializable{
 	@Override
 	public boolean containsAllChildren(TreeNode node, Collection<?> col){
 		for(Object obj:col){
-			if(!this.containsChild(node, obj))
+			if(!this.containsChild(node, obj)){
 				return false;
+			}
 		}
 		return true;
 	}
@@ -197,8 +204,9 @@ public abstract class AbstractTree<T> implements Tree<T>, Serializable{
 	@Override
 	public boolean containsAllDescendants(TreeNode node, Collection<?> col){
 		for(Object obj:col){
-			if(!this.containsDescendant(node, obj))
+			if(!this.containsDescendant(node, obj)){
 				return false;
+			}
 		}
 		return true;
 	}
@@ -224,20 +232,23 @@ public abstract class AbstractTree<T> implements Tree<T>, Serializable{
 
 	@Override
 	public int height(){
-		if(this.isEmpty())
+		if(this.isEmpty()){
 			return 0;
+		}
 		return this.height(this.root().get());
 	}
 
 	@Override
 	public int height(TreeNode node){
-		if(!this.hasChildren(node))
+		if(!this.hasChildren(node)){
 			return 1;
+		}
 		int acc=0;
 		for(TreeNode son:this.children(node)){
 			acc=Math.max(acc, this.height(son));
-			if(acc < 0)
+			if(acc < 0){
 				return Integer.MAX_VALUE;
+			}
 		}
 		return acc + 1;
 	}
@@ -254,8 +265,9 @@ public abstract class AbstractTree<T> implements Tree<T>, Serializable{
 
 	@Override
 	public int size(){
-		if(this.isEmpty())
+		if(this.isEmpty()){
 			return 0;
+		}
 		return this.size(this.root().get());
 	}
 
@@ -264,8 +276,9 @@ public abstract class AbstractTree<T> implements Tree<T>, Serializable{
 		int acc=1;
 		for(TreeNode son:this.children(node)){
 			acc+=this.size(son);
-			if(acc < 0)
+			if(acc < 0){
 				return Integer.MAX_VALUE;
+			}
 		}
 		return acc;
 	}

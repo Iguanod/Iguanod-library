@@ -192,10 +192,12 @@ public class Tuple5<Fst, Snd, Trd, Fth, Ffth> implements Comparable<Tuple5<Fst, 
 	 */
 	@Override
 	public boolean equals(Object obj){
-		if(obj == null)
+		if(obj == null){
 			return false;
-		if(obj == this)
+		}
+		if(obj == this){
 			return true;
+		}
 		if(obj instanceof Tuple5){
 			return Objects.equals(this.getFirst(), (((Tuple5)obj).getFirst()))
 			&& Objects.equals(this.getSecond(), (((Tuple5)obj).getSecond()))

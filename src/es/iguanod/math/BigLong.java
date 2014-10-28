@@ -868,17 +868,21 @@ public class BigLong extends Number implements Comparable<BigLong>{
 	@Override
 	public boolean equals(Object obj){
 
-		if(obj == null)
+		if(obj == null){
 			return false;
+		}
 
-		if(!(obj instanceof BigLong))
+		if(!(obj instanceof BigLong)){
 			return false;
+		}
 
-		if(nan || ((BigLong)obj).nan)
+		if(nan || ((BigLong)obj).nan){
 			return false;
+		}
 
-		if(obj == this)
+		if(obj == this){
 			return true;
+		}
 
 		return this.compareTo((BigLong)obj) == 0;
 	}

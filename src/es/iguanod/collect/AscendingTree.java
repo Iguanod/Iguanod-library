@@ -93,13 +93,15 @@ public class AscendingTree<T> extends AbstractLinkedTree<T>{
 	}
 
 	public int nonEmptySize(TreeNode node){
-		if(!this.hasChildren(node))
+		if(!this.hasChildren(node)){
 			return 1;
+		}
 		int acc=this.getValue(node).isAbsent()?0:1;
 		for(TreeNode son:this.children(node)){
 			acc+=this.nonEmptySize(son);
-			if(acc < 0)
+			if(acc < 0){
 				return Integer.MAX_VALUE;
+			}
 		}
 		return acc;
 	}
@@ -212,8 +214,9 @@ public class AscendingTree<T> extends AbstractLinkedTree<T>{
 				count++;
 			}while(next != this.root && this.hasAllUncompleteChildren(next));
 
-			if(count > 0)
+			if(count > 0){
 				next.sons.remove(next.sons.size() - 1);
+			}
 		}
 
 		if(this.getValue(this.root).isAbsent() && this.childrenSize(this.root) == 1){
