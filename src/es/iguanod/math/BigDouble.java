@@ -281,6 +281,7 @@ public class BigDouble extends Number implements Comparable<BigDouble>{
 	public BigDouble(String str){
 		switch(str.toLowerCase()){
 			case "nan":
+			case "+nan":
 				pos=true;
 				exp=0;
 				nan=true;
@@ -295,8 +296,9 @@ public class BigDouble extends Number implements Comparable<BigDouble>{
 				mant1=mant2=0;
 				return;
 			case "inf":
+			case "+inf":
 			case "infinity":
-			case "infinite":
+			case "+infinty":
 				pos=true;
 				exp=0;
 				nan=false;
@@ -305,7 +307,6 @@ public class BigDouble extends Number implements Comparable<BigDouble>{
 				return;
 			case "-inf":
 			case "-infinity":
-			case "-infinite":
 				pos=false;
 				exp=0;
 				nan=false;
