@@ -40,7 +40,7 @@ import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
 /**
- * Unit tests for all classes in {@code es.iguanod.util.tuples}.
+ * Unit tests for {@link es.iguanod.algorithms.Knapsack} class.
  *
  * @author <a href="mailto:rubiof.david@gmail.com">David Rubio Fernández</a>
  * @since 1.0.1
