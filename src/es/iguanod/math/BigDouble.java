@@ -493,6 +493,10 @@ public class BigDouble extends Number implements Comparable<BigDouble>{
 		return pos || (mant1 == 0 && mant2 == 0);
 	}
 
+	public boolean isNegative(){
+		return !pos && (mant1 != 0 || mant2 != 0);
+	}
+
 	public int signum(){
 
 		if(!inf && !nan && mant1 == 0 && mant2 == 0){
