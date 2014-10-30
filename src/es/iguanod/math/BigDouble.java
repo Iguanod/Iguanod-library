@@ -1425,22 +1425,24 @@ public class BigDouble extends Number implements Comparable<BigDouble>{
 
 		if(!(obj instanceof BigDouble))
 			return false;
+		
+		BigDouble bd=(BigDouble)obj;
 
-		if(nan || ((BigDouble)obj).nan)
+		if(nan || bd.nan)
 			return false;
 
 		if(obj == this)
 			return true;
 
-		if(inf || ((BigDouble)obj).inf){
-			return inf == ((BigDouble)obj).inf && pos == ((BigDouble)obj).pos;
+		if(inf || bd.inf){
+			return inf == bd.inf && pos == bd.pos;
 		}else{
-			return (mant1 == 0 && mant2 == 0 && ((BigDouble)obj).mant1 == 0 && ((BigDouble)obj).mant2 == 0)
-			|| (pos == ((BigDouble)obj).pos
-			&& inf == ((BigDouble)obj).inf
-			&& exp == ((BigDouble)obj).exp
-			&& mant1 == ((BigDouble)obj).mant1
-			&& mant2 == ((BigDouble)obj).mant2);
+			return (mant1 == 0 && mant2 == 0 && bd.mant1 == 0 && bd.mant2 == 0)
+			|| (pos == bd.pos
+			&& inf == bd.inf
+			&& exp == bd.exp
+			&& mant1 == bd.mant1
+			&& mant2 == bd.mant2);
 		}
 	}
 
