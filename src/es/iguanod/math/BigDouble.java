@@ -1446,6 +1446,45 @@ public class BigDouble extends Number implements Comparable<BigDouble>{
 		}
 	}
 
+	/**
+	 * NOTE: according to IEEE 754, NaN.equals(x) and x.equals(NaN) is false
+	 * for every x; although NaN.compareTo(NaN)==0 and
+	 * NaN1.hashCode()==NaN2.hashCode()
+	 *
+	 * @param obj
+	 *
+	 * @return
+	 */
+	public boolean equals(Object obj, int bin_digits){
+
+		if(obj == null)
+			return false;
+
+		if(!(obj instanceof BigDouble))
+			return false;
+		
+		BigDouble bd=(BigDouble)obj;
+
+		if(nan || bd.nan)
+			return false;
+
+		if(obj == this)
+			return true;
+
+		if(inf || bd.inf){
+			return inf == bd.inf && pos == bd.pos;
+		}else{
+			long mask1=0xFFFFFFFFFFFFFFFFL<<(bin_digits>=63?0:63-bin_digits);
+			long mask2=0xFFFFFFFFFFFFFFFFL<<(bin_digits>=127?0:127-bin_digits);
+			return ((mant1 & mask1) == 0 && (mant2 & mask2) == 0 && (bd.mant1 & mask1) == 0 && (bd.mant2 & mask2) == 0)
+			|| (pos == bd.pos
+			&& inf == bd.inf
+			&& exp == bd.exp
+			&& (mant1 & mask1) == (bd.mant1 & mask1)
+			&& (mant2 & mask2) == (bd.mant2 & mask2));
+		}
+	}
+
 	@Override
 	public int hashCode(){
 		int hash=7;
