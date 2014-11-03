@@ -43,9 +43,9 @@ public class EloScoreTable<T> implements Iterable<Tuple2<T, Integer>>, Serializa
 	private static final long serialVersionUID=818005879329498514L;
 	//************
 	private static final int TIMES_BETTER=2;
-	private static final int DIFFERENCE_BETTER=150;
+	private static final int DIFFERENCE_BETTER=200;
 	//************
-	private static final int BASE_CHANGE=30;
+	private static final int BASE_CHANGE=50;
 	private static final double INITIAL_K_FACTOR=1.66;
 	private static final int DEFAULT_POSITIONING_GAMES=8;
 	private static final int RECORD_SIZE=16;
