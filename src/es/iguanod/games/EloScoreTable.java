@@ -20,7 +20,9 @@
 package es.iguanod.games;
 
 import es.iguanod.collect.DoubleTreeCounter.DoubleTreeCounterBuilder;
+import es.iguanod.collect.LinkedFixedCapacityQueue;
 import es.iguanod.collect.SortedCounter;
+import es.iguanod.util.Maybe;
 import es.iguanod.util.tuples.Tuple2;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -28,7 +30,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -63,8 +64,8 @@ public class EloScoreTable<T> implements Iterable<Tuple2<T, Integer>>, Serializa
 
 		private static final long serialVersionUID=-469496794623962387L;
 		//************
-		private LinkedList<Double> games=new LinkedList<>();
 		private double k_factor;
+		private LinkedFixedCapacityQueue<Double> games=new LinkedFixedCapacityQueue<>(RECORD_SIZE);
 		private int wins=0;
 		private int losses=0;
 		private int ties=0;
@@ -84,11 +85,10 @@ public class EloScoreTable<T> implements Iterable<Tuple2<T, Integer>>, Serializa
 			}
 
 			double next=Math.signum(win) / (num_players - 1);
-			games.addFirst(next);
 			k_factor+=next;
-
-			if(games.size() > RECORD_SIZE){
-				k_factor-=games.removeLast();
+			Maybe<Double> popped=games.push(next);
+			if(popped.isPresent()){
+				k_factor-=popped.get();
 			}
 
 			if(wins + ties + losses > positioning_games){
