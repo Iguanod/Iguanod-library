@@ -74,7 +74,7 @@ public class EloScoreTable<T> implements Iterable<Tuple2<T, Integer>>, Serializa
 
 			if(tie){
 				ties++;
-			}else if(score>0){
+			}else if(score > 0){
 				wins++;
 			}else{
 				losses++;
@@ -85,10 +85,10 @@ public class EloScoreTable<T> implements Iterable<Tuple2<T, Integer>>, Serializa
 			}
 
 			double next;
-			if(score>=0){
-				next=1-1.0/(num_players*score);
+			if(score >= 0){
+				next=1 - 1.0 / (num_players * score);
 			}else{
-				next=-1.0/num_players;
+				next=-1.0 / num_players;
 			}
 			k_factor+=next;
 			Maybe<Double> popped=games.push(next);
@@ -165,10 +165,10 @@ public class EloScoreTable<T> implements Iterable<Tuple2<T, Integer>>, Serializa
 			table.sum(change.getKey(), change.getValue());
 			mean+=change.getValue() / table.size();
 		}
-		
+
 		games++;
 	}
-	
+
 	private void updatePlayer(T player, double scores_sum, double actual_score, int num_players, Map<T, Double> acc, double change, boolean tie){
 
 		double k_factor=stats.get(player).addGame(num_players, actual_score, tie);
@@ -257,7 +257,7 @@ public class EloScoreTable<T> implements Iterable<Tuple2<T, Integer>>, Serializa
 
 		i=0;
 		for(Collection<? extends T> team:loser_teams){
-			updateTeam(team, loser_elos.get(i), scores_sum, 1.0 / winner_teams.size(), winner_teams.size() + loser_teams.size(), acc, loser_teams.isEmpty());
+			updateTeam(team, loser_elos.get(i), scores_sum, 0, winner_teams.size() + loser_teams.size(), acc, loser_teams.isEmpty());
 			i++;
 		}
 
@@ -265,23 +265,26 @@ public class EloScoreTable<T> implements Iterable<Tuple2<T, Integer>>, Serializa
 			table.sum(change.getKey(), change.getValue());
 			mean+=change.getValue() / table.size();
 		}
-		
+
 		games++;
 	}
 
 	private void updateTeam(Collection<? extends T> team, double team_elo, double scores_sum, double actual_score, int num_teams, Map<T, Double> acc, boolean tie){
 
 		double expected_score=Math.pow(TIMES_BETTER, team_elo / DIFFERENCE_BETTER) / scores_sum;
+		double team_change=(actual_score - expected_score) * BASE_CHANGE * team.size();
 
 		double scores_sum_players=0;
 		for(T player:team){
 			scores_sum_players+=Math.pow(TIMES_BETTER, table.get(player) / DIFFERENCE_BETTER);
 		}
 		for(T player:team){
-			updatePlayer(player, scores_sum_players, actual_score, num_teams, acc, (actual_score - expected_score) * BASE_CHANGE * team.size(), tie);
+			double k_factor=stats.get(player).addGame(num_teams, actual_score, tie);
+			double expected_in_team=1-Math.pow(TIMES_BETTER, table.get(player) / DIFFERENCE_BETTER) / scores_sum_players;
+			acc.put(player, expected_in_team * team_change * k_factor);
 		}
 	}
-	
+
 	public int totalGames(){
 		return games;
 	}
