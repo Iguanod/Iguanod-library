@@ -45,8 +45,8 @@ public class EloScoreTable<T> implements Iterable<Tuple2<T, Integer>>, Serializa
 	//************
 	private static final int TIMES_BETTER=2;
 	private static final int DIFFERENCE_BETTER=200;
-	//************
 	private static final int BASE_CHANGE=50;
+	//************
 	private static final double INITIAL_K_FACTOR=1.66;
 	private static final int DEFAULT_POSITIONING_GAMES=8;
 	private static final int RECORD_SIZE=16;
@@ -64,18 +64,18 @@ public class EloScoreTable<T> implements Iterable<Tuple2<T, Integer>>, Serializa
 
 		private static final long serialVersionUID=-469496794623962387L;
 		//************
-		private double k_factor;
 		private LinkedFixedCapacityQueue<Double> games=new LinkedFixedCapacityQueue<>(RECORD_SIZE);
+		private double k_factor=0;
 		private int wins=0;
 		private int losses=0;
 		private int ties=0;
 
-		public double addGame(int num_players, double win){
+		public double addGame(int num_players, double score, boolean tie){
 
-			if(win>0){
-				wins++;
-			}else if(win==0){
+			if(tie){
 				ties++;
+			}else if(score>0){
+				wins++;
 			}else{
 				losses++;
 			}
@@ -84,7 +84,12 @@ public class EloScoreTable<T> implements Iterable<Tuple2<T, Integer>>, Serializa
 				return 1;
 			}
 
-			double next=Math.signum(win) / (num_players - 1);
+			double next;
+			if(score>=0){
+				next=1-1.0/(num_players*score);
+			}else{
+				next=-1.0/num_players;
+			}
 			k_factor+=next;
 			Maybe<Double> popped=games.push(next);
 			if(popped.isPresent()){
@@ -92,7 +97,7 @@ public class EloScoreTable<T> implements Iterable<Tuple2<T, Integer>>, Serializa
 			}
 
 			if(wins + ties + losses > positioning_games){
-				return Math.abs((k_factor / positioning_games) + Math.signum(win)*1.1);
+				return Math.abs((k_factor / positioning_games) + Math.signum(score));
 			}else{
 				return INITIAL_K_FACTOR;
 			}
@@ -166,7 +171,7 @@ public class EloScoreTable<T> implements Iterable<Tuple2<T, Integer>>, Serializa
 	
 	private void updatePlayer(T player, double scores_sum, double actual_score, int num_players, Map<T, Double> acc, double change, boolean tie){
 
-		double k_factor=stats.get(player).addGame(num_players, tie?0:actual_score);
+		double k_factor=stats.get(player).addGame(num_players, actual_score, tie);
 		double expected_score=Math.pow(TIMES_BETTER, table.get(player) / DIFFERENCE_BETTER) / scores_sum;
 
 		acc.put(player, (actual_score - expected_score) * change * k_factor);
