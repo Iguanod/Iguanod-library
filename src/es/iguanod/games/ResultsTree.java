@@ -46,7 +46,11 @@ public class ResultsTree<T> extends AscendingTree<T[]>{
 	//************
 	private IntHashCounter<Integer> spaces=new IntHashCounterBuilder<Integer>().build();
 	private DoubleTreeCounter<T> sons_results=new DoubleTreeCounterBuilder<T>().reverse(true).build();
+	//************
 	private int prune_lvls;
+	private int num_players;
+	//************
+	private static final int DEFAULT_PRUNE_LVLS=3;
 
 	protected static class ResultsTNode<T> extends LinkedTNode<T[]>{
 
@@ -111,9 +115,14 @@ public class ResultsTree<T> extends AscendingTree<T[]>{
 		return acc + 1;
 	}
 
-	public ResultsTree(int num_sons, int prune_lvls){
+	public ResultsTree(int num_players, int num_sons){
+		this(num_players, num_sons, DEFAULT_PRUNE_LVLS);
+	}
+	
+	public ResultsTree(int num_players, int num_sons, int prune_lvls){
 		super(num_sons);
 		this.prune_lvls=prune_lvls;
+		this.num_players=num_players;
 	}
 
 	@Override
@@ -145,7 +154,8 @@ public class ResultsTree<T> extends AscendingTree<T[]>{
 
 		sons_results.clear();
 		for(TreeNode son:getChildren(parent)){
-			sons_results.balancedSum(getValue(son).get());
+			T[] value=getValue(son).get();
+			sons_results.sumAll(value,(num_players+1-value.length)/(double)num_players);
 		}
 		Entry<T, Double>[] sorted=CollectionsIg.toGenericArray(sons_results.entrySet());
 
