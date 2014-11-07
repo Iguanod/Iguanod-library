@@ -19,7 +19,6 @@
  */
 package es.iguanod.collect;
 
-import es.iguanod.collect.AbstractTree.TNode;
 import es.iguanod.collect.DoubleHashCounter.DoubleHashCounterBuilder;
 import es.iguanod.collect.DoubleTreeCounter.DoubleTreeCounterBuilder;
 import es.iguanod.collect.HashCounter.HashCounterBuilder;
@@ -36,6 +35,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.NoSuchElementException;
@@ -77,10 +77,18 @@ public final class CollectionsIg{
 		return col.toArray((T[])Array.newInstance(min_class, col.size()));
 	}
 
+	public static <T> Collection<T> deepUnmodifiableCollection(Collection<? extends T> col){
+		return (Collection<T>)new DeepUnmodifiableCollection<>(col);
+	}
+
+	public static <T> List<T> deepUnmodifiableList(List<? extends T> list){
+		return (List<T>)new DeepUnmodifiableList<>(list);
+	}
+
 	public static <T> Tree<T> treeReference(Tree<T> tree, TreeNode node){
 
 		node.checkNode(tree);
-		return new TreeRef<>(tree,node);
+		return new TreeRef<>(tree, node);
 	}
 
 	//<editor-fold defaultstate="collapsed" desc="Collections methods">
@@ -975,6 +983,208 @@ public final class CollectionsIg{
 			throw new UnsupportedOperationException("Unmodifiable queue");
 		}//</editor-fold>
 	}//</editor-fold>
+
+	//<editor-fold defaultstate="collapsed" desc="DeepUnmodifiableCollection">
+	private static class DeepUnmodifiableCollection<T> implements Collection<T>{
+
+		private Collection<? extends T> col;
+
+		public DeepUnmodifiableCollection(Collection<? extends T> col){
+			this.col=col;
+		}
+
+		@Override
+		public int size(){
+			return col.size();
+		}
+
+		@Override
+		public boolean isEmpty(){
+			return col.isEmpty();
+		}
+
+		@Override
+		public boolean contains(Object o){
+			return col.contains(o);
+		}
+
+		@Override
+		public Iterator<T> iterator(){
+			return new Iterator<T>(){
+
+				private Iterator<? extends T> iter=col.iterator();
+
+				@Override
+				public boolean hasNext(){
+					return iter.hasNext();
+				}
+
+				@Override
+				public T next(){
+					T next=iter.next();
+					if(next instanceof Collection){
+						return (T)new DeepUnmodifiableCollection<>((Collection)next);
+					}else{
+						return next;
+					}
+				}
+
+				@Override
+				public void remove(){
+					throw new UnsupportedOperationException("Unmodifiable collection");
+				}
+			};
+		}
+
+		@Override
+		public Object[] toArray(){
+			return col.toArray();
+		}
+
+		@Override
+		public <T> T[] toArray(T[] a){
+			return col.toArray(a);
+		}
+
+		@Override
+		public boolean containsAll(Collection<?> c){
+			return col.containsAll(c);
+		}
+		
+		@Override
+		public String toString(){
+			return col.toString();
+		}
+
+		//<editor-fold defaultstate="collapsed" desc="Unsupported methods">
+		@Override
+		public boolean add(T e){
+			throw new UnsupportedOperationException("Unmodifiable collection");
+		}
+
+		@Override
+		public boolean remove(Object o){
+			throw new UnsupportedOperationException("Unmodifiable collection");
+		}
+
+		@Override
+		public boolean addAll(Collection<? extends T> c){
+			throw new UnsupportedOperationException("Unmodifiable collection");
+		}
+
+		@Override
+		public boolean removeAll(Collection<?> c){
+			throw new UnsupportedOperationException("Unmodifiable collection");
+		}
+
+		@Override
+		public boolean retainAll(Collection<?> c){
+			throw new UnsupportedOperationException("Unmodifiable collection");
+		}
+
+		@Override
+		public void clear(){
+			throw new UnsupportedOperationException("Unmodifiable collection");
+		}
+		//</editor-fold>
+	}
+	//</editor-fold>
+
+	//<editor-fold defaultstate="collapsed" desc="DeepUnmodifiableList">
+	private static class DeepUnmodifiableList<T> extends DeepUnmodifiableCollection<T> implements List<T>{
+
+		private List<? extends T> list;
+
+		public DeepUnmodifiableList(List<? extends T> list){
+			super(list);
+			this.list=list;
+		}
+
+		@Override
+		public T get(int index){
+			if(list.get(index) instanceof List){
+				return (T)new DeepUnmodifiableList((List)list.get(index));
+			}else{
+				return list.get(index);
+			}
+		}
+
+		@Override
+		public Iterator<T> iterator(){
+			return new Iterator<T>(){
+
+				private Iterator<? extends T> iter=list.iterator();
+
+				@Override
+				public boolean hasNext(){
+					return iter.hasNext();
+				}
+
+				@Override
+				public T next(){
+					T next=iter.next();
+					if(next instanceof List){
+						return (T)new DeepUnmodifiableList<>((List)next);
+					}else{
+						return next;
+					}
+				}
+
+				@Override
+				public void remove(){
+					throw new UnsupportedOperationException("Unmodifiable collection");
+				}
+			};
+		}
+
+		@Override
+		public int indexOf(Object o){
+			return list.indexOf(o);
+		}
+
+		@Override
+		public int lastIndexOf(Object o){
+			return list.lastIndexOf(o);
+		}
+
+		@Override
+		public ListIterator<T> listIterator(){
+			return (ListIterator<T>)list.listIterator();
+		}
+
+		@Override
+		public ListIterator<T> listIterator(int index){
+			return (ListIterator<T>)list.listIterator(index);
+		}
+
+		@Override
+		public List<T> subList(int fromIndex, int toIndex){
+			return (List<T>)list.subList(fromIndex, toIndex);
+		}
+
+		//<editor-fold defaultstate="collapsed" desc="Unsupported methods">
+		@Override
+		public boolean addAll(int index, Collection<? extends T> c){
+			throw new UnsupportedOperationException("Unmodifiable list");
+		}
+
+		@Override
+		public T set(int index, T element){
+			throw new UnsupportedOperationException("Unmodifiable list");
+		}
+
+		@Override
+		public void add(int index, T element){
+			throw new UnsupportedOperationException("Unmodifiable list");
+		}
+
+		@Override
+		public T remove(int index){
+			throw new UnsupportedOperationException("Unmodifiable list");
+		}
+		//</editor-fold>
+	}
+	//</editor-fold>
 	//</editor-fold>
 
 	//<editor-fold defaultstate="collapsed" desc="Synchronized classes">
