@@ -310,8 +310,13 @@ public class EloScoreTable<T> implements Iterable<Tuple2<T, Integer>>, Serializa
 		}
 	}
 
-	public int totalGames(){
+	public int gamesPlayed(){
 		return games;
+	}
+
+	public int games(T player){
+		Stats s=stats.get(player);
+		return s == null?0:s.games;
 	}
 
 	public int wins(T player){
@@ -332,11 +337,6 @@ public class EloScoreTable<T> implements Iterable<Tuple2<T, Integer>>, Serializa
 	public List<List<Integer>> detailedTies(T player){
 		Stats s=stats.get(player);
 		return s == null?Collections.EMPTY_LIST:CollectionsIg.<List<Integer>>deepUnmodifiableList(s.ties_table);
-	}
-
-	public int numGames(T player){
-		Stats s=stats.get(player);
-		return s == null?0:s.games;
 	}
 
 	public int score(T player){
