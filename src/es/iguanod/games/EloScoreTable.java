@@ -19,6 +19,7 @@
  */
 package es.iguanod.games;
 
+import es.iguanod.collect.CollectionsIg;
 import es.iguanod.collect.DoubleTreeCounter.DoubleTreeCounterBuilder;
 import es.iguanod.collect.LinkedFixedCapacityQueue;
 import es.iguanod.collect.SortedCounter;
@@ -27,9 +28,11 @@ import es.iguanod.util.tuples.Tuple2;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -62,22 +65,37 @@ public class EloScoreTable<T> implements Iterable<Tuple2<T, Integer>>, Serializa
 
 	private class Stats implements Serializable{
 
-		private static final long serialVersionUID=-469496794623962387L;
+		private static final long serialVersionUID=-469496794623962386L;
 		//************
-		private LinkedFixedCapacityQueue<Double> games=new LinkedFixedCapacityQueue<>(RECORD_SIZE);
+		private LinkedFixedCapacityQueue<Double> queue=new LinkedFixedCapacityQueue<>(RECORD_SIZE);
 		private double k_factor=0;
+		private int games=0;
 		private int wins=0;
 		private int losses=0;
 		private int ties=0;
+		private List<List<Integer>> ties_table=new ArrayList<>();
 
-		public double addGame(int num_players, double score, boolean tie){
+		public double addGame(int num_players, double score, int num_winners){
+			
+			if(ties_table.size()<num_players){
+				for(int i=ties_table.size();i<=num_players;i++){
+					ArrayList<Integer> next=new ArrayList<>();
+					ties_table.add(next);
+					for(int j=0;j<=i;j++){
+						next.add(0);
+					}
+				}
+			}
 
-			if(tie){
-				ties++;
-			}else if(score > 0){
+			games++;
+			if(score > 0){
 				wins++;
 			}else{
 				losses++;
+			}
+			if(num_winners>1){
+				ties++;
+				ties_table.get(num_players).set(num_winners,ties_table.get(num_players).get(num_winners)+1);
 			}
 
 			if(!use_k_factor){
@@ -91,7 +109,7 @@ public class EloScoreTable<T> implements Iterable<Tuple2<T, Integer>>, Serializa
 				next=-1.0 / num_players;
 			}
 			k_factor+=next;
-			Maybe<Double> popped=games.push(next);
+			Maybe<Double> popped=queue.push(next);
 			if(popped.isPresent()){
 				k_factor-=popped.get();
 			}
@@ -154,11 +172,11 @@ public class EloScoreTable<T> implements Iterable<Tuple2<T, Integer>>, Serializa
 		}
 
 		for(T player:winner_players){
-			updatePlayer(player, scores_sum, 1.0 / winner_players.size(), winner_players.size() + loser_players.size(), acc, BASE_CHANGE, loser_players.isEmpty());
+			updatePlayer(player, scores_sum, 1.0 / winner_players.size(), winner_players.size() + loser_players.size(), acc, BASE_CHANGE, winner_players.size());
 		}
 
 		for(T player:loser_players){
-			updatePlayer(player, scores_sum, 0, winner_players.size() + loser_players.size(), acc, BASE_CHANGE, loser_players.isEmpty());
+			updatePlayer(player, scores_sum, 0, winner_players.size() + loser_players.size(), acc, BASE_CHANGE, winner_players.size());
 		}
 
 		for(Entry<T, Double> change:acc.entrySet()){
@@ -169,9 +187,9 @@ public class EloScoreTable<T> implements Iterable<Tuple2<T, Integer>>, Serializa
 		games++;
 	}
 
-	private void updatePlayer(T player, double scores_sum, double actual_score, int num_players, Map<T, Double> acc, double change, boolean tie){
+	private void updatePlayer(T player, double scores_sum, double actual_score, int num_players, Map<T, Double> acc, double change, int num_winners){
 
-		double k_factor=stats.get(player).addGame(num_players, actual_score, tie);
+		double k_factor=stats.get(player).addGame(num_players, actual_score, num_winners);
 		double expected_score=Math.pow(TIMES_BETTER, table.get(player) / DIFFERENCE_BETTER) / scores_sum;
 
 		acc.put(player, (actual_score - expected_score) * change * k_factor);
@@ -251,13 +269,13 @@ public class EloScoreTable<T> implements Iterable<Tuple2<T, Integer>>, Serializa
 
 		int i=0;
 		for(Collection<? extends T> team:winner_teams){
-			updateTeam(team, winner_elos.get(i), scores_sum, 1.0 / winner_teams.size(), winner_teams.size() + loser_teams.size(), acc, loser_teams.isEmpty());
+			updateTeam(team, winner_elos.get(i), scores_sum, 1.0 / winner_teams.size(), winner_teams.size() + loser_teams.size(), acc, winner_teams.size());
 			i++;
 		}
 
 		i=0;
 		for(Collection<? extends T> team:loser_teams){
-			updateTeam(team, loser_elos.get(i), scores_sum, 0, winner_teams.size() + loser_teams.size(), acc, loser_teams.isEmpty());
+			updateTeam(team, loser_elos.get(i), scores_sum, 0, winner_teams.size() + loser_teams.size(), acc, winner_teams.size());
 			i++;
 		}
 
@@ -269,7 +287,7 @@ public class EloScoreTable<T> implements Iterable<Tuple2<T, Integer>>, Serializa
 		games++;
 	}
 
-	private void updateTeam(Collection<? extends T> team, double team_elo, double scores_sum, double actual_score, int num_teams, Map<T, Double> acc, boolean tie){
+	private void updateTeam(Collection<? extends T> team, double team_elo, double scores_sum, double actual_score, int num_teams, Map<T, Double> acc, int num_winners){
 
 		double expected_score=Math.pow(TIMES_BETTER, team_elo / DIFFERENCE_BETTER) / scores_sum;
 		double team_change=(actual_score - expected_score) * BASE_CHANGE * team.size();
@@ -279,8 +297,8 @@ public class EloScoreTable<T> implements Iterable<Tuple2<T, Integer>>, Serializa
 			scores_sum_players+=Math.pow(TIMES_BETTER, table.get(player) / DIFFERENCE_BETTER);
 		}
 		for(T player:team){
-			double k_factor=stats.get(player).addGame(num_teams, actual_score, tie);
-			double expected_in_team=1-Math.pow(TIMES_BETTER, table.get(player) / DIFFERENCE_BETTER) / scores_sum_players;
+			double k_factor=stats.get(player).addGame(num_teams, actual_score, num_winners);
+			double expected_in_team=1 - Math.pow(TIMES_BETTER, table.get(player) / DIFFERENCE_BETTER) / scores_sum_players;
 			acc.put(player, expected_in_team * team_change * k_factor);
 		}
 	}
@@ -304,9 +322,14 @@ public class EloScoreTable<T> implements Iterable<Tuple2<T, Integer>>, Serializa
 		return s == null?0:s.ties;
 	}
 
+	public List<List<Integer>> detailedTies(T player){
+		Stats s=stats.get(player);
+		return s == null?Collections.EMPTY_LIST:CollectionsIg.<List<Integer>>deepUnmodifiableList(s.ties_table);
+	}
+
 	public int numGames(T player){
 		Stats s=stats.get(player);
-		return s == null?0:s.wins + s.losses + s.ties;
+		return s == null?0:s.games;
 	}
 
 	public int score(T player){
