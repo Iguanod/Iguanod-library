@@ -75,28 +75,31 @@ public class EloScoreTable<T> implements Iterable<Tuple2<T, Integer>>, Serializa
 		private int ties=0;
 		private List<List<Integer>> ties_table=new ArrayList<>();
 
-		public double addGame(int num_players, double score, int num_winners){
-			
-			if(ties_table.size()<num_players){
-				for(int i=ties_table.size();i<=num_players;i++){
+		public void addGame(int num_players, boolean win, int num_winners){
+
+			if(ties_table.size() < num_players){
+				for(int i=ties_table.size(); i <= num_players; i++){
 					ArrayList<Integer> next=new ArrayList<>();
 					ties_table.add(next);
-					for(int j=0;j<=i;j++){
+					for(int j=0; j <= i; j++){
 						next.add(0);
 					}
 				}
 			}
 
 			games++;
-			if(score > 0){
+			if(win){
 				wins++;
 			}else{
 				losses++;
 			}
-			if(num_winners>1){
+			if(num_winners > 1){
 				ties++;
-				ties_table.get(num_players).set(num_winners,ties_table.get(num_players).get(num_winners)+1);
+				ties_table.get(num_players).set(num_winners, ties_table.get(num_players).get(num_winners) + 1);
 			}
+		}
+
+		public double kFactor(int num_players, double score){
 
 			if(!use_k_factor){
 				return 1;
@@ -189,7 +192,9 @@ public class EloScoreTable<T> implements Iterable<Tuple2<T, Integer>>, Serializa
 
 	private void updatePlayer(T player, double scores_sum, double actual_score, int num_players, Map<T, Double> acc, double change, int num_winners){
 
-		double k_factor=stats.get(player).addGame(num_players, actual_score, num_winners);
+		Stats s=stats.get(player);
+		s.addGame(num_players, actual_score > 0, num_winners);
+		double k_factor=s.kFactor(num_players, actual_score);
 		double expected_score=Math.pow(TIMES_BETTER, table.get(player) / DIFFERENCE_BETTER) / scores_sum;
 
 		acc.put(player, (actual_score - expected_score) * change * k_factor);
@@ -297,7 +302,9 @@ public class EloScoreTable<T> implements Iterable<Tuple2<T, Integer>>, Serializa
 			scores_sum_players+=Math.pow(TIMES_BETTER, table.get(player) / DIFFERENCE_BETTER);
 		}
 		for(T player:team){
-			double k_factor=stats.get(player).addGame(num_teams, actual_score, num_winners);
+			Stats s=stats.get(player);
+			s.addGame(num_teams, actual_score > 0, num_winners);
+			double k_factor=s.kFactor(num_teams, actual_score);
 			double expected_in_team=1 - Math.pow(TIMES_BETTER, table.get(player) / DIFFERENCE_BETTER) / scores_sum_players;
 			acc.put(player, expected_in_team * team_change * k_factor);
 		}
