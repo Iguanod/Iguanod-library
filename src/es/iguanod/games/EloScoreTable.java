@@ -44,7 +44,7 @@ import java.util.Map.Entry;
  */
 public class EloScoreTable<T> implements Iterable<Tuple2<T, Integer>>, Serializable{
 
-	private static final long serialVersionUID=818005879329498516L;
+	private static final long serialVersionUID=818005879329498517L;
 	//************
 	private static final int TIMES_BETTER=2;
 	private static final int DIFFERENCE_BETTER=200;
@@ -65,7 +65,7 @@ public class EloScoreTable<T> implements Iterable<Tuple2<T, Integer>>, Serializa
 
 	private class Stats implements Serializable{
 
-		private static final long serialVersionUID=469496794623962391L;
+		private static final long serialVersionUID=469496794623962392L;
 		//************
 		private LinkedFixedCapacityQueue<Double> queue=new LinkedFixedCapacityQueue<>(RECORD_SIZE);
 		private double k_factor=0;
@@ -75,36 +75,44 @@ public class EloScoreTable<T> implements Iterable<Tuple2<T, Integer>>, Serializa
 		private int losses=0;
 		private int ties=0;
 		private List<List<Integer>> winners_count=new ArrayList<>();
+		private List<Integer> players_count=new ArrayList<>();
 		//************
 		private int games_team=0;
 		private int wins_team=0;
 		private int losses_team=0;
 		private int ties_team=0;
 		private List<List<Integer>> winners_count_team=new ArrayList<>();
+		private List<Integer> players_count_team=new ArrayList<>();
 		//************
 		private List<List<Integer>> winners_count_total=new ArrayList<>();
+		private List<Integer> players_count_total=new ArrayList<>();
+
+		private void resizeDoubleList(List<List<Integer>> list, int threshold){
+			if(list.size() <= threshold){
+				for(int i=list.size(); i <= threshold; i++){
+					ArrayList<Integer> next=new ArrayList<>();
+					list.add(next);
+					for(int j=0; j <= i; j++){
+						next.add(0);
+					}
+				}
+			}
+		}
+
+		private void resizeList(List<Integer> list, int threshold){
+			if(list.size() <= threshold){
+				for(int i=0; i <= threshold; i++){
+					list.add(0);
+				}
+			}
+		}
 
 		public void addGame(int num_players, boolean win, int num_winners){
 
-			if(winners_count.size() <= num_players){
-				for(int i=winners_count.size(); i <= num_players; i++){
-					ArrayList<Integer> next=new ArrayList<>();
-					winners_count.add(next);
-					for(int j=0; j <= i; j++){
-						next.add(0);
-					}
-				}
-			}
-
-			if(winners_count_total.size() <= num_players){
-				for(int i=winners_count_total.size(); i <= num_players; i++){
-					ArrayList<Integer> next=new ArrayList<>();
-					winners_count_total.add(next);
-					for(int j=0; j <= i; j++){
-						next.add(0);
-					}
-				}
-			}
+			resizeDoubleList(winners_count, num_players);
+			resizeDoubleList(winners_count_total, num_players);
+			resizeList(players_count, num_players);
+			resizeList(players_count_total, num_players);
 
 			games++;
 			if(win){
@@ -115,31 +123,19 @@ public class EloScoreTable<T> implements Iterable<Tuple2<T, Integer>>, Serializa
 			if(num_winners > 1){
 				ties++;
 			}
+
 			winners_count.get(num_players).set(num_winners, winners_count.get(num_players).get(num_winners) + 1);
 			winners_count_total.get(num_players).set(num_winners, winners_count_total.get(num_players).get(num_winners) + 1);
+			players_count.set(num_players, players_count.get(num_players) + 1);
+			players_count_total.set(num_players, players_count_total.get(num_players) + 1);
 		}
 
 		public void addGameTeam(int num_teams, boolean win, int num_winners){
 
-			if(winners_count_team.size() <= num_teams){
-				for(int i=winners_count_team.size(); i <= num_teams; i++){
-					ArrayList<Integer> next=new ArrayList<>();
-					winners_count_team.add(next);
-					for(int j=0; j <= i; j++){
-						next.add(0);
-					}
-				}
-			}
-
-			if(winners_count_total.size() <= num_teams){
-				for(int i=winners_count_total.size(); i <= num_teams; i++){
-					ArrayList<Integer> next=new ArrayList<>();
-					winners_count_total.add(next);
-					for(int j=0; j <= i; j++){
-						next.add(0);
-					}
-				}
-			}
+			resizeDoubleList(winners_count_team, num_teams);
+			resizeDoubleList(winners_count_total, num_teams);
+			resizeList(players_count_team, num_teams);
+			resizeList(players_count_total, num_teams);
 
 			games_team++;
 			if(win){
@@ -150,8 +146,11 @@ public class EloScoreTable<T> implements Iterable<Tuple2<T, Integer>>, Serializa
 			if(num_winners > 1){
 				ties_team++;
 			}
+
 			winners_count_team.get(num_teams).set(num_winners, winners_count_team.get(num_teams).get(num_winners) + 1);
 			winners_count_total.get(num_teams).set(num_winners, winners_count_total.get(num_teams).get(num_winners) + 1);
+			players_count_team.set(num_teams, players_count_team.get(num_teams) + 1);
+			players_count_total.set(num_teams, players_count_total.get(num_teams) + 1);
 		}
 
 		public double kFactor(int num_players, double score){
@@ -394,6 +393,11 @@ public class EloScoreTable<T> implements Iterable<Tuple2<T, Integer>>, Serializa
 		return s == null?Collections.EMPTY_LIST:CollectionsIg.<List<Integer>>deepUnmodifiableList(s.winners_count_total);
 	}
 
+	public List<Integer> playersCount(T player){
+		Stats s=stats.get(player);
+		return s == null?Collections.EMPTY_LIST:Collections.<Integer>unmodifiableList(s.players_count_total);
+	}
+
 	public int gamesSingle(T player){
 		Stats s=stats.get(player);
 		return s == null?0:s.games;
@@ -419,6 +423,11 @@ public class EloScoreTable<T> implements Iterable<Tuple2<T, Integer>>, Serializa
 		return s == null?Collections.EMPTY_LIST:CollectionsIg.<List<Integer>>deepUnmodifiableList(s.winners_count);
 	}
 
+	public List<Integer> playersCountSingle(T player){
+		Stats s=stats.get(player);
+		return s == null?Collections.EMPTY_LIST:Collections.<Integer>unmodifiableList(s.players_count);
+	}
+
 	public int gamesTeam(T player){
 		Stats s=stats.get(player);
 		return s == null?0:s.games_team;
@@ -442,6 +451,11 @@ public class EloScoreTable<T> implements Iterable<Tuple2<T, Integer>>, Serializa
 	public List<List<Integer>> winnersCountTeam(T player){
 		Stats s=stats.get(player);
 		return s == null?Collections.EMPTY_LIST:CollectionsIg.<List<Integer>>deepUnmodifiableList(s.winners_count_team);
+	}
+
+	public List<Integer> playersCountTeam(T player){
+		Stats s=stats.get(player);
+		return s == null?Collections.EMPTY_LIST:Collections.<Integer>unmodifiableList(s.players_count_team);
 	}
 
 	public int score(T player){
