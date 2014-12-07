@@ -118,62 +118,56 @@ public class EloScoreTable<T> implements Iterable<Tuple2<T, Integer>>, Serializa
 			}
 		}
 
-		public void addGame(int num_players, boolean win, int num_winners){
+		public void addGame(int num_players, boolean win, int num_winners, boolean single){
+			
+			List<List<Integer>> wc;
+			List<Integer> pc;
+			Counter<Integer, Integer> g;
+			Counter<Integer, Integer> w;
+			Counter<Integer, Integer> t;
+			Counter<Integer, Integer> l;
+			
+			if(single){
+				wc=winners_count;
+				pc=players_count;
+				g=games;
+				w=wins;
+				t=ties;
+				l=losses;
+			}else{
+				wc=winners_count_team;
+				pc=players_count_team;
+				g=games_team;
+				w=wins_team;
+				t=ties_team;
+				l=losses_team;
+			}
 
-			resizeListList(winners_count, num_players);
+			resizeListList(wc, num_players);
 			resizeListList(winners_count_total, num_players);
-			resizeList(players_count, num_players);
+			resizeList(pc, num_players);
 			resizeList(players_count_total, num_players);
 
-			games.sum(num_players);
-			games.sum(0);
+			g.sum(num_players);
+			g.sum(0);
 			if(win){
 				if(num_winners != num_players){
-					wins.sum(num_players);
-					wins.sum(0);
+					w.sum(num_players);
+					w.sum(0);
 				}
 				if(num_winners > 1){
-					ties.sum(num_players);
-					ties.sum(0);
+					t.sum(num_players);
+					t.sum(0);
 				}
 			}else{
-				losses.sum(num_players);
-				losses.sum(0);
+				l.sum(num_players);
+				l.sum(0);
 			}
 
-			winners_count.get(num_players).set(num_winners, winners_count.get(num_players).get(num_winners) + 1);
+			wc.get(num_players).set(num_winners, wc.get(num_players).get(num_winners) + 1);
 			winners_count_total.get(num_players).set(num_winners, winners_count_total.get(num_players).get(num_winners) + 1);
-			players_count.set(num_players, players_count.get(num_players) + 1);
+			pc.set(num_players, pc.get(num_players) + 1);
 			players_count_total.set(num_players, players_count_total.get(num_players) + 1);
-		}
-
-		public void addGameTeam(int num_teams, boolean win, int num_winners){
-
-			resizeListList(winners_count_team, num_teams);
-			resizeListList(winners_count_total, num_teams);
-			resizeList(players_count_team, num_teams);
-			resizeList(players_count_total, num_teams);
-
-			games_team.sum(num_teams);
-			games_team.sum(0);
-			if(win){
-				if(num_winners != num_teams){
-					wins_team.sum(num_teams);
-					wins_team.sum(0);
-				}
-				if(num_winners > 1){
-					ties_team.sum(num_teams);
-					ties_team.sum(0);
-				}
-			}else{
-				losses_team.sum(num_teams);
-				losses_team.sum(0);
-			}
-
-			winners_count_team.get(num_teams).set(num_winners, winners_count_team.get(num_teams).get(num_winners) + 1);
-			winners_count_total.get(num_teams).set(num_winners, winners_count_total.get(num_teams).get(num_winners) + 1);
-			players_count_team.set(num_teams, players_count_team.get(num_teams) + 1);
-			players_count_total.set(num_teams, players_count_total.get(num_teams) + 1);
 		}
 
 		public double kFactor(int num_players, double score){
@@ -270,7 +264,7 @@ public class EloScoreTable<T> implements Iterable<Tuple2<T, Integer>>, Serializa
 	private void updatePlayer(T player, double scores_sum, double actual_score, int num_players, Map<T, Double> acc, double change, int num_winners){
 
 		Stats s=stats.get(player);
-		s.addGame(num_players, actual_score > 0, num_winners);
+		s.addGame(num_players, actual_score > 0, num_winners, true);
 		double k_factor=s.kFactor(num_players, actual_score);
 		double expected_score=Math.pow(TIMES_BETTER, table.get(player) / DIFFERENCE_BETTER) / scores_sum;
 
@@ -380,7 +374,7 @@ public class EloScoreTable<T> implements Iterable<Tuple2<T, Integer>>, Serializa
 		}
 		for(T player:team){
 			Stats s=stats.get(player);
-			s.addGameTeam(num_teams, actual_score > 0, num_winners);
+			s.addGame(num_teams, actual_score > 0, num_winners, false);
 			double k_factor=s.kFactor(num_teams, actual_score);
 			double expected_in_team=1 - Math.pow(TIMES_BETTER, table.get(player) / DIFFERENCE_BETTER) / scores_sum_players;
 			acc.put(player, expected_in_team * team_change * k_factor);
