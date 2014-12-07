@@ -385,8 +385,8 @@ public class EloScoreTable<T> implements Iterable<Tuple2<T, Integer>>, Serializa
 		return table.keySet();
 	}
 
-	public boolean contains(Object obj){
-		return stats.containsKey(obj);
+	public boolean contains(T player){
+		return stats.containsKey(player);
 	}
 
 	public int gamesPlayed(){
