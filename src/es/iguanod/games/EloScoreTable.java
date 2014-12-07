@@ -23,6 +23,7 @@ import es.iguanod.collect.CollectionsIg;
 import es.iguanod.collect.DoubleTreeCounter.DoubleTreeCounterBuilder;
 import es.iguanod.collect.LinkedFixedCapacityQueue;
 import es.iguanod.collect.SortedCounter;
+import static es.iguanod.games.EloScoreTable.GameType.*;
 import es.iguanod.util.Maybe;
 import es.iguanod.util.tuples.Tuple2;
 import java.io.Serializable;
@@ -63,6 +64,13 @@ public class EloScoreTable<T> implements Iterable<Tuple2<T, Integer>>, Serializa
 	private double mean=INITIAL_SCORE;
 	private final boolean use_k_factor;
 	private final int positioning_games;
+
+	public static enum GameType{
+
+		SINGLE,
+		TEAM,
+		ALL;
+	}
 
 	private class Stats implements Serializable{
 
@@ -381,94 +389,88 @@ public class EloScoreTable<T> implements Iterable<Tuple2<T, Integer>>, Serializa
 		return games;
 	}
 
-	public int games(T player){
+	public int games(T player, GameType type){
 		Stats s=stats.get(player);
-		return s == null?0:s.games + s.games_team;
+		if(s == null){
+			return 0;
+		}
+		if(type == SINGLE){
+			return s.games;
+		}else if(type == TEAM){
+			return s.games_team;
+		}else{
+			return s.games + s.games_team;
+		}
 	}
 
-	public int wins(T player){
+	public int wins(T player, GameType type){
 		Stats s=stats.get(player);
-		return s == null?0:s.wins + s.wins_team;
+		if(s == null){
+			return 0;
+		}
+		if(type == SINGLE){
+			return s.wins;
+		}else if(type == TEAM){
+			return s.wins_team;
+		}else{
+			return s.wins + s.wins_team;
+		}
 	}
 
-	public int losses(T player){
+	public int losses(T player, GameType type){
 		Stats s=stats.get(player);
-		return s == null?0:s.losses + s.losses_team;
+		if(s == null){
+			return 0;
+		}
+		if(type == SINGLE){
+			return s.losses;
+		}else if(type == TEAM){
+			return s.losses_team;
+		}else{
+			return s.losses + s.losses_team;
+		}
 	}
 
-	public int ties(T player){
+	public int ties(T player, GameType type){
 		Stats s=stats.get(player);
-		return s == null?0:s.ties + s.ties_team;
+		if(s == null){
+			return 0;
+		}
+		if(type == SINGLE){
+			return s.ties;
+		}else if(type == TEAM){
+			return s.ties_team;
+		}else{
+			return s.ties + s.ties_team;
+		}
 	}
 
-	public List<List<Integer>> winnersCount(T player){
+	public List<List<Integer>> winnersCount(T player, GameType type){
 		Stats s=stats.get(player);
-		return s == null?Collections.EMPTY_LIST:CollectionsIg.<List<Integer>>deepUnmodifiableList(s.winners_count_total);
+		if(s == null){
+			return Collections.EMPTY_LIST;
+		}
+		if(type==SINGLE){
+			return CollectionsIg.<List<Integer>>deepUnmodifiableList(s.winners_count);
+		}else if(type==TEAM){
+			return CollectionsIg.<List<Integer>>deepUnmodifiableList(s.winners_count_team);
+		}else{
+			return CollectionsIg.<List<Integer>>deepUnmodifiableList(s.winners_count_total);
+		}
 	}
 
-	public List<Integer> playersCount(T player){
+	public List<Integer> playersCount(T player, GameType type){
 		Stats s=stats.get(player);
-		return s == null?Collections.EMPTY_LIST:Collections.<Integer>unmodifiableList(s.players_count_total);
-	}
-
-	public int gamesSingle(T player){
-		Stats s=stats.get(player);
-		return s == null?0:s.games;
-	}
-
-	public int winsSingle(T player){
-		Stats s=stats.get(player);
-		return s == null?0:s.wins;
-	}
-
-	public int lossesSingle(T player){
-		Stats s=stats.get(player);
-		return s == null?0:s.losses;
-	}
-
-	public int tiesSingle(T player){
-		Stats s=stats.get(player);
-		return s == null?0:s.ties;
-	}
-
-	public List<List<Integer>> winnersCountSingle(T player){
-		Stats s=stats.get(player);
-		return s == null?Collections.EMPTY_LIST:CollectionsIg.<List<Integer>>deepUnmodifiableList(s.winners_count);
-	}
-
-	public List<Integer> playersCountSingle(T player){
-		Stats s=stats.get(player);
-		return s == null?Collections.EMPTY_LIST:Collections.<Integer>unmodifiableList(s.players_count);
-	}
-
-	public int gamesTeam(T player){
-		Stats s=stats.get(player);
-		return s == null?0:s.games_team;
-	}
-
-	public int winsTeam(T player){
-		Stats s=stats.get(player);
-		return s == null?0:s.wins_team;
-	}
-
-	public int lossesTeam(T player){
-		Stats s=stats.get(player);
-		return s == null?0:s.losses_team;
-	}
-
-	public int tiesTeam(T player){
-		Stats s=stats.get(player);
-		return s == null?0:s.ties_team;
-	}
-
-	public List<List<Integer>> winnersCountTeam(T player){
-		Stats s=stats.get(player);
-		return s == null?Collections.EMPTY_LIST:CollectionsIg.<List<Integer>>deepUnmodifiableList(s.winners_count_team);
-	}
-
-	public List<Integer> playersCountTeam(T player){
-		Stats s=stats.get(player);
-		return s == null?Collections.EMPTY_LIST:Collections.<Integer>unmodifiableList(s.players_count_team);
+		if(s == null){
+			return Collections.EMPTY_LIST;
+		}
+		if(type==SINGLE){
+			return Collections.<Integer>unmodifiableList(s.players_count);
+		}else if(type==TEAM){
+			return Collections.<Integer>unmodifiableList(s.players_count_team);
+		}else{
+			return Collections.<Integer>unmodifiableList(s.players_count_total);
+		}
 	}
 
 	public int score(T player){
