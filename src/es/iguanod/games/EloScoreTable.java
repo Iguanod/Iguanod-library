@@ -20,7 +20,9 @@
 package es.iguanod.games;
 
 import es.iguanod.collect.CollectionsIg;
+import es.iguanod.collect.Counter;
 import es.iguanod.collect.DoubleTreeCounter.DoubleTreeCounterBuilder;
+import es.iguanod.collect.IntHashCounter;
 import es.iguanod.collect.LinkedFixedCapacityQueue;
 import es.iguanod.collect.SortedCounter;
 import static es.iguanod.games.EloScoreTable.GameType.*;
@@ -46,7 +48,7 @@ import java.util.Set;
  */
 public class EloScoreTable<T> implements Iterable<Tuple2<T, Integer>>, Serializable{
 
-	private static final long serialVersionUID=818005879329498517L;
+	private static final long serialVersionUID=818005879329498518L;
 	//************
 	private static final int TIMES_BETTER=2;
 	private static final int DIFFERENCE_BETTER=200;
@@ -74,29 +76,29 @@ public class EloScoreTable<T> implements Iterable<Tuple2<T, Integer>>, Serializa
 
 	private class Stats implements Serializable{
 
-		private static final long serialVersionUID=469496794623962392L;
+		private static final long serialVersionUID=469496794623962393L;
 		//************
 		private LinkedFixedCapacityQueue<Double> queue=new LinkedFixedCapacityQueue<>(RECORD_SIZE);
 		private double k_factor=0;
 		//************
-		private int games=0;
-		private int wins=0;
-		private int losses=0;
-		private int ties=0;
+		private Counter<Integer, Integer> games=new IntHashCounter<>();
+		private Counter<Integer, Integer> wins=new IntHashCounter<>();
+		private Counter<Integer, Integer> losses=new IntHashCounter<>();
+		private Counter<Integer, Integer> ties=new IntHashCounter<>();
 		private List<List<Integer>> winners_count=new ArrayList<>();
 		private List<Integer> players_count=new ArrayList<>();
 		//************
-		private int games_team=0;
-		private int wins_team=0;
-		private int losses_team=0;
-		private int ties_team=0;
+		private Counter<Integer, Integer> games_team=new IntHashCounter<>();
+		private Counter<Integer, Integer> wins_team=new IntHashCounter<>();
+		private Counter<Integer, Integer> losses_team=new IntHashCounter<>();
+		private Counter<Integer, Integer> ties_team=new IntHashCounter<>();
 		private List<List<Integer>> winners_count_team=new ArrayList<>();
 		private List<Integer> players_count_team=new ArrayList<>();
 		//************
 		private List<List<Integer>> winners_count_total=new ArrayList<>();
 		private List<Integer> players_count_total=new ArrayList<>();
 
-		private void resizeDoubleList(List<List<Integer>> list, int threshold){
+		private void resizeListList(List<List<Integer>> list, int threshold){
 			if(list.size() <= threshold){
 				for(int i=list.size(); i <= threshold; i++){
 					ArrayList<Integer> next=new ArrayList<>();
@@ -118,21 +120,25 @@ public class EloScoreTable<T> implements Iterable<Tuple2<T, Integer>>, Serializa
 
 		public void addGame(int num_players, boolean win, int num_winners){
 
-			resizeDoubleList(winners_count, num_players);
-			resizeDoubleList(winners_count_total, num_players);
+			resizeListList(winners_count, num_players);
+			resizeListList(winners_count_total, num_players);
 			resizeList(players_count, num_players);
 			resizeList(players_count_total, num_players);
 
-			games++;
+			games.sum(num_players);
+			games.sum(0);
 			if(win){
 				if(num_winners != num_players){
-					wins++;
+					wins.sum(num_players);
+					wins.sum(0);
 				}
 				if(num_winners > 1){
-					ties++;
+					ties.sum(num_players);
+					ties.sum(0);
 				}
 			}else{
-				losses++;
+				losses.sum(num_players);
+				losses.sum(0);
 			}
 
 			winners_count.get(num_players).set(num_winners, winners_count.get(num_players).get(num_winners) + 1);
@@ -143,21 +149,25 @@ public class EloScoreTable<T> implements Iterable<Tuple2<T, Integer>>, Serializa
 
 		public void addGameTeam(int num_teams, boolean win, int num_winners){
 
-			resizeDoubleList(winners_count_team, num_teams);
-			resizeDoubleList(winners_count_total, num_teams);
+			resizeListList(winners_count_team, num_teams);
+			resizeListList(winners_count_total, num_teams);
 			resizeList(players_count_team, num_teams);
 			resizeList(players_count_total, num_teams);
 
-			games_team++;
+			games_team.sum(num_teams);
+			games_team.sum(0);
 			if(win){
 				if(num_winners != num_teams){
-					wins_team++;
+					wins_team.sum(num_teams);
+					wins_team.sum(0);
 				}
 				if(num_winners > 1){
-					ties_team++;
+					ties_team.sum(num_teams);
+					ties_team.sum(0);
 				}
 			}else{
-				losses_team++;
+				losses_team.sum(num_teams);
+				losses_team.sum(0);
 			}
 
 			winners_count_team.get(num_teams).set(num_winners, winners_count_team.get(num_teams).get(num_winners) + 1);
@@ -184,7 +194,7 @@ public class EloScoreTable<T> implements Iterable<Tuple2<T, Integer>>, Serializa
 				k_factor-=popped.get();
 			}
 
-			if(wins + ties + losses > positioning_games){
+			if(wins.get(0) + ties.get(0) + losses.get(0) > positioning_games){
 				return Math.abs((k_factor / positioning_games) + Math.signum(score));
 			}else{
 				return INITIAL_K_FACTOR;
@@ -389,60 +399,124 @@ public class EloScoreTable<T> implements Iterable<Tuple2<T, Integer>>, Serializa
 		return games;
 	}
 
-	public int games(T player, GameType type){
+	private int pvtGames(T player, GameType type, int num_players){
 		Stats s=stats.get(player);
 		if(s == null){
 			return 0;
 		}
+
+		Integer ret;
+		Integer ret2=0;
 		if(type == SINGLE){
-			return s.games;
+			ret=s.games.get(num_players);
 		}else if(type == TEAM){
-			return s.games_team;
+			ret=s.games_team.get(num_players);
 		}else{
-			return s.games + s.games_team;
+			ret=s.games.get(num_players);
+			ret2=s.games_team.get(num_players);
 		}
+		return (ret != null?ret:0) + (ret2 != null?ret2:0);
+	}
+
+	private int pvtWins(T player, GameType type, int num_players){
+		Stats s=stats.get(player);
+		if(s == null){
+			return 0;
+		}
+
+		Integer ret;
+		Integer ret2=0;
+		if(type == SINGLE){
+			ret=s.wins.get(num_players);
+		}else if(type == TEAM){
+			ret=s.wins_team.get(num_players);
+		}else{
+			ret=s.wins.get(num_players);
+			ret2=s.wins_team.get(num_players);
+		}
+		return (ret != null?ret:0) + (ret2 != null?ret2:0);
+	}
+
+	private int pvtLosses(T player, GameType type, int num_players){
+		Stats s=stats.get(player);
+		if(s == null){
+			return 0;
+		}
+
+		Integer ret;
+		Integer ret2=0;
+		if(type == SINGLE){
+			ret=s.losses.get(num_players);
+		}else if(type == TEAM){
+			ret=s.losses_team.get(num_players);
+		}else{
+			ret=s.losses.get(num_players);
+			ret2=s.losses_team.get(num_players);
+		}
+		return (ret != null?ret:0) + (ret2 != null?ret2:0);
+	}
+
+	private int pvtTies(T player, GameType type, int num_players){
+		Stats s=stats.get(player);
+		if(s == null){
+			return 0;
+		}
+
+		Integer ret;
+		Integer ret2=0;
+		if(type == SINGLE){
+			ret=s.ties.get(num_players);
+		}else if(type == TEAM){
+			ret=s.ties_team.get(num_players);
+		}else{
+			ret=s.ties.get(num_players);
+			ret2=s.ties_team.get(num_players);
+		}
+		return (ret != null?ret:0) + (ret2 != null?ret2:0);
+	}
+
+	public int games(T player, GameType type){
+		return pvtGames(player, type, 0);
 	}
 
 	public int wins(T player, GameType type){
-		Stats s=stats.get(player);
-		if(s == null){
-			return 0;
-		}
-		if(type == SINGLE){
-			return s.wins;
-		}else if(type == TEAM){
-			return s.wins_team;
-		}else{
-			return s.wins + s.wins_team;
-		}
+		return pvtWins(player, type, 0);
 	}
 
 	public int losses(T player, GameType type){
-		Stats s=stats.get(player);
-		if(s == null){
-			return 0;
-		}
-		if(type == SINGLE){
-			return s.losses;
-		}else if(type == TEAM){
-			return s.losses_team;
-		}else{
-			return s.losses + s.losses_team;
-		}
+		return pvtLosses(player, type, 0);
 	}
 
 	public int ties(T player, GameType type){
-		Stats s=stats.get(player);
-		if(s == null){
-			return 0;
+		return pvtTies(player, type, 0);
+	}
+
+	public int games(T player, GameType type, int num_players){
+		if(num_players < 2){
+			throw new IllegalArgumentException("The number of players has to be equal or greater than 2");
 		}
-		if(type == SINGLE){
-			return s.ties;
-		}else if(type == TEAM){
-			return s.ties_team;
-		}else{
-			return s.ties + s.ties_team;
+		return pvtGames(player, type, num_players);
+	}
+
+	public int wins(T player, GameType type, int num_players){
+		if(num_players < 2){
+			throw new IllegalArgumentException("The number of players has to be equal or greater than 2");
 		}
+		return pvtWins(player, type, num_players);
+	}
+
+	public int losses(T player, GameType type, int num_players){
+		if(num_players < 2){
+			throw new IllegalArgumentException("The number of players has to be equal or greater than 2");
+		}
+		return pvtLosses(player, type, num_players);
+	}
+
+	public int ties(T player, GameType type, int num_players){
+		if(num_players < 2){
+			throw new IllegalArgumentException("The number of players has to be equal or greater than 2");
+		}
+		return pvtTies(player, type, num_players);
 	}
 
 	public List<List<Integer>> winnersCount(T player, GameType type){
@@ -450,9 +524,9 @@ public class EloScoreTable<T> implements Iterable<Tuple2<T, Integer>>, Serializa
 		if(s == null){
 			return Collections.EMPTY_LIST;
 		}
-		if(type==SINGLE){
+		if(type == SINGLE){
 			return CollectionsIg.<List<Integer>>deepUnmodifiableList(s.winners_count);
-		}else if(type==TEAM){
+		}else if(type == TEAM){
 			return CollectionsIg.<List<Integer>>deepUnmodifiableList(s.winners_count_team);
 		}else{
 			return CollectionsIg.<List<Integer>>deepUnmodifiableList(s.winners_count_total);
@@ -464,9 +538,9 @@ public class EloScoreTable<T> implements Iterable<Tuple2<T, Integer>>, Serializa
 		if(s == null){
 			return Collections.EMPTY_LIST;
 		}
-		if(type==SINGLE){
+		if(type == SINGLE){
 			return Collections.<Integer>unmodifiableList(s.players_count);
-		}else if(type==TEAM){
+		}else if(type == TEAM){
 			return Collections.<Integer>unmodifiableList(s.players_count_team);
 		}else{
 			return Collections.<Integer>unmodifiableList(s.players_count_total);
