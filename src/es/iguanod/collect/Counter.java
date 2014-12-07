@@ -30,8 +30,8 @@ import java.util.Map;
  * operations such as adding or deducting values to the current value associated
  * with a key, or replacing the old value with a new one if the later is
  * higher/lower.
- *
- * <p>{@code Counter} operats with {@link java.lang.Number Numbers} to store the
+ * <p>
+ * {@code Counter} operats with {@link java.lang.Number Numbers} to store the
  * values associated with the keys, but different classes subclassing
  * {@code Number} cannot be operated with one another directly. For that reason,
  * it is not natively possible to perform perfectly logical operations as adding
@@ -40,9 +40,9 @@ import java.util.Map;
  * class called {@link es.iguanod.util.Caster Caster} is used to cast elements
  * of different classes to the appropriate class a given {@code Counter}
  * operates with.</p>
- *
- * <p>As the {@code Counter} interface extends the {@code Map} interface, all
- * the general contracts in {@code Map} should be maintained. However, the
+ * <p>
+ * As the {@code Counter} interface extends the {@code Map} interface, all the
+ * general contracts in {@code Map} should be maintained. However, the
  * {@code Counter} interfaces adds a couple of specifications. First of all,
  * {@code Map} allows for implementing classes to decide wether they want to
  * allow {@code null} keys and values, but {@code Counter} restricts this since
@@ -762,7 +762,8 @@ public interface Counter<K, V extends Number> extends Map<K, V>{
 	 * behaves as if it was present with an associated value of minus
 	 * infinity.
 	 *
-	 * <p>More formally, it behaves as {@code (}{@link java.util.Map#containsKey
+	 * <p>
+	 * More formally, it behaves as {@code (}{@link java.util.Map#containsKey
 	 * containsKey}{@code (key) ? }{@link java.lang.Math#max max}{@code
 	 * (value,}{@link java.util.Map#get get}{@code (key)) : }{@link
 	 * java.util.Map#put(Object,Object) put}{@code (key,value)}.</p>
@@ -792,7 +793,8 @@ public interface Counter<K, V extends Number> extends Map<K, V>{
 	 * key is not already present in this {@code Counter}, this method behaves
 	 * as if it was present with an associated value of infinity.
 	 *
-	 * <p>More formally, it behaves as {@code (}{@link java.util.Map#containsKey
+	 * <p>
+	 * More formally, it behaves as {@code (}{@link java.util.Map#containsKey
 	 * containsKey}{@code (key) ? }{@link java.lang.Math#min min}{@code
 	 * (value,}{@link java.util.Map#get get}{@code (key)) : }{@link
 	 * java.util.Map#put put}{@code (key,value)}.</p>

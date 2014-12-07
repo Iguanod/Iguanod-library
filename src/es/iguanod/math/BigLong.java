@@ -214,24 +214,24 @@ public class BigLong extends Number implements Comparable<BigLong>{
 			if(n.nan){
 				return 0;
 			}else{
-				return isPossitive()?1:-1;
+				return isPossitive() ? 1 : -1;
 			}
 		}
 
 		if(n.nan){
-			return n.isPossitive()?1:-1;
+			return n.isPossitive() ? 1 : -1;
 		}
 
 		if(inf){
 			if(n.inf){
 				return 0;
 			}else{
-				return isPossitive()?1:-1;
+				return isPossitive() ? 1 : -1;
 			}
 		}
 
 		if(n.inf){
-			return isPossitive()?1:-1;
+			return isPossitive() ? 1 : -1;
 		}
 
 		int cmp=((Long)this.mant1).compareTo(n.mant1);
@@ -522,7 +522,6 @@ public class BigLong extends Number implements Comparable<BigLong>{
 			long res;
 
 			//************
-
 			mant2=op14 * op24;
 			if(mant2 < 0){
 				mant2&=0x7FFFFFFFFFFFFFFFL;
@@ -530,7 +529,6 @@ public class BigLong extends Number implements Comparable<BigLong>{
 			}
 
 			//************
-
 			res=op14 * op23;
 			mant2+=(res & 0x7FFFFFFFL) << 32;
 			if(mant2 < 0){
@@ -548,7 +546,6 @@ public class BigLong extends Number implements Comparable<BigLong>{
 			mant1+=(res & 0x7FFFFFFF80000000L) >>> 31;
 
 			//************
-
 			mant1+=op14 * op22;
 
 			mant1+=op12 * op24;
@@ -556,7 +553,6 @@ public class BigLong extends Number implements Comparable<BigLong>{
 			mant1+=(op13 * op23) << 1;
 
 			//************
-
 			mant1+=((op14 * op21) & 0xFFFFFFFFL) << 32;
 
 			mant1+=((op13 * op22) & 0xFFFFFFFFL) << 32;
@@ -566,7 +562,6 @@ public class BigLong extends Number implements Comparable<BigLong>{
 			mant1+=((op11 * op24) & 0xFFFFFFFFL) << 32;
 
 			//************
-
 			if(negate){
 				negateM();
 			}
@@ -763,7 +758,7 @@ public class BigLong extends Number implements Comparable<BigLong>{
 				mant1=res.mant1;
 				mant2=res.mant2;
 			}while(!this.equals(lastlast) && count < 7);
-			return this.mul(this).compareTo(this_cpy) <= 0?(BigLongM)this:last;
+			return this.mul(this).compareTo(this_cpy) <= 0 ? (BigLongM)this : last;
 		}
 
 		return (BigLongM)this;
@@ -890,8 +885,8 @@ public class BigLong extends Number implements Comparable<BigLong>{
 	@Override
 	public int hashCode(){
 		int hash=5;
-		hash=97 * hash + (this.nan?1:0);
-		hash=97 * hash + (this.inf?1:0);
+		hash=97 * hash + (this.nan ? 1 : 0);
+		hash=97 * hash + (this.inf ? 1 : 0);
 		hash=97 * hash + (int)(this.mant1 ^ (this.mant1 >>> 32));
 		hash=97 * hash + (int)(this.mant2 ^ (this.mant2 >>> 32));
 		return hash;
@@ -909,9 +904,9 @@ public class BigLong extends Number implements Comparable<BigLong>{
 	public BigDoubleM bigDoubleValue(){
 
 		if(inf){
-			return mant1 >= 0?BigDoubleM.infinity():BigDoubleM.infinity().negateM();
+			return mant1 >= 0 ? BigDoubleM.infinity() : BigDoubleM.infinity().negateM();
 		}else if(nan){
-			return mant1 >= 0?BigDoubleM.NaN():BigDoubleM.NaN().negateM();
+			return mant1 >= 0 ? BigDoubleM.NaN() : BigDoubleM.NaN().negateM();
 		}else if(mant1 == 0 && mant2 == 0){
 			return new BigDoubleM(BigDouble.ZERO);
 		}else if(mant1 == 0x8000000000000000L && mant2 == 0x0L){
@@ -954,7 +949,7 @@ public class BigLong extends Number implements Comparable<BigLong>{
 			}
 			int lead=numberOfLeadingZeros();
 			pvtShiftLeftM(lead - 1);
-			double ret=Double.longBitsToDouble((pos?0:0x8000000000000000L) | (((long)1149 - lead) << 52) | ((mant1 & 0x3FFFFFFFFFFFFFFFL) >> 10));
+			double ret=Double.longBitsToDouble((pos ? 0 : 0x8000000000000000L) | (((long)1149 - lead) << 52) | ((mant1 & 0x3FFFFFFFFFFFFFFFL) >> 10));
 			pvtShiftRightM(lead - 1);
 			if(!pos){
 				pvtNegateM();
@@ -985,7 +980,7 @@ public class BigLong extends Number implements Comparable<BigLong>{
 			}
 			int lead=numberOfLeadingZeros();
 			pvtShiftLeftM(lead - 1);
-			float ret=Float.intBitsToFloat((pos?0:0x80000000) | ((253 - lead) << 23) | (int)((mant1 & 0x3FFFFFFFFFFFFFFFL) >> 39));
+			float ret=Float.intBitsToFloat((pos ? 0 : 0x80000000) | ((253 - lead) << 23) | (int)((mant1 & 0x3FFFFFFFFFFFFFFFL) >> 39));
 			pvtShiftRightM(lead - 1);
 			if(!pos){
 				pvtNegateM();
@@ -1114,9 +1109,9 @@ public class BigLong extends Number implements Comparable<BigLong>{
 	public String toString(){
 
 		if(nan){
-			return mant1 >= 0?"NaN":"-NaN";
+			return mant1 >= 0 ? "NaN" : "-NaN";
 		}else if(inf){
-			return mant1 >= 0?"Inf":"-Inf";
+			return mant1 >= 0 ? "Inf" : "-Inf";
 		}else{
 			return bigIntegerValue().toString();
 		}

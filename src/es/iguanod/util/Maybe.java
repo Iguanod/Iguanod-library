@@ -252,7 +252,7 @@ public class Maybe<T> implements Serializable, Comparable<Maybe<T>>{
 	public int compareTo(Maybe<T> maybe){
 
 		if(!present){
-			return maybe.present?-1:0;
+			return maybe.present ? -1 : 0;
 		}else if(!maybe.present){
 			return 1;
 		}else{

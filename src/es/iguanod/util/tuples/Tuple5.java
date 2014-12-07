@@ -142,12 +142,12 @@ public class Tuple5<Fst, Snd, Trd, Fth, Ffth> implements Comparable<Tuple5<Fst, 
 	 * Compares this object with the specified object for order. Returns a
 	 * negative integer, zero, or a positive integer as this object is less
 	 * than, equal to, or greater than the specified object.
-	 *
-	 * <p>The comparison is done in order for the elements of the tuple: if
-	 * the first elements of both tuples compare to non-zero that value is
+	 * <p>
+	 * The comparison is done in order for the elements of the tuple: if the
+	 * first elements of both tuples compare to non-zero that value is
 	 * returned, otherwise the second elements are compared and so on.</p>
-	 *
-	 * <p>For the comparison
+	 * <p>
+	 * For the comparison
 	 * {@link es.iguanod.base.Objects#compare(Object,Object) Objects.compare}
 	 * is used, so it is {@code null}-safe and {@code nulls} compare to zero
 	 * with other {@code nulls} and less than zero with anything else.</p>
@@ -181,8 +181,8 @@ public class Tuple5<Fst, Snd, Trd, Fth, Ffth> implements Comparable<Tuple5<Fst, 
 	 * this tuple and the i-th element of the compared tuple are equal, for
 	 * any 1&le;i&le;5. Equality is determined with
 	 * {@link es.iguanod.base.Objects#equals(Object,Object) Objects.equals}.
-	 *
-	 * <p>In every other aspect this method follows the general contract of
+	 * <p>
+	 * In every other aspect this method follows the general contract of
 	 * {@link java.lang.Object#equals(Object) Object.equals}.</p>
 	 *
 	 * @param obj the object to be tested for equality
@@ -211,8 +211,8 @@ public class Tuple5<Fst, Snd, Trd, Fth, Ffth> implements Comparable<Tuple5<Fst, 
 
 	/**
 	 * Returns a hashCode value for this {@code Tuple5}.
-	 *
-	 * <p>This method follows the general contract of
+	 * <p>
+	 * This method follows the general contract of
 	 * {@link java.lang.Object#hashCode() Object.hashCode}.</p>
 	 *
 	 * @return the hashCode of this object
@@ -230,8 +230,8 @@ public class Tuple5<Fst, Snd, Trd, Fth, Ffth> implements Comparable<Tuple5<Fst, 
 
 	/**
 	 * Returns a {@code String} representation of this {@code Tuple5}.
-	 *
-	 * <p>This method returns a String consisting of parenthesis enclosing the
+	 * <p>
+	 * This method returns a String consisting of parenthesis enclosing the
 	 * String representation of each element of the tuple, separated with
 	 * {@code ", "}.</p>
 	 *

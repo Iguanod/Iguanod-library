@@ -456,7 +456,7 @@ public class TreeCounter<K, V extends Number> extends AbstractSortedCounter<K, V
 		@Override
 		public int size(){
 			Set<K> set=map.get(value);
-			return set == null?0:set.size();
+			return set == null ? 0 : set.size();
 		}
 
 		@Override
@@ -467,7 +467,7 @@ public class TreeCounter<K, V extends Number> extends AbstractSortedCounter<K, V
 		@Override
 		public boolean contains(Object obj){
 			Set<K> set=map.get(value);
-			return set == null?false:set.contains(obj);
+			return set == null ? false : set.contains(obj);
 		}
 
 		@Override
@@ -737,7 +737,7 @@ public class TreeCounter<K, V extends Number> extends AbstractSortedCounter<K, V
 	}
 
 	private class BackedInverseEntrySet extends AbstractBackedCollection<Entry<V, Set<K>>> implements Set<Entry<V, Set<K>>>{
-		
+
 		private static final long serialVersionUID=235548298362812687L;
 
 		public BackedInverseEntrySet(){
@@ -986,7 +986,7 @@ public class TreeCounter<K, V extends Number> extends AbstractSortedCounter<K, V
 		@Override
 		public V get(Object key){
 			V ret=super.get(key);
-			return ret != null && inLimits(ret)?ret:null;
+			return ret != null && inLimits(ret) ? ret : null;
 		}
 
 		@Override

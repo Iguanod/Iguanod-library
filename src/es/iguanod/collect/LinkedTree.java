@@ -49,7 +49,7 @@ public class LinkedTree<T> extends AbstractLinkedTree<T>{
 	public LinkedTree(Tree<? extends T> tree, int max_sons){
 		super(tree, max_sons);
 	}
-	
+
 	@Override
 	protected final boolean nullsAllowed(){
 		return true;
@@ -59,7 +59,7 @@ public class LinkedTree<T> extends AbstractLinkedTree<T>{
 	protected final boolean structureModifiable(){
 		return true;
 	}
-	
+
 	@Override
 	protected final boolean nodeValueModifiable(){
 		return true;
@@ -67,7 +67,7 @@ public class LinkedTree<T> extends AbstractLinkedTree<T>{
 
 	@Override
 	public TreeNode push(T value){
-		if(root!=null && this.maxSons() <= 0){
+		if(root != null && this.maxSons() <= 0){
 			throw new UnsupportedOperationException("If maximum of sons per node is not specified push is only supported to set the root");
 		}
 

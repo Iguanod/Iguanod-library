@@ -118,7 +118,7 @@ public class ResultsTree<T> extends AscendingTree<T[]>{
 	public ResultsTree(int num_players, int num_sons){
 		this(num_players, num_sons, DEFAULT_PRUNE_LVLS);
 	}
-	
+
 	public ResultsTree(int num_players, int num_sons, int prune_lvls){
 		super(num_sons);
 		this.prune_lvls=prune_lvls;
@@ -155,7 +155,7 @@ public class ResultsTree<T> extends AscendingTree<T[]>{
 		sons_results.clear();
 		for(TreeNode son:getChildren(parent)){
 			T[] value=getValue(son).get();
-			sons_results.sumAll(value,(num_players+1-value.length)/(double)num_players);
+			sons_results.sumAll(value, (num_players + 1 - value.length) / (double)num_players);
 		}
 		Entry<T, Double>[] sorted=CollectionsIg.toGenericArray(sons_results.entrySet());
 

@@ -1050,7 +1050,7 @@ public final class CollectionsIg{
 		public boolean containsAll(Collection<?> c){
 			return col.containsAll(c);
 		}
-		
+
 		@Override
 		public String toString(){
 			return col.toString();

@@ -376,7 +376,7 @@ public enum CardSuit{
 	 * @see es.iguanod.games.cards.CardSymbol#supported_locale
 	 */
 	public String toString(Locale locale) throws IllegalArgumentException{
-		if(locale==null){
+		if(locale == null){
 			throw new NullPointerException("Locale can't be null");
 		}
 		if(!supported_locale.contains(locale)){
@@ -404,7 +404,7 @@ public enum CardSuit{
 	 * {@code null}
 	 */
 	public static Maybe<CardSuit> fromString(String name, Locale locale) throws IllegalArgumentException{
-		if(name==null || locale==null){
+		if(name == null || locale == null){
 			throw new NullPointerException("Null values not accepted");
 		}
 		if(!supported_locale.contains(locale)){

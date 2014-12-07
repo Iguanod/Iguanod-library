@@ -109,15 +109,15 @@ public class Deck extends ArrayList<Card>{
 			public int compare(Card o1, Card o2){
 				int ind1=suits.indexOf(o1.suit);
 				int ind2=suits.indexOf(o2.suit);
-				int cmp=(ind1 != -1?ind1:suits.size()) - (ind2 != -1?ind2:suits.size());
+				int cmp=(ind1 != -1 ? ind1 : suits.size()) - (ind2 != -1 ? ind2 : suits.size());
 				if(cmp != 0){
 					return cmp;
 				}else{
 					ind1=symbols.indexOf(o1.symbol);
 					ind2=symbols.indexOf(o2.symbol);
-					ind1=ind1 != -1?ind1:suits.size();
-					ind2=ind2 != -1?ind2:suits.size();
-					return (ind1 != -1?ind1:symbols.size()) - (ind2 != -1?ind2:symbols.size());
+					ind1=ind1 != -1 ? ind1 : suits.size();
+					ind2=ind2 != -1 ? ind2 : suits.size();
+					return (ind1 != -1 ? ind1 : symbols.size()) - (ind2 != -1 ? ind2 : symbols.size());
 				}
 			}
 		});

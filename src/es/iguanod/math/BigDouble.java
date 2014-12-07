@@ -375,7 +375,7 @@ public class BigDouble extends Number implements Comparable<BigDouble>{
 		desp_count++;
 		BigDecimal last_pow=pows_of_2_bd[251];
 		while(bd.compareTo(BigDecimal.ZERO) > 0 && desp_count < 126){
-			if(pow_index < 252?(bd.compareTo(pows_of_2_bd[pow_index]) >= 0):(last_pow=last_pow.divide(bd2)) != null && bd.compareTo(last_pow) >= 0){
+			if(pow_index < 252 ? (bd.compareTo(pows_of_2_bd[pow_index]) >= 0) : (last_pow=last_pow.divide(bd2)) != null && bd.compareTo(last_pow) >= 0){
 				if(desp_count < 64){
 					mant1|=0x8000000000000000L >>> desp_count;
 					init=true;
@@ -383,7 +383,7 @@ public class BigDouble extends Number implements Comparable<BigDouble>{
 					mant2|=0x8000000000000000L >>> (desp_count - 63);
 					init=true;
 				}
-				bd=bd.subtract(pow_index < 252?pows_of_2_bd[pow_index]:last_pow);
+				bd=bd.subtract(pow_index < 252 ? pows_of_2_bd[pow_index] : last_pow);
 			}
 			if(init){
 				desp_count++;
@@ -508,26 +508,26 @@ public class BigDouble extends Number implements Comparable<BigDouble>{
 
 		if(nan){
 			if(n.nan){
-				return pos == n.pos?0:pos?1:-1;
+				return pos == n.pos ? 0 : pos ? 1 : -1;
 			}else{
-				return pos?1:-1;
+				return pos ? 1 : -1;
 			}
 		}
 
 		if(n.nan){
-			return n.pos?1:-1;
+			return n.pos ? 1 : -1;
 		}
 
 		if(inf){
 			if(n.inf){
-				return pos == n.pos?0:pos?1:-1;
+				return pos == n.pos ? 0 : pos ? 1 : -1;
 			}else{
-				return pos?1:-1;
+				return pos ? 1 : -1;
 			}
 		}
 
 		if(n.inf){
-			return pos?1:-1;
+			return pos ? 1 : -1;
 		}
 
 		if(mant1 != mant2 || mant1 != n.mant1 || mant1 != n.mant2 || mant1 != 0){
@@ -553,9 +553,9 @@ public class BigDouble extends Number implements Comparable<BigDouble>{
 
 		int cmp=((Long)a.mant1).compareTo(b.mant1);
 		if(cmp != 0){
-			return cmp * (pos?1:-1);
+			return cmp * (pos ? 1 : -1);
 		}else{
-			return ((Long)a.mant2).compareTo(b.mant2) * (pos?1:-1);
+			return ((Long)a.mant2).compareTo(b.mant2) * (pos ? 1 : -1);
 		}
 	}
 
@@ -1255,7 +1255,7 @@ public class BigDouble extends Number implements Comparable<BigDouble>{
 			//Nothing to do
 		}else{
 			BigDoubleM this_cpy=new BigDoubleM(this);
-			this.exp=(short)(exp % 2 == 0?exp / 2:exp / 2 + 1);
+			this.exp=(short)(exp % 2 == 0 ? exp / 2 : exp / 2 + 1);
 			{
 				BigDoubleM last=new BigDoubleM(this);
 				BigDoubleM lastlast;
@@ -1451,9 +1451,9 @@ public class BigDouble extends Number implements Comparable<BigDouble>{
 	@Override
 	public int hashCode(){
 		int hash=7;
-		hash=59 * hash + (this.pos?1:0);
-		hash=59 * hash + (this.nan?1:0);
-		hash=59 * hash + (this.inf?1:0);
+		hash=59 * hash + (this.pos ? 1 : 0);
+		hash=59 * hash + (this.nan ? 1 : 0);
+		hash=59 * hash + (this.inf ? 1 : 0);
 		hash=59 * hash + this.exp;
 		hash=59 * hash + (int)(this.mant1 ^ (this.mant1 >>> 32));
 		hash=59 * hash + (int)(this.mant2 ^ (this.mant2 >>> 32));
@@ -1479,9 +1479,9 @@ public class BigDouble extends Number implements Comparable<BigDouble>{
 	public BigLongM bigLongValue() throws IllegalStateException{
 
 		if(inf){
-			return pos?BigLongM.infinity():BigLongM.infinity().negateM();
+			return pos ? BigLongM.infinity() : BigLongM.infinity().negateM();
 		}else if(nan){
-			return pos?BigLongM.NaN():BigLongM.NaN().negateM();
+			return pos ? BigLongM.NaN() : BigLongM.NaN().negateM();
 		}else if(pos && exp > 126){
 			throw new IllegalStateException("Number too big for a BigLong");
 		}else if(!pos){
@@ -1536,7 +1536,7 @@ public class BigDouble extends Number implements Comparable<BigDouble>{
 		}else if(mant1 == 0 && mant2 == 0){
 			return 0;
 		}else{
-			return Double.longBitsToDouble((pos?0:0x8000000000000000L) | (((long)exp + 1022) << 52) | ((mant1 & 0x3FFFFFFFFFFFFFFFL) >> 10));
+			return Double.longBitsToDouble((pos ? 0 : 0x8000000000000000L) | (((long)exp + 1022) << 52) | ((mant1 & 0x3FFFFFFFFFFFFFFFL) >> 10));
 		}
 	}
 
@@ -1564,7 +1564,7 @@ public class BigDouble extends Number implements Comparable<BigDouble>{
 		}else if(mant1 == 0 && mant2 == 0){
 			return 0;
 		}else{
-			return Float.intBitsToFloat((pos?0:0x80000000) | ((exp + 126) << 23) | (int)((mant1 & 0x3FFFFFFFFFFFFFFFL) >> 39));
+			return Float.intBitsToFloat((pos ? 0 : 0x80000000) | ((exp + 126) << 23) | (int)((mant1 & 0x3FFFFFFFFFFFFFFFL) >> 39));
 		}
 	}
 
@@ -1724,9 +1724,9 @@ public class BigDouble extends Number implements Comparable<BigDouble>{
 	public String toString(){
 
 		if(nan){
-			return pos?"NaN":"-NaN";
+			return pos ? "NaN" : "-NaN";
 		}else if(inf){
-			return pos?"Inf":"-Inf";
+			return pos ? "Inf" : "-Inf";
 		}else{
 			return bigDecimalValue().toString();
 		}
@@ -1742,9 +1742,9 @@ public class BigDouble extends Number implements Comparable<BigDouble>{
 	public String toString(int digits){
 
 		if(nan){
-			return pos?"NaN":"-NaN";
+			return pos ? "NaN" : "-NaN";
 		}else if(inf){
-			return pos?"Inf":"-Inf";
+			return pos ? "Inf" : "-Inf";
 		}else{
 			return bigDecimalValue().round(new MathContext(digits, RoundingMode.HALF_EVEN)).toString();
 		}

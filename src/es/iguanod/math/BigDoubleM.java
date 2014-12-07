@@ -194,16 +194,12 @@ public class BigDoubleM extends BigDouble{
 
 	/**
 	 * NOTE: preferred over modM(BigDouble) when
-	 * Long.MIN_VALUE<=this<=Long.MAX_VALUE. In case of doubt it is
-	 * recommended to use this method since if used when this>Long.MAX_VALUE
-	 * or this<Long.MIN_VALUE it is 0.5 times slower than modM(BigDouble) but
-	 * if Long.MIN_VALUE<=this<=Long.MAX_VALUE this method is 40 times faster
-	 * than modM(BigDouble).
-	 *
-	 *
-	 *
-
-	 *
+	 * Long.MIN_VALUE&le;this&le;Long.MAX_VALUE. In case of doubt it is
+	 * recommended to use this method since if used when
+	 * this&gt;Long.MAX_VALUE or this&lt;Long.MIN_VALUE it is 0.5 times slower
+	 * than modM(BigDouble) but if Long.MIN_VALUE&le;this&le;Long.MAX_VALUE
+	 * this method is 40 times faster than modM(BigDouble).
+	 * 
 	 * @param n
 	 *
 	 * @return

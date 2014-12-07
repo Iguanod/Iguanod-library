@@ -37,17 +37,17 @@ import java.util.Set;
  * equivalent to a {@link java.util.HashMap}. This class makes no guarantees as
  * to the order of the counter; in particular, it does not guarantee that the
  * order will remain constant over time.
- *
- * <p>An instance of {@code HashCounter} has two parameters that affect its
+ * <p>
+ * An instance of {@code HashCounter} has two parameters that affect its
  * performance: initial capacity and load factor. To know more about these
  * parameters, please read the documentation of the {@link java.util.HashMap}
  * class.</p>
- *
- * <p>{@code HashCounter} provides no public constructors. Instead, objects are
+ * <p>
+ * {@code HashCounter} provides no public constructors. Instead, objects are
  * instantiated with a builder,
  * {@link HashCounterBuilder HashCounterBuilder}.</p>
- *
- * <p>For methods inherited from {@code AbstractCounter}, its documentation
+ * <p>
+ * For methods inherited from {@code AbstractCounter}, its documentation
  * specifies they can throw {@code UnsupportedOperationException} if the
  * implementing class is not mutable, and {@code NullPointerException} if keys
  * passed to methods aer {@code null} and the implementing class doesn't accept
@@ -80,19 +80,19 @@ public class HashCounter<K, V extends Number> extends AbstractCounter<K, V>{
 	 * load factor of the underlaying hash table, a
 	 * {@link java.util.Comparator} for the values and a {@link java.util.Map}
 	 * with the initial mappings for the {@code HashCounter} can be provided.
-	 *
-	 * <p>All the methods of the {@code HashCounterBuilder} (except for the
+	 * <p>
+	 * All the methods of the {@code HashCounterBuilder} (except for the
 	 * {@link #build build} method) return {@code this}, so calls can be
 	 * chained.</p>
-	 *
-	 * <p>If no initial capacity is specified, the default initial capacity
-	 * (16) is used. If no load factor is specified, the default load factor
-	 * is used (0.75).</p>
-	 *
-	 * <p>If no {@code Comparator} is specified, none will be used and the
-	 * values will be compared according to their natural ordering.</p>
-	 *
-	 * <p>If no initial mappings are specfied, none will be used. If they are
+	 * <p>
+	 * If no initial capacity is specified, the default initial capacity (16)
+	 * is used. If no load factor is specified, the default load factor is
+	 * used (0.75).</p>
+	 * <p>
+	 * If no {@code Comparator} is specified, none will be used and the values
+	 * will be compared according to their natural ordering.</p>
+	 * <p>
+	 * If no initial mappings are specfied, none will be used. If they are
 	 * specified, the initial capacity and load factor are ignored, and the
 	 * default load factor (0.75) and an initial capacity enough to hold all
 	 * of the initial mappings are used.</p>
@@ -434,10 +434,10 @@ public class HashCounter<K, V extends Number> extends AbstractCounter<K, V>{
 	 * modified while an iteration over the set is in progress (except through
 	 * the iterator's own {@code remove} operation), the results of the
 	 * iteration are undefined. The set supports element removal, which
-	 * removes the corresponding mapping from the counter, via the {@code Iterator.remove},
-	 * {@code Set.remove}, {@code removeAll}, {@code retainAll}, and
-	 * {@code clear} operations. It does not support the {@code add} or
-	 * {@code addAll} operations.
+	 * removes the corresponding mapping from the counter, via the
+	 * {@code Iterator.remove}, {@code Set.remove}, {@code removeAll},
+	 * {@code retainAll}, and {@code clear} operations. It does not support
+	 * the {@code add} or {@code addAll} operations.
 	 *
 	 * @return the {@code Set} view of the keys contained in this
 	 * {@code Counter}
@@ -476,10 +476,9 @@ public class HashCounter<K, V extends Number> extends AbstractCounter<K, V>{
 	 * {@code setValue} operation on an {@code Entry} returned by the
 	 * iterator), the results of the iteration are undefined. The set supports
 	 * element removal, which removes the corresponding mapping from the
-	 * counter, via the {@code Iterator.remove},
-	 * {@code Set.remove}, {@code removeAll}, {@code retainAll}, and
-	 * {@code clear} operations. It does not support the {@code add} or
-	 * {@code addAll} operations.
+	 * counter, via the {@code Iterator.remove}, {@code Set.remove},
+	 * {@code removeAll}, {@code retainAll}, and {@code clear} operations. It
+	 * does not support the {@code add} or {@code addAll} operations.
 	 *
 	 * @return the {@code Set} view of the mappings contained in this
 	 * {@code Counter}

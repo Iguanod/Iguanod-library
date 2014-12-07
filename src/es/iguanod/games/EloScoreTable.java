@@ -133,7 +133,7 @@ public class EloScoreTable<T> implements Iterable<Tuple2<T, Integer>>, Serializa
 
 		public void addGame(int num_players, boolean win, int num_winners, boolean single){
 
-			GameType type=single?SINGLE:TEAM;
+			GameType type=single ? SINGLE : TEAM;
 
 			stats.get(type).get(StatType.GAMES).sum(num_players);
 			stats.get(type).get(StatType.GAMES).sum(0);
@@ -158,7 +158,7 @@ public class EloScoreTable<T> implements Iterable<Tuple2<T, Integer>>, Serializa
 				ties_count.get(type).put(num_players, ties);
 			}
 			ties.sum(num_winners);
-			
+
 			ties=ties_total.get(type).get(num_players);
 			if(ties == null){
 				ties=new IntHashCounter<>();
@@ -435,7 +435,7 @@ public class EloScoreTable<T> implements Iterable<Tuple2<T, Integer>>, Serializa
 		}
 		return pvtStats(player, type, StatType.TIES, num_players);
 	}
-	
+
 	protected int pvtTimesTied(Map<GameType, Map<Integer, Counter<Integer, Integer>>> ties_map, GameType type, int num_players, int num_winners){
 		if(type == ALL){
 			return timesTied(SINGLE, num_players, num_winners) + timesTied(TEAM, num_players, num_winners);
@@ -457,18 +457,18 @@ public class EloScoreTable<T> implements Iterable<Tuple2<T, Integer>>, Serializa
 		if(s == null){
 			return 0;
 		}
-		
-		return pvtTimesTied(s.ties_count,type,num_players,num_winners);
+
+		return pvtTimesTied(s.ties_count, type, num_players, num_winners);
 	}
-	
+
 	public int timesTied(GameType type, int num_players, int num_winners){
-		
-		return pvtTimesTied(ties_total,type,num_players,num_winners);
+
+		return pvtTimesTied(ties_total, type, num_players, num_winners);
 	}
 
 	public int score(T player){
 		Double x=table.get(player);
-		return (int)(x == null?mean:x);
+		return (int)(x == null ? mean : x);
 	}
 
 	@Override

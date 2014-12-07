@@ -43,7 +43,7 @@ public class AscendingTree<T> extends AbstractLinkedTree<T>{
 	public AscendingTree(Tree<? extends T> tree, int num_sons){
 		super(tree, num_sons);
 	}
-	
+
 	@Override
 	protected final boolean nullsAllowed(){
 		return true;
@@ -53,7 +53,7 @@ public class AscendingTree<T> extends AbstractLinkedTree<T>{
 	protected final boolean structureModifiable(){
 		return false;
 	}
-	
+
 	@Override
 	protected final boolean nodeValueModifiable(){
 		return false;
@@ -96,7 +96,7 @@ public class AscendingTree<T> extends AbstractLinkedTree<T>{
 		if(!this.hasChildren(node)){
 			return 1;
 		}
-		int acc=this.getValue(node).isAbsent()?0:1;
+		int acc=this.getValue(node).isAbsent() ? 0 : 1;
 		for(TreeNode son:this.children(node)){
 			acc+=this.nonEmptySize(son);
 			if(acc < 0){

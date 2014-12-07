@@ -88,7 +88,7 @@ public abstract class AbstractTree<T> implements Tree<T>, Serializable{
 	public AbstractTree(){
 		this(0);
 	}
-	
+
 	protected abstract boolean nullsAllowed();
 
 	protected abstract boolean structureModifiable();
@@ -302,7 +302,7 @@ public abstract class AbstractTree<T> implements Tree<T>, Serializable{
 	 */
 	@Override
 	public Maybe<TreeNode> getChild(TreeNode node, int i){
-		if(childrenSize(node)>i+1){
+		if(childrenSize(node) > i + 1){
 			return Maybe.ABSENT;
 		}
 		int count=0;

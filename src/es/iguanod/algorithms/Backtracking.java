@@ -32,12 +32,14 @@ import java.util.Iterator;
  * soon as possible one they can't lead to a solution (follow the link for more
  * details).
  *
- * <p>To solve a problem using this class, one has to model said problem with
- * the {@link es.iguanod.algorithms.Backtracking.Backtrackable Backtrackable}
+ * <p>
+ * To solve a problem using this class, one has to model said problem with the
+ * {@link es.iguanod.algorithms.Backtracking.Backtrackable Backtrackable}
  * interface.</p>
  *
- * <p>The algorithm develops as follows: for every state (partial or full
- * solution) examined, starting with the initial one (constructed with the
+ * <p>
+ * The algorithm develops as follows: for every state (partial or full solution)
+ * examined, starting with the initial one (constructed with the
  * {@link es.iguanod.algorithms.Backtracking.Backtrackable#initialState() initialState()}
  * method), the method
  * {@link es.iguanod.algorithms.Backtracking.Backtrackable#isSolution(Object) isSolution(state)}
@@ -48,7 +50,8 @@ import java.util.Iterator;
  * {@link es.iguanod.algorithms.Backtracking.Backtrackable#reject(Object) reject(state)}
  * method, the algorithm loops applying it the whole process.</p>
  *
- * <p>If any operation needs to be done when a solution is rejected, it can be
+ * <p>
+ * If any operation needs to be done when a solution is rejected, it can be
  * performed inside the
  * {@link es.iguanod.algorithms.Backtracking.Backtrackable#reject(Object) reject(state)}
  * method, as there is guarantee the method will be called exactly once per
@@ -75,8 +78,8 @@ public final class Backtracking{
 	/**
 	 * Class used to model a problem to be solved with the
 	 * {@link es.iguanod.algorithms.Backtracking Backtracking} algorithm.
-	 *
-	 * <p>It is guaranteed that the objects passed to the {@link es.iguanod.algorithms.Backtracking.Backtrackable#reject(Object) reject(state)},
+	 * <p>
+	 * It is guaranteed that the objects passed to the {@link es.iguanod.algorithms.Backtracking.Backtrackable#reject(Object) reject(state)},
 	 * {@link es.iguanod.algorithms.Backtracking.Backtrackable#isSolution(Object) isSolution(state)}
 	 * and
 	 * {@link es.iguanod.algorithms.Backtracking.Backtrackable#stateIterator(Object) stateIterator(state)}

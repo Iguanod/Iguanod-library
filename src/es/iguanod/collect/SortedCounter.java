@@ -25,8 +25,8 @@ import java.util.Set;
 /**
  * Extension of the {@code Counter} interface to add methods related with
  * {@code Counters} that maintain an order in their values.
- *
- * <p>Note that although {@code Counter} extends {@link java.util.Map},
+ * <p>
+ * Note that although {@code Counter} extends {@link java.util.Map},
  * {@code SortedCounter} does <b>not</b> extend {@link java.util.SortedMap}, and
  * their behaviour should not be confused: {@code SortedCounters} maintain an
  * ordering in their values, while {@code SortedMaps} maintain an ordering in

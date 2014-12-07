@@ -89,7 +89,7 @@ public final class Objects{
 	 * @return the hashCode of the object
 	 */
 	public static int hashCode(Object obj){
-		return obj != null?obj.hashCode():0;
+		return obj != null ? obj.hashCode() : 0;
 	}
 
 	/**

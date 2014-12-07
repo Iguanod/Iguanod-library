@@ -33,7 +33,8 @@ import java.util.List;
  * that the total weight is less than or equal to a given limit and the total
  * value is as large as possible.
  *
- * <p>Implementation is provided for two variants of the problem: the bounded
+ * <p>
+ * Implementation is provided for two variants of the problem: the bounded
  * variant, in which every item can be added as much once; and the unbounded
  * variant, in which each item can be used as many times as wanted.
  * Additionally, for both variants there are methods that return only the best
@@ -173,12 +174,12 @@ public final class Knapsack{
 	/**
 	 * Solves the bounded knapsack problem, returning both the optimized value
 	 * and the count of each item needed to achieve that value.
-	 *
-	 * <p>Note that since it is the bounded version of the problem, each
-	 * element can be only selected either one or zero times, so the count of
-	 * the items is returned as a {@code List} of {@code Booleans}.</p>
-	 *
-	 * <p><b>Warning</b>: the returned {@code List} of {@code Booleans} may be
+	 * <p>
+	 * Note that since it is the bounded version of the problem, each element
+	 * can be only selected either one or zero times, so the count of the
+	 * items is returned as a {@code List} of {@code Booleans}.</p>
+	 * <p>
+	 * <b>Warning</b>: the returned {@code List} of {@code Booleans} may be
 	 * immutable.</p>
 	 *
 	 * @param items {@code List} of tuples containing all the possible items.
@@ -193,7 +194,8 @@ public final class Knapsack{
 	 * {@code true} if the ith element of the list of items is chosen, and
 	 * false otherwise
 	 *
-	 * @throws IllegalArgumentException if the weight of any item or {@code max_weight} is negative
+	 * @throws IllegalArgumentException if the weight of any item or
+	 * {@code max_weight} is negative
 	 * @throws NullPointerException if {@code items} is {@code null}, or any
 	 * {@code Tuple2} in {@code items} is {@code null} or any {@code Double}
 	 * or {@code Integer} in any {@code Tuple2} is {@code null}
@@ -299,7 +301,8 @@ public final class Knapsack{
 	 * Solves the bounded knapsack problem, returning both the optimized value
 	 * and the count of each item needed to achieve that value.
 	 *
-	 * <p><b>Warning</b>: the returned {@code List} of {@code Integers} may be
+	 * <p>
+	 * <b>Warning</b>: the returned {@code List} of {@code Integers} may be
 	 * immutable</p>
 	 *
 	 * @param items {@code List} of tuples containing all the possible items.

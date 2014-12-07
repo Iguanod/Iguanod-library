@@ -103,7 +103,7 @@ public abstract class AbstractLinkedTree<T> extends AbstractTree<T>{
 		}
 		this.copyStructure(tree, tree_root);
 	}
-	
+
 	protected abstract boolean nodeValueModifiable();
 
 	private void copyStructure(Tree<? extends T> tree_src, TreeNode node){
@@ -204,7 +204,7 @@ public abstract class AbstractLinkedTree<T> extends AbstractTree<T>{
 
 	@Override
 	public Maybe<TreeNode> root(){
-		return root == null?Maybe.ABSENT:Maybe.from(root);
+		return root == null ? Maybe.ABSENT : Maybe.from(root);
 	}
 
 	@Override
@@ -263,7 +263,7 @@ public abstract class AbstractLinkedTree<T> extends AbstractTree<T>{
 	@Override
 	public Maybe<TreeNode> parent(TreeNode node){
 		node.checkNode(this);
-		return ((LinkedTNode<T>)node).parent == null?Maybe.ABSENT:Maybe.from(((LinkedTNode<T>)node).parent);
+		return ((LinkedTNode<T>)node).parent == null ? Maybe.ABSENT : Maybe.from(((LinkedTNode<T>)node).parent);
 	}
 
 	protected LinkedTNode<T> pvtAdd(TreeNode node, T value){
@@ -334,7 +334,7 @@ public abstract class AbstractLinkedTree<T> extends AbstractTree<T>{
 		}
 		node.checkNode(this);
 		for(TreeNode son:this.children(node)){
-		invalidateBranch(son);
+			invalidateBranch(son);
 		}
 		((LinkedTNode<T>)node).sons.clear();
 	}

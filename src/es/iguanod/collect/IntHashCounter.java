@@ -163,7 +163,7 @@ public class IntHashCounter<K> extends HashCounter<K, Integer>{
 		Iterator<Entry<K, Integer>> iter=entrySet().iterator();
 		while(iter.hasNext()){
 			Entry<K, Integer> entry=iter.next();
-			entry.setValue(entry.getValue()+value);
+			entry.setValue(entry.getValue() + value);
 		}
 	}
 
@@ -172,8 +172,8 @@ public class IntHashCounter<K> extends HashCounter<K, Integer>{
 	 * current value associated with every key in the specified. If the key is
 	 * not already present in this {@code Counter}, this method behaves as if
 	 * it was present with an associated value of {@code 0} (zero).
-	 *
-	 * <p><b>Note</b>: since this {@code Counter} works with {@code Integers},
+	 * <p>
+	 * <b>Note</b>: since this {@code Counter} works with {@code Integers},
 	 * unless the size of the collection is one, the amount summed to the
 	 * elements will be zero.</p>
 	 *
@@ -193,8 +193,8 @@ public class IntHashCounter<K> extends HashCounter<K, Integer>{
 	 * key in the specified. If the key is not already present in this
 	 * {@code Counter}, this method behaves as if it was present with an
 	 * associated value of {@code 0} (zero).
-	 *
-	 * <p><b>Note</b>: since this {@code Counter} works with {@code Integers},
+	 * <p>
+	 * <b>Note</b>: since this {@code Counter} works with {@code Integers},
 	 * unless the size of the array is one, the amount summed to the elements
 	 * will be zero.</p>
 	 *
@@ -215,8 +215,8 @@ public class IntHashCounter<K> extends HashCounter<K, Integer>{
 	 * {@code Collection}. If the key is not already present in this
 	 * {@code Counter}, this method behaves as if it was present with an
 	 * associated value of {@code 0} (zero).
-	 *
-	 * <p><b>Note</b>: since this {@code Counter} works with {@code Integers},
+	 * <p>
+	 * <b>Note</b>: since this {@code Counter} works with {@code Integers},
 	 * unless the size of the collection is greater or equal than
 	 * {@code value}, the amount summed to the elements will be zero.</p>
 	 *
@@ -237,8 +237,8 @@ public class IntHashCounter<K> extends HashCounter<K, Integer>{
 	 * every key in the specified array. If the key is not already present in
 	 * this {@code Counter}, this method behaves as if it was present with an
 	 * associated value of {@code 0} (zero).
-	 *
-	 * <p><b>Note</b>: since this {@code Counter} works with {@code Integers},
+	 * <p>
+	 * <b>Note</b>: since this {@code Counter} works with {@code Integers},
 	 * unless the size of the array greater or equal than {@code value}, the
 	 * amount summed to the elements will be zero.</p>
 	 *
@@ -257,8 +257,8 @@ public class IntHashCounter<K> extends HashCounter<K, Integer>{
 	/**
 	 * Adds {@code 1/this.}{@link #size() size()}) to the current value
 	 * associated with every key in this {@code Counter}.
-	 *
-	 * <p><b>Note</b>: since this {@code Counter} works with {@code Integers},
+	 * <p>
+	 * <b>Note</b>: since this {@code Counter} works with {@code Integers},
 	 * unless the size of this {@code Counter} is one, the amount summed to
 	 * the elements will be zero.</p>
 	 *
@@ -275,8 +275,8 @@ public class IntHashCounter<K> extends HashCounter<K, Integer>{
 	/**
 	 * Adds {@code value/this.}{@link #size() size()}), to the current value
 	 * associated with every key in this {@code Counter}.
-	 *
-	 * <p><b>Note</b>: since this {@code Counter} works with {@code Integers},
+	 * <p>
+	 * <b>Note</b>: since this {@code Counter} works with {@code Integers},
 	 * unless the size of this {@code Counter} is greater or equal than
 	 * {@code value}, the amount summed to the elements will be zero.</p>
 	 *
@@ -300,8 +300,8 @@ public class IntHashCounter<K> extends HashCounter<K, Integer>{
 	 * the current value associated with every key in the specified. If the
 	 * key is not already present in this {@code Counter}, this method behaves
 	 * as if it was present with an associated value of {@code 0} (zero).
-	 *
-	 * <p><b>Note</b>: since this {@code Counter} works with {@code Integers},
+	 * <p>
+	 * <b>Note</b>: since this {@code Counter} works with {@code Integers},
 	 * unless the size of the collection is one, the amount deducted to the
 	 * elements will be zero.</p>
 	 *
@@ -321,8 +321,8 @@ public class IntHashCounter<K> extends HashCounter<K, Integer>{
 	 * every key in the specified. If the key is not already present in this
 	 * {@code Counter}, this method behaves as if it was present with an
 	 * associated value of {@code 0} (zero).
-	 *
-	 * <p><b>Note</b>: since this {@code Counter} works with {@code Integers},
+	 * <p>
+	 * <b>Note</b>: since this {@code Counter} works with {@code Integers},
 	 * unless the size of the array is one, the amount deducted to the
 	 * elements will be zero.</p>
 	 *
@@ -343,8 +343,8 @@ public class IntHashCounter<K> extends HashCounter<K, Integer>{
 	 * {@code Collection}. If the key is not already present in this
 	 * {@code Counter}, this method behaves as if it was present with an
 	 * associated value of {@code 0} (zero).
-	 *
-	 * <p><b>Note</b>: since this {@code Counter} works with {@code Integers},
+	 * <p>
+	 * <b>Note</b>: since this {@code Counter} works with {@code Integers},
 	 * unless the size of the collection is greater or equal than
 	 * {@code value}, the amount deducted to the elements will be zero.</p>
 	 *
@@ -365,8 +365,8 @@ public class IntHashCounter<K> extends HashCounter<K, Integer>{
 	 * every key in the specified array. If the key is not already present in
 	 * this {@code Counter}, this method behaves as if it was present with an
 	 * associated value of {@code 0} (zero).
-	 *
-	 * <p><b>Note</b>: since this {@code Counter} works with {@code Integers},
+	 * <p>
+	 * <b>Note</b>: since this {@code Counter} works with {@code Integers},
 	 * unless the size of the array greater or equal than {@code value}, the
 	 * amount deducted to the elements will be zero.</p>
 	 *
@@ -385,8 +385,8 @@ public class IntHashCounter<K> extends HashCounter<K, Integer>{
 	/**
 	 * Deducts {@code 1/this.}{@link #size() size()}) to the current value
 	 * associated with every key in this {@code Counter}.
-	 *
-	 * <p><b>Note</b>: since this {@code Counter} works with {@code Integers},
+	 * <p>
+	 * <b>Note</b>: since this {@code Counter} works with {@code Integers},
 	 * unless the size of this {@code Counter} is one, the amount deducted to
 	 * the elements will be zero.</p>
 	 *
@@ -403,8 +403,8 @@ public class IntHashCounter<K> extends HashCounter<K, Integer>{
 	/**
 	 * Deducts {@code value/this.}{@link #size() size()}), to the current
 	 * value associated with every key in this {@code Counter}.
-	 *
-	 * <p><b>Note</b>: since this {@code Counter} works with {@code Integers},
+	 * <p>
+	 * <b>Note</b>: since this {@code Counter} works with {@code Integers},
 	 * unless the size of this {@code Counter} is greater or equal than
 	 * {@code value}, the amount deducted to the elements will be zero.</p>
 	 *

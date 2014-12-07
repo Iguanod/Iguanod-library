@@ -178,7 +178,7 @@ public class Card implements Comparable<Card>, Serializable{
 	 * @see es.iguanod.games.cards.CardSymbol#supported_locale
 	 */
 	public String toString(Locale locale) throws IllegalArgumentException{
-		return symbol.toString(locale) + (supported_locale.contains(locale)?translations.get(locale):" of ") + suit.toString(locale);
+		return symbol.toString(locale) + (supported_locale.contains(locale) ? translations.get(locale) : " of ") + suit.toString(locale);
 	}
 
 	/**
@@ -225,8 +225,8 @@ public class Card implements Comparable<Card>, Serializable{
 	@Override
 	public int hashCode(){
 		int hash=5;
-		hash=97 * hash + (this.suit != null?this.suit.hashCode():0);
-		hash=97 * hash + (this.symbol != null?this.symbol.hashCode():0);
+		hash=97 * hash + (this.suit != null ? this.suit.hashCode() : 0);
+		hash=97 * hash + (this.symbol != null ? this.symbol.hashCode() : 0);
 		return hash;
 	}
 }

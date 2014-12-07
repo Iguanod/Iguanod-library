@@ -31,14 +31,14 @@ import java.util.Map;
 /**
  * This class provides a skeletal implementation of the {@code Counter}
  * interface, to minimize the effort required to implement this interface.
- *
- * <p>Since {@link java.lang.Number Numbers} cannot be operated directly, the
+ * <p>
+ * Since {@link java.lang.Number Numbers} cannot be operated directly, the
  * internal calculations are done using {@link java.math.BigDecimal BigDecimal}.
  * That's why the constructors take as parameter a
  * {@link es.iguanod.util.Caster Caster} to convert {@code BigDecimal} values to
  * {@code V} values.</p>
- *
- * <p>Despite being abstract, {@code AbstractCounter} does have some internal
+ * <p>
+ * Despite being abstract, {@code AbstractCounter} does have some internal
  * fields, so it implements {@link java.io.Serializable Serializable} and it
  * will be {@code Serializable} as long as both the {@code Comparator} (if
  * given) and the elements returned by the {@code Caster} are

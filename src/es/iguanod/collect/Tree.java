@@ -26,6 +26,7 @@ import java.util.List;
 //TODO: al hacer la pasada final de todos los archivos, comprobar que todas las funciones hagan checkNode
 /**
  * Especificar como construir árbol a partir de parte de otro
+ *
  * @author <a href="mailto:rubiof.david@gmail.com">David Rubio Fernández</a>
  * @since 1.0.1
  * @version 1.0.1
