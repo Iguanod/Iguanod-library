@@ -86,7 +86,7 @@ public class EloScoreTable<T> implements Iterable<Tuple2<T, Integer>>, Serializa
 
 		public void addGame(int num_players, boolean win, int num_winners){
 
-			if(ties_table.size() < num_players){
+			if(ties_table.size() <= num_players){
 				for(int i=ties_table.size(); i <= num_players; i++){
 					ArrayList<Integer> next=new ArrayList<>();
 					ties_table.add(next);
@@ -96,7 +96,7 @@ public class EloScoreTable<T> implements Iterable<Tuple2<T, Integer>>, Serializa
 				}
 			}
 
-			if(ties_table_total.size() < num_players){
+			if(ties_table_total.size() <= num_players){
 				for(int i=ties_table_total.size(); i <= num_players; i++){
 					ArrayList<Integer> next=new ArrayList<>();
 					ties_table_total.add(next);
@@ -121,7 +121,7 @@ public class EloScoreTable<T> implements Iterable<Tuple2<T, Integer>>, Serializa
 
 		public void addGameTeam(int num_teams, boolean win, int num_winners){
 
-			if(ties_table_team.size() < num_teams){
+			if(ties_table_team.size() <= num_teams){
 				for(int i=ties_table_team.size(); i <= num_teams; i++){
 					ArrayList<Integer> next=new ArrayList<>();
 					ties_table_team.add(next);
@@ -131,7 +131,7 @@ public class EloScoreTable<T> implements Iterable<Tuple2<T, Integer>>, Serializa
 				}
 			}
 
-			if(ties_table_total.size() < num_teams){
+			if(ties_table_total.size() <= num_teams){
 				for(int i=ties_table_total.size(); i <= num_teams; i++){
 					ArrayList<Integer> next=new ArrayList<>();
 					ties_table_total.add(next);
