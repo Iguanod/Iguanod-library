@@ -194,7 +194,7 @@ public class EloScoreTable<T> implements Iterable<Tuple2<T, Integer>>, Serializa
 				k_factor-=popped.get();
 			}
 
-			if(wins.get(0) + ties.get(0) + losses.get(0) > positioning_games){
+			if(games.get(0) > positioning_games){
 				return Math.abs((k_factor / positioning_games) + Math.signum(score));
 			}else{
 				return INITIAL_K_FACTOR;
