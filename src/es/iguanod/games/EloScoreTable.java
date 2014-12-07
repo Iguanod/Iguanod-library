@@ -32,6 +32,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -48,7 +49,7 @@ import java.util.Set;
  */
 public class EloScoreTable<T> implements Iterable<Tuple2<T, Integer>>, Serializable{
 
-	private static final long serialVersionUID=818005879329498518L;
+	private static final long serialVersionUID=818005879329498519L;
 	//************
 	private static final int TIMES_BETTER=2;
 	private static final int DIFFERENCE_BETTER=200;
@@ -60,12 +61,36 @@ public class EloScoreTable<T> implements Iterable<Tuple2<T, Integer>>, Serializa
 	//************
 	public static final double INITIAL_SCORE=1000;
 	//************
-	private SortedCounter<T, Double> table;
-	private Map<T, Stats> stats;
+
 	private int games=0;
 	private double mean=INITIAL_SCORE;
 	private final boolean use_k_factor;
 	private final int positioning_games;
+	//************
+	private SortedCounter<T, Double> table;
+	private Map<T, Stats> stats;
+	private Map<GameType, Map<Integer, Counter<Integer, Integer>>> ties_total=new EnumMap<>(GameType.class);
+
+	private EloScoreTable(boolean use_k_factor, int positioning_games){
+		this.use_k_factor=use_k_factor;
+		this.positioning_games=positioning_games;
+		table=new DoubleTreeCounterBuilder<T>().reverse(true).build();
+		stats=new HashMap<>();
+		ties_total.put(SINGLE, new HashMap<Integer, Counter<Integer, Integer>>());
+		ties_total.put(TEAM, new HashMap<Integer, Counter<Integer, Integer>>());
+	}
+
+	public EloScoreTable(int initial_positioning_games){
+		this(true, initial_positioning_games);
+	}
+
+	public EloScoreTable(boolean fast_repositioning){
+		this(fast_repositioning, DEFAULT_POSITIONING_GAMES);
+	}
+
+	public EloScoreTable(){
+		this(false, 0);
+	}
 
 	public static enum GameType{
 
@@ -74,96 +99,72 @@ public class EloScoreTable<T> implements Iterable<Tuple2<T, Integer>>, Serializa
 		ALL;
 	}
 
+	private static enum StatType{
+
+		GAMES,
+		WINS,
+		LOSSES,
+		TIES;
+	}
+
 	private class Stats implements Serializable{
 
-		private static final long serialVersionUID=469496794623962393L;
+		private static final long serialVersionUID=469496794623962394L;
 		//************
 		private LinkedFixedCapacityQueue<Double> queue=new LinkedFixedCapacityQueue<>(RECORD_SIZE);
 		private double k_factor=0;
 		//************
-		private Counter<Integer, Integer> games=new IntHashCounter<>();
-		private Counter<Integer, Integer> wins=new IntHashCounter<>();
-		private Counter<Integer, Integer> losses=new IntHashCounter<>();
-		private Counter<Integer, Integer> ties=new IntHashCounter<>();
-		private List<List<Integer>> winners_count=new ArrayList<>();
-		private List<Integer> players_count=new ArrayList<>();
-		//************
-		private Counter<Integer, Integer> games_team=new IntHashCounter<>();
-		private Counter<Integer, Integer> wins_team=new IntHashCounter<>();
-		private Counter<Integer, Integer> losses_team=new IntHashCounter<>();
-		private Counter<Integer, Integer> ties_team=new IntHashCounter<>();
-		private List<List<Integer>> winners_count_team=new ArrayList<>();
-		private List<Integer> players_count_team=new ArrayList<>();
-		//************
-		private List<List<Integer>> winners_count_total=new ArrayList<>();
-		private List<Integer> players_count_total=new ArrayList<>();
+		private Map<GameType, Map<StatType, Counter<Integer, Integer>>> stats=new EnumMap<>(GameType.class);
+		private Map<GameType, Map<Integer, Counter<Integer, Integer>>> ties_count=new EnumMap<>(GameType.class);
 
-		private void resizeListList(List<List<Integer>> list, int threshold){
-			for(int i=list.size(); i <= threshold; i++){
-				ArrayList<Integer> next=new ArrayList<>();
-				list.add(next);
-				for(int j=0; j <= i; j++){
-					next.add(0);
-				}
+		public Stats(){
+			Map<StatType, Counter<Integer, Integer>> single=new EnumMap<>(StatType.class);
+			Map<StatType, Counter<Integer, Integer>> team=new EnumMap<>(StatType.class);
+			stats.put(SINGLE, single);
+			stats.put(TEAM, team);
+			for(StatType type:StatType.values()){
+				single.put(type, new IntHashCounter<Integer>());
+				team.put(type, new IntHashCounter<Integer>());
 			}
-		}
 
-		private void resizeList(List<Integer> list, int threshold){
-			for(int i=list.size(); i <= threshold; i++){
-				list.add(0);
-			}
+			ties_count.put(SINGLE, new HashMap<Integer, Counter<Integer, Integer>>());
+			ties_count.put(TEAM, new HashMap<Integer, Counter<Integer, Integer>>());
 		}
 
 		public void addGame(int num_players, boolean win, int num_winners, boolean single){
 
-			List<List<Integer>> wc;
-			List<Integer> pc;
-			Counter<Integer, Integer> g;
-			Counter<Integer, Integer> w;
-			Counter<Integer, Integer> t;
-			Counter<Integer, Integer> l;
+			GameType type=single?SINGLE:TEAM;
 
-			if(single){
-				wc=winners_count;
-				pc=players_count;
-				g=games;
-				w=wins;
-				t=ties;
-				l=losses;
-			}else{
-				wc=winners_count_team;
-				pc=players_count_team;
-				g=games_team;
-				w=wins_team;
-				t=ties_team;
-				l=losses_team;
-			}
+			stats.get(type).get(StatType.GAMES).sum(num_players);
+			stats.get(type).get(StatType.GAMES).sum(0);
 
-			resizeListList(wc, num_players);
-			resizeListList(winners_count_total, num_players);
-			resizeList(pc, num_players);
-			resizeList(players_count_total, num_players);
-
-			g.sum(num_players);
-			g.sum(0);
 			if(win){
 				if(num_winners != num_players){
-					w.sum(num_players);
-					w.sum(0);
+					stats.get(type).get(StatType.WINS).sum(num_players);
+					stats.get(type).get(StatType.WINS).sum(0);
 				}
 				if(num_winners > 1){
-					t.sum(num_players);
-					t.sum(0);
+					stats.get(type).get(StatType.TIES).sum(num_players);
+					stats.get(type).get(StatType.TIES).sum(0);
 				}
 			}else{
-				l.sum(num_players);
-				l.sum(0);
+				stats.get(type).get(StatType.LOSSES).sum(num_players);
+				stats.get(type).get(StatType.LOSSES).sum(0);
 			}
 
-			wc.get(num_players).set(num_winners, wc.get(num_players).get(num_winners) + 1);
-			winners_count_total.get(num_players).set(num_winners, winners_count_total.get(num_players).get(num_winners) + 1);
-			pc.set(num_players, pc.get(num_players) + 1);
-			players_count_total.set(num_players, players_count_total.get(num_players) + 1);
+			Counter<Integer, Integer> ties=ties_count.get(type).get(num_players);
+			if(ties == null){
+				ties=new IntHashCounter<>();
+				ties_count.get(type).put(num_players, ties);
+			}
+			ties.sum(num_winners);
+			
+			ties=ties_total.get(type).get(num_players);
+			if(ties == null){
+				ties=new IntHashCounter<>();
+				ties_total.get(type).put(num_players, ties);
+			}
+			ties.sum(num_winners);
 		}
 
 		public double kFactor(int num_players, double score){
@@ -184,31 +185,12 @@ public class EloScoreTable<T> implements Iterable<Tuple2<T, Integer>>, Serializa
 				k_factor-=popped.get();
 			}
 
-			if(games.get(0) > positioning_games){
+			if(stats.get(TEAM).get(StatType.GAMES).get(0) + stats.get(SINGLE).get(StatType.GAMES).get(0) > positioning_games){
 				return Math.abs((k_factor / positioning_games) + Math.signum(score));
 			}else{
 				return INITIAL_K_FACTOR;
 			}
 		}
-	}
-	
-	private EloScoreTable(boolean use_k_factor, int positioning_games){
-		this.use_k_factor=use_k_factor;
-		this.positioning_games=positioning_games;
-		table=new DoubleTreeCounterBuilder<T>().reverse(true).build();
-		stats=new HashMap<>();
-	}
-
-	public EloScoreTable(int initial_positioning_games){
-		this(true, initial_positioning_games);
-	}
-
-	public EloScoreTable(boolean fast_repositioning){
-		this(fast_repositioning, DEFAULT_POSITIONING_GAMES);
-	}
-
-	public EloScoreTable(){
-		this(false, 0);
 	}
 
 	public void submitGame(Collection<? extends T> winner_players, Collection<? extends T> loser_players){
@@ -389,156 +371,99 @@ public class EloScoreTable<T> implements Iterable<Tuple2<T, Integer>>, Serializa
 		return stats.containsKey(player);
 	}
 
-	public int gamesPlayed(){
+	private int pvtStats(T player, GameType game_type, StatType stat_type, int num_players){
+		Stats s=stats.get(player);
+		if(s == null){
+			return 0;
+		}
+
+		if(game_type == ALL){
+			return pvtStats(player, SINGLE, stat_type, num_players) + pvtStats(player, TEAM, stat_type, num_players);
+		}else{
+			Integer ret=s.stats.get(game_type).get(stat_type).get(num_players);
+			if(ret==null){
+				return 0;
+			}
+			return ret;
+		}
+	}
+
+	public int games(){
 		return games;
 	}
 
-	private int pvtGames(T player, GameType type, int num_players){
-		Stats s=stats.get(player);
-		if(s == null){
-			return 0;
-		}
-
-		Integer ret;
-		Integer ret2=0;
-		if(type == SINGLE){
-			ret=s.games.get(num_players);
-		}else if(type == TEAM){
-			ret=s.games_team.get(num_players);
-		}else{
-			ret=s.games.get(num_players);
-			ret2=s.games_team.get(num_players);
-		}
-		return (ret != null?ret:0) + (ret2 != null?ret2:0);
-	}
-
-	private int pvtWins(T player, GameType type, int num_players){
-		Stats s=stats.get(player);
-		if(s == null){
-			return 0;
-		}
-
-		Integer ret;
-		Integer ret2=0;
-		if(type == SINGLE){
-			ret=s.wins.get(num_players);
-		}else if(type == TEAM){
-			ret=s.wins_team.get(num_players);
-		}else{
-			ret=s.wins.get(num_players);
-			ret2=s.wins_team.get(num_players);
-		}
-		return (ret != null?ret:0) + (ret2 != null?ret2:0);
-	}
-
-	private int pvtLosses(T player, GameType type, int num_players){
-		Stats s=stats.get(player);
-		if(s == null){
-			return 0;
-		}
-
-		Integer ret;
-		Integer ret2=0;
-		if(type == SINGLE){
-			ret=s.losses.get(num_players);
-		}else if(type == TEAM){
-			ret=s.losses_team.get(num_players);
-		}else{
-			ret=s.losses.get(num_players);
-			ret2=s.losses_team.get(num_players);
-		}
-		return (ret != null?ret:0) + (ret2 != null?ret2:0);
-	}
-
-	private int pvtTies(T player, GameType type, int num_players){
-		Stats s=stats.get(player);
-		if(s == null){
-			return 0;
-		}
-
-		Integer ret;
-		Integer ret2=0;
-		if(type == SINGLE){
-			ret=s.ties.get(num_players);
-		}else if(type == TEAM){
-			ret=s.ties_team.get(num_players);
-		}else{
-			ret=s.ties.get(num_players);
-			ret2=s.ties_team.get(num_players);
-		}
-		return (ret != null?ret:0) + (ret2 != null?ret2:0);
-	}
-
 	public int games(T player, GameType type){
-		return pvtGames(player, type, 0);
+		return pvtStats(player, type, StatType.GAMES, 0);
 	}
 
 	public int wins(T player, GameType type){
-		return pvtWins(player, type, 0);
+		return pvtStats(player, type, StatType.WINS, 0);
 	}
 
 	public int losses(T player, GameType type){
-		return pvtLosses(player, type, 0);
+		return pvtStats(player, type, StatType.LOSSES, 0);
 	}
 
 	public int ties(T player, GameType type){
-		return pvtTies(player, type, 0);
+		return pvtStats(player, type, StatType.TIES, 0);
 	}
 
 	public int games(T player, GameType type, int num_players){
 		if(num_players < 2){
 			throw new IllegalArgumentException("The number of players has to be equal or greater than 2");
 		}
-		return pvtGames(player, type, num_players);
+		return pvtStats(player, type, StatType.GAMES, num_players);
 	}
 
 	public int wins(T player, GameType type, int num_players){
 		if(num_players < 2){
 			throw new IllegalArgumentException("The number of players has to be equal or greater than 2");
 		}
-		return pvtWins(player, type, num_players);
+		return pvtStats(player, type, StatType.WINS, num_players);
 	}
 
 	public int losses(T player, GameType type, int num_players){
 		if(num_players < 2){
 			throw new IllegalArgumentException("The number of players has to be equal or greater than 2");
 		}
-		return pvtLosses(player, type, num_players);
+		return pvtStats(player, type, StatType.LOSSES, num_players);
 	}
 
 	public int ties(T player, GameType type, int num_players){
 		if(num_players < 2){
 			throw new IllegalArgumentException("The number of players has to be equal or greater than 2");
 		}
-		return pvtTies(player, type, num_players);
+		return pvtStats(player, type, StatType.TIES, num_players);
+	}
+	
+	protected int pvtTimesTied(Map<GameType, Map<Integer, Counter<Integer, Integer>>> ties_map, GameType type, int num_players, int num_winners){
+		if(type == ALL){
+			return timesTied(SINGLE, num_players, num_winners) + timesTied(TEAM, num_players, num_winners);
+		}else{
+			Counter<Integer, Integer> ties=ties_map.get(type).get(num_players);
+			if(ties == null){
+				return 0;
+			}
+			Integer ret=ties.get(num_winners);
+			if(ret == null){
+				return 0;
+			}
+			return ret;
+		}
 	}
 
-	public List<List<Integer>> winnersCount(T player, GameType type){
+	public int timesTied(T player, GameType type, int num_players, int num_winners){
 		Stats s=stats.get(player);
 		if(s == null){
-			return Collections.EMPTY_LIST;
+			return 0;
 		}
-		if(type == SINGLE){
-			return CollectionsIg.<List<Integer>>deepUnmodifiableList(s.winners_count);
-		}else if(type == TEAM){
-			return CollectionsIg.<List<Integer>>deepUnmodifiableList(s.winners_count_team);
-		}else{
-			return CollectionsIg.<List<Integer>>deepUnmodifiableList(s.winners_count_total);
-		}
+		
+		return pvtTimesTied(s.ties_count,type,num_players,num_winners);
 	}
-
-	public List<Integer> playersCount(T player, GameType type){
-		Stats s=stats.get(player);
-		if(s == null){
-			return Collections.EMPTY_LIST;
-		}
-		if(type == SINGLE){
-			return Collections.<Integer>unmodifiableList(s.players_count);
-		}else if(type == TEAM){
-			return Collections.<Integer>unmodifiableList(s.players_count_team);
-		}else{
-			return Collections.<Integer>unmodifiableList(s.players_count_total);
-		}
+	
+	public int timesTied(GameType type, int num_players, int num_winners){
+		
+		return pvtTimesTied(ties_total,type,num_players,num_winners);
 	}
 
 	public int score(T player){
