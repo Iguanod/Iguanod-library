@@ -117,11 +117,11 @@ public class EloScoreTable<T> implements Iterable<Tuple2<T, Integer>>, Serializa
 			games++;
 			if(win){
 				wins++;
+				if(num_winners > 1){
+					ties++;
+				}
 			}else{
 				losses++;
-			}
-			if(num_winners > 1){
-				ties++;
 			}
 
 			winners_count.get(num_players).set(num_winners, winners_count.get(num_players).get(num_winners) + 1);
@@ -140,11 +140,11 @@ public class EloScoreTable<T> implements Iterable<Tuple2<T, Integer>>, Serializa
 			games_team++;
 			if(win){
 				wins_team++;
+				if(num_winners > 1){
+					ties_team++;
+				}
 			}else{
 				losses_team++;
-			}
-			if(num_winners > 1){
-				ties_team++;
 			}
 
 			winners_count_team.get(num_teams).set(num_winners, winners_count_team.get(num_teams).get(num_winners) + 1);
