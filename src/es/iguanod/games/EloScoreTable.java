@@ -119,14 +119,14 @@ public class EloScoreTable<T> implements Iterable<Tuple2<T, Integer>>, Serializa
 		}
 
 		public void addGame(int num_players, boolean win, int num_winners, boolean single){
-			
+
 			List<List<Integer>> wc;
 			List<Integer> pc;
 			Counter<Integer, Integer> g;
 			Counter<Integer, Integer> w;
 			Counter<Integer, Integer> t;
 			Counter<Integer, Integer> l;
-			
+
 			if(single){
 				wc=winners_count;
 				pc=players_count;
@@ -366,7 +366,7 @@ public class EloScoreTable<T> implements Iterable<Tuple2<T, Integer>>, Serializa
 	private void updateTeam(Collection<? extends T> team, double team_elo, double scores_sum, double actual_score, int num_teams, Map<T, Double> acc, int num_winners){
 
 		double expected_score=Math.pow(TIMES_BETTER, team_elo / DIFFERENCE_BETTER) / scores_sum;
-		double team_change=(actual_score - expected_score) * BASE_CHANGE * team.size();
+		double team_change=(actual_score - expected_score) * BASE_CHANGE * ((4 * team.size()) / (4 * team.size() + 3.0));
 
 		double scores_sum_players=0;
 		for(T player:team){
