@@ -35,6 +35,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 /**
  *
@@ -116,7 +117,9 @@ public class EloScoreTable<T> implements Iterable<Tuple2<T, Integer>>, Serializa
 
 			games++;
 			if(win){
-				wins++;
+				if(num_winners != num_players){
+					wins++;
+				}
 				if(num_winners > 1){
 					ties++;
 				}
@@ -139,7 +142,9 @@ public class EloScoreTable<T> implements Iterable<Tuple2<T, Integer>>, Serializa
 
 			games_team++;
 			if(win){
-				wins_team++;
+				if(num_winners != num_teams){
+					wins_team++;
+				}
 				if(num_winners > 1){
 					ties_team++;
 				}
@@ -362,6 +367,14 @@ public class EloScoreTable<T> implements Iterable<Tuple2<T, Integer>>, Serializa
 			double expected_in_team=1 - Math.pow(TIMES_BETTER, table.get(player) / DIFFERENCE_BETTER) / scores_sum_players;
 			acc.put(player, expected_in_team * team_change * k_factor);
 		}
+	}
+
+	public Set<T> players(){
+		return table.keySet();
+	}
+
+	public boolean contains(Object obj){
+		return stats.containsKey(obj);
 	}
 
 	public int gamesPlayed(){
