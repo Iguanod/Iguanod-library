@@ -99,22 +99,18 @@ public class EloScoreTable<T> implements Iterable<Tuple2<T, Integer>>, Serializa
 		private List<Integer> players_count_total=new ArrayList<>();
 
 		private void resizeListList(List<List<Integer>> list, int threshold){
-			if(list.size() <= threshold){
-				for(int i=list.size(); i <= threshold; i++){
-					ArrayList<Integer> next=new ArrayList<>();
-					list.add(next);
-					for(int j=0; j <= i; j++){
-						next.add(0);
-					}
+			for(int i=list.size(); i <= threshold; i++){
+				ArrayList<Integer> next=new ArrayList<>();
+				list.add(next);
+				for(int j=0; j <= i; j++){
+					next.add(0);
 				}
 			}
 		}
 
 		private void resizeList(List<Integer> list, int threshold){
-			if(list.size() <= threshold){
-				for(int i=0; i <= threshold; i++){
-					list.add(0);
-				}
+			for(int i=list.size(); i <= threshold; i++){
+				list.add(0);
 			}
 		}
 
