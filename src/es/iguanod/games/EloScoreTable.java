@@ -191,12 +191,16 @@ public class EloScoreTable<T> implements Iterable<Tuple2<T, Integer>>, Serializa
 			}
 		}
 	}
-
-	public EloScoreTable(boolean fast_repositioning, int initial_positioning_games){
-		use_k_factor=fast_repositioning;
-		positioning_games=initial_positioning_games;
+	
+	private EloScoreTable(boolean use_k_factor, int positioning_games){
+		this.use_k_factor=use_k_factor;
+		this.positioning_games=positioning_games;
 		table=new DoubleTreeCounterBuilder<T>().reverse(true).build();
 		stats=new HashMap<>();
+	}
+
+	public EloScoreTable(int initial_positioning_games){
+		this(true, initial_positioning_games);
 	}
 
 	public EloScoreTable(boolean fast_repositioning){
@@ -204,7 +208,7 @@ public class EloScoreTable<T> implements Iterable<Tuple2<T, Integer>>, Serializa
 	}
 
 	public EloScoreTable(){
-		this(false);
+		this(false, 0);
 	}
 
 	public void submitGame(Collection<? extends T> winner_players, Collection<? extends T> loser_players){
