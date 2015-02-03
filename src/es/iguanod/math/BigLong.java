@@ -1099,6 +1099,7 @@ public class BigLong extends Number implements Comparable<BigLong>{
 		}
 
 		if(!pos){
+			ret=ret.negate();
 			pvtNegateM();
 		}
 
