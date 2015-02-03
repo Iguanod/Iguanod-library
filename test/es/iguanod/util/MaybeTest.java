@@ -59,7 +59,7 @@ public class MaybeTest{
 	 * Test wether the singleton absent is built.
 	 */
 	@Test
-	public void testSingletonAbsent1(){
+	public void testSingletonAbsent_01(){
 		assertNotNull(Maybe.ABSENT);
 	}
 
@@ -67,7 +67,7 @@ public class MaybeTest{
 	 * Test wether an absent Maybe can be built.
 	 */
 	@Test
-	public void testAbsent1(){
+	public void testAbsent_01(){
 		assertNotNull(absent2);
 	}
 
@@ -75,7 +75,7 @@ public class MaybeTest{
 	 * Test wether the object returned by absent() is Maybe.ABSENT.
 	 */
 	@Test
-	public void testAbsent2(){
+	public void testAbsent_02(){
 		assertTrue(absent1 == absent2);
 	}
 
@@ -83,7 +83,7 @@ public class MaybeTest{
 	 * Test wether a non absent Maybe can be built.
 	 */
 	@Test
-	public void testFrom1(){
+	public void testFrom_01(){
 		assertNotNull(m1);
 	}
 
@@ -91,7 +91,7 @@ public class MaybeTest{
 	 * Test wether a non absent Maybe can be built from null.
 	 */
 	@Test
-	public void testFrom2(){
+	public void testFrom_02(){
 		assertNotNull(null1);
 	}
 
@@ -99,7 +99,7 @@ public class MaybeTest{
 	 * Test of isPresent method with an absent.
 	 */
 	@Test
-	public void testIsPresent1(){
+	public void testIsPresent_01(){
 		assertFalse(absent1.isPresent());
 	}
 
@@ -107,7 +107,7 @@ public class MaybeTest{
 	 * Test of isPresent method with a non absent.
 	 */
 	@Test
-	public void testIsPresent2(){
+	public void testIsPresent_02(){
 		assertTrue(m1.isPresent());
 	}
 
@@ -115,7 +115,7 @@ public class MaybeTest{
 	 * Test of isPresent method with a non absent with null value.
 	 */
 	@Test
-	public void testIsPresent3(){
+	public void testIsPresent_03(){
 		assertTrue(null1.isPresent());
 	}
 
@@ -123,7 +123,7 @@ public class MaybeTest{
 	 * Test of isAbsent method with an absent.
 	 */
 	@Test
-	public void testIsAbsent1(){
+	public void testIsAbsent_01(){
 		assertTrue(absent1.isAbsent());
 	}
 
@@ -131,7 +131,7 @@ public class MaybeTest{
 	 * Test of isAbsent method with a non absent.
 	 */
 	@Test
-	public void testIsAbsent2(){
+	public void testIsAbsent_02(){
 		assertFalse(m1.isAbsent());
 	}
 
@@ -139,7 +139,7 @@ public class MaybeTest{
 	 * Test of isAbsent method with a non absent with null value.
 	 */
 	@Test
-	public void testIsAbsent3(){
+	public void testIsAbsent_03(){
 		assertFalse(null1.isAbsent());
 	}
 
@@ -147,7 +147,7 @@ public class MaybeTest{
 	 * Test wether isPresent()==!isAbsent()
 	 */
 	@Test
-	public void testIsPresentIsAbsent(){
+	public void testIsPresentIsAbsent_01(){
 		assertEquals(absent1.isPresent(), !absent1.isAbsent());
 		assertEquals(m1.isPresent(), !m1.isAbsent());
 		assertEquals(null1.isPresent(), !null1.isAbsent());
@@ -157,7 +157,7 @@ public class MaybeTest{
 	 * Test of get method with a non absent.
 	 */
 	@Test
-	public void testGet1(){
+	public void testGet_01(){
 		assertSame(m1.get(), m1_value);
 	}
 
@@ -165,7 +165,7 @@ public class MaybeTest{
 	 * Test of get method with a non absent with null value.
 	 */
 	@Test
-	public void testGet2(){
+	public void testGet_02(){
 		assertSame(null1.get(), null);
 	}
 
@@ -173,7 +173,7 @@ public class MaybeTest{
 	 * Test of get method with an absent.
 	 */
 	@Test(expected=IllegalStateException.class)
-	public void testGet3(){
+	public void testGet_03(){
 		absent1.get();
 	}
 
@@ -181,7 +181,7 @@ public class MaybeTest{
 	 * Test of copyOf method from absent.
 	 */
 	@Test
-	public void testCopyOf1(){
+	public void testCopyOf_01(){
 		Maybe copy=Maybe.copyOf(absent1);
 		assertEquals(absent1.isAbsent(), copy.isAbsent());
 	}
@@ -190,7 +190,7 @@ public class MaybeTest{
 	 * Test of copyOf method from absent.
 	 */
 	@Test(expected=IllegalStateException.class)
-	public void testCopyOf2(){
+	public void testCopyOf_02(){
 		Maybe copy=Maybe.copyOf(absent1);
 		copy.get();
 	}
@@ -199,7 +199,7 @@ public class MaybeTest{
 	 * Test of copyOf method from non absent.
 	 */
 	@Test
-	public void testCopyOf3(){
+	public void testCopyOf_03(){
 		Maybe copy=Maybe.copyOf(m1);
 		assertEquals(m1.isAbsent(), copy.isAbsent());
 	}
@@ -208,7 +208,7 @@ public class MaybeTest{
 	 * Test of copyOf method from non absent.
 	 */
 	@Test
-	public void testCopyOf4(){
+	public void testCopyOf_04(){
 		Maybe copy=Maybe.copyOf(m1);
 		assertSame(m1.get(), copy.get());
 	}
@@ -217,7 +217,7 @@ public class MaybeTest{
 	 * Test of copyOf method from null.
 	 */
 	@Test(expected=NullPointerException.class)
-	public void testCopyOf5(){
+	public void testCopyOf_05(){
 		Maybe copy=Maybe.copyOf(null);
 	}
 
@@ -225,7 +225,7 @@ public class MaybeTest{
 	 * Test of or(T) method with this absent.
 	 */
 	@Test
-	public void testOr_T1(){
+	public void testOr_T_01(){
 		Integer default_value=1;
 		assertSame(absent1.or(default_value), default_value);
 	}
@@ -234,7 +234,7 @@ public class MaybeTest{
 	 * Test of or(T) method with this absent and null default_value
 	 */
 	@Test
-	public void testOr_T2(){
+	public void testOr_T_02(){
 		Integer default_value=null;
 		assertSame(absent1.or(default_value), default_value);
 	}
@@ -243,7 +243,7 @@ public class MaybeTest{
 	 * Test of or(T) method with this non absent.
 	 */
 	@Test
-	public void testOr_T3(){
+	public void testOr_T_03(){
 		Integer default_value=2;
 		assertSame(m1.or(default_value), m1_value);
 	}
@@ -252,7 +252,7 @@ public class MaybeTest{
 	 * Test of or(T) method with this non absent and null value.
 	 */
 	@Test
-	public void testOr_T4(){
+	public void testOr_T_04(){
 		Integer default_value=1;
 		assertSame(null1.or(default_value), null);
 	}
@@ -261,7 +261,7 @@ public class MaybeTest{
 	 * Test of or(Maybe) method with this absent.
 	 */
 	@Test
-	public void testOr_Maybe1(){
+	public void testOr_Maybe_01(){
 		assertSame(absent1.or(m1), m1);
 	}
 
@@ -269,7 +269,7 @@ public class MaybeTest{
 	 * Test of or(Maybe) method with this absent and null second_choice.
 	 */
 	@Test
-	public void testOr_Maybe2(){
+	public void testOr_Maybe_02(){
 		assertSame(absent1.or(null), null);
 	}
 
@@ -277,7 +277,7 @@ public class MaybeTest{
 	 * Test of or(maybe) method with this non absent.
 	 */
 	@Test
-	public void testOr_Maybe3(){
+	public void testOr_Maybe_03(){
 		assertSame(m1.or(m2), m1);
 	}
 
@@ -285,7 +285,7 @@ public class MaybeTest{
 	 * Test of or(Maybe) method with this non absent and null second choice.
 	 */
 	@Test
-	public void testOr_Maybe4(){
+	public void testOr_Maybe_04(){
 		assertSame(m1.or(null), m1);
 	}
 
@@ -293,7 +293,7 @@ public class MaybeTest{
 	 * Test of toString method with this absent.
 	 */
 	@Test
-	public void testToString1(){
+	public void testToString_01(){
 		assertEquals("Maybe -> Absent", absent1.toString());
 	}
 
@@ -301,7 +301,7 @@ public class MaybeTest{
 	 * Test of toString method with this non absent.
 	 */
 	@Test
-	public void testToString2(){
+	public void testToString_02(){
 		assertEquals("Maybe -> value = " + (m1.get() != null?m1.get().toString():"null"), m1.toString());
 	}
 
@@ -309,7 +309,7 @@ public class MaybeTest{
 	 * Test of toString method with this non absent with null value.
 	 */
 	@Test
-	public void testToString3(){
+	public void testToString_03(){
 		assertEquals("Maybe -> value = " + (null1.get() != null?null1.get().toString():"null"), null1.toString());
 	}
 
@@ -317,7 +317,7 @@ public class MaybeTest{
 	 * Test of compareTo method with both absents.
 	 */
 	@Test
-	public void testCompareTo1(){
+	public void testCompareTo_01(){
 		assertTrue(absent1.compareTo(absent2) == 0);
 		assertTrue(absent2.compareTo(absent1) == 0);
 	}
@@ -326,7 +326,7 @@ public class MaybeTest{
 	 * Test of compareTo method with first absent.
 	 */
 	@Test
-	public void testCompareTo2(){
+	public void testCompareTo_02(){
 		assertTrue(absent1.compareTo(m1) < 0);
 	}
 
@@ -334,7 +334,7 @@ public class MaybeTest{
 	 * Test of compareTo method with second absent.
 	 */
 	@Test
-	public void testCompareTo3(){
+	public void testCompareTo_03(){
 		assertTrue(m1.compareTo(absent1) > 0);
 	}
 
@@ -342,7 +342,7 @@ public class MaybeTest{
 	 * Test of compareTo method with no absents and first null value.
 	 */
 	@Test
-	public void testCompareTo4(){
+	public void testCompareTo_04(){
 		assertTrue(null1.compareTo(m1) < 0);
 	}
 
@@ -350,7 +350,7 @@ public class MaybeTest{
 	 * Test of compareTo method with no absents and second null value.
 	 */
 	@Test
-	public void testCompareTo5(){
+	public void testCompareTo_05(){
 		assertTrue(m1.compareTo(null1) > 0);
 	}
 
@@ -358,7 +358,7 @@ public class MaybeTest{
 	 * Test of compareTo method with no absents and both null values.
 	 */
 	@Test
-	public void testCompareTo6(){
+	public void testCompareTo_06(){
 		assertTrue(null1.compareTo(null2) == 0);
 		assertTrue(null2.compareTo(null1) == 0);
 	}
@@ -367,7 +367,7 @@ public class MaybeTest{
 	 * Test of compareTo method with absent and null parameter.
 	 */
 	@Test(expected=NullPointerException.class)
-	public void testCompareTo7(){
+	public void testCompareTo_07(){
 		absent1.compareTo(null);
 	}
 
@@ -375,7 +375,7 @@ public class MaybeTest{
 	 * Test of compareTo method with non-absent and null parameter.
 	 */
 	@Test(expected=NullPointerException.class)
-	public void testCompareTo8(){
+	public void testCompareTo_08(){
 		m1.compareTo(null);
 	}
 
@@ -383,7 +383,7 @@ public class MaybeTest{
 	 * Test of compareTo method with non comparable.
 	 */
 	@Test(expected=ClassCastException.class)
-	public void testCompareTo9(){
+	public void testCompareTo_09(){
 		uncomparable.compareTo(m1);
 	}
 
@@ -391,7 +391,7 @@ public class MaybeTest{
 	 * Test of compareTo method with non comparable.
 	 */
 	@Test(expected=ClassCastException.class)
-	public void testCompareTo11(){
+	public void testCompareTo_10(){
 		m1.compareTo(uncomparable);
 	}
 
@@ -399,7 +399,7 @@ public class MaybeTest{
 	 * Test of equals method with absents.
 	 */
 	@Test
-	public void testEquals1(){
+	public void testEquals_01(){
 		assertTrue(absent1.equals(absent2));
 		assertTrue(absent2.equals(absent1));
 	}
@@ -408,7 +408,7 @@ public class MaybeTest{
 	 * Test of equals method with absents.
 	 */
 	@Test
-	public void testEquals2(){
+	public void testEquals_02(){
 		assertFalse(m1.equals(absent1));
 		assertFalse(absent1.equals(m1));
 	}
@@ -416,7 +416,7 @@ public class MaybeTest{
 	/**
 	 * Test of equals method with no absents.
 	 */
-	public void testEquals3(){
+	public void testEquals_03(){
 		assertFalse(m1.equals(m2));
 		assertFalse(m2.equals(m1));
 	}
@@ -424,7 +424,7 @@ public class MaybeTest{
 	/**
 	 * Test of equals method with no absents.
 	 */
-	public void testEquals4(){
+	public void testEquals_04(){
 		assertTrue(m1.equals(m1_cpy));
 		assertTrue(m1_cpy.equals(m1));
 	}
@@ -433,7 +433,7 @@ public class MaybeTest{
 	 * Test of equals method with no absents and one null value.
 	 */
 	@Test
-	public void testEquals5(){
+	public void testEquals_05(){
 		assertFalse(m1.equals(null1));
 		assertFalse(null1.equals(m1));
 	}
@@ -442,7 +442,7 @@ public class MaybeTest{
 	 * Test of equals method with no absents and both null values.
 	 */
 	@Test
-	public void testEquals6(){
+	public void testEquals_06(){
 		assertTrue(null1.equals(null2));
 		assertTrue(null2.equals(null1));
 	}
@@ -451,7 +451,7 @@ public class MaybeTest{
 	 * Test of hashCode method with absent.
 	 */
 	@Test
-	public void testHashCode1(){
+	public void testHashCode_01(){
 		assertEquals(absent1.hashCode(), 0);
 	}
 
@@ -459,7 +459,7 @@ public class MaybeTest{
 	 * Test of hashCode method with non absent.
 	 */
 	@Test
-	public void testHashCode2(){
+	public void testHashCode_02(){
 		assertFalse(m1.hashCode() == m1_value.hashCode());
 	}
 
@@ -467,7 +467,7 @@ public class MaybeTest{
 	 * Test of hashCode method of equals Maybes.
 	 */
 	@Test
-	public void testHashCode3(){
+	public void testHashCode_03(){
 		assertEquals(m1.hashCode(), m1_cpy.hashCode());
 	}
 }

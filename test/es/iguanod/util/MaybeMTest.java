@@ -19,7 +19,6 @@
  */
 package es.iguanod.util;
 
-import java.util.ArrayList;
 import static org.junit.Assert.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -63,7 +62,7 @@ public class MaybeMTest extends MaybeTest{
 	 */
 	@Test
 	@Override
-	public void testAbsent2(){
+	public void testAbsent_02(){
 	}
 
 	/**
@@ -71,7 +70,7 @@ public class MaybeMTest extends MaybeTest{
 	 */
 	@Test
 	@Override
-	public void testCopyOf1(){
+	public void testCopyOf_01(){
 		MaybeM copy=MaybeM.copyOf(absent1);
 		assertEquals(absent1.isAbsent(), copy.isAbsent());
 	}
@@ -81,7 +80,7 @@ public class MaybeMTest extends MaybeTest{
 	 */
 	@Test(expected=IllegalStateException.class)
 	@Override
-	public void testCopyOf2(){
+	public void testCopyOf_02(){
 		MaybeM copy=MaybeM.copyOf(absent1);
 		copy.get();
 	}
@@ -91,7 +90,7 @@ public class MaybeMTest extends MaybeTest{
 	 */
 	@Test
 	@Override
-	public void testCopyOf3(){
+	public void testCopyOf_03(){
 		MaybeM copy=MaybeM.copyOf(m1);
 		assertEquals(m1.isAbsent(), copy.isAbsent());
 	}
@@ -101,7 +100,7 @@ public class MaybeMTest extends MaybeTest{
 	 */
 	@Test
 	@Override
-	public void testCopyOf4(){
+	public void testCopyOf_04(){
 		MaybeM copy=MaybeM.copyOf(m1);
 		assertSame(m1.get(), copy.get());
 	}
@@ -111,7 +110,7 @@ public class MaybeMTest extends MaybeTest{
 	 */
 	@Test(expected=NullPointerException.class)
 	@Override
-	public void testCopyOf5(){
+	public void testCopyOf_05(){
 		MaybeM copy=MaybeM.copyOf(null);
 	}
 
@@ -119,7 +118,7 @@ public class MaybeMTest extends MaybeTest{
 	 * Test of copyOf method from absent and Maybe parameter.
 	 */
 	@Test
-	public void testCopyOf6(){
+	public void testCopyOf_06(){
 		MaybeM copy=MaybeM.copyOf(absentI);
 		assertEquals(absentI.isAbsent(), copy.isAbsent());
 	}
@@ -128,7 +127,7 @@ public class MaybeMTest extends MaybeTest{
 	 * Test of copyOf method from absent and Maybe parameter.
 	 */
 	@Test(expected=IllegalStateException.class)
-	public void testCopyOf7(){
+	public void testCopyOf_07(){
 		MaybeM copy=MaybeM.copyOf(absentI);
 		copy.get();
 	}
@@ -137,7 +136,7 @@ public class MaybeMTest extends MaybeTest{
 	 * Test of copyOf method from non absent and Maybe parameter.
 	 */
 	@Test
-	public void testCopyOf8(){
+	public void testCopyOf_08(){
 		MaybeM copy=MaybeM.copyOf(m1I);
 		assertEquals(m1I.isAbsent(), copy.isAbsent());
 	}
@@ -146,7 +145,7 @@ public class MaybeMTest extends MaybeTest{
 	 * Test of copyOf method from non absent and Maybe parameter.
 	 */
 	@Test
-	public void testCopyOf9(){
+	public void testCopyOf_09(){
 		MaybeM copy=MaybeM.copyOf(m1I);
 		assertSame(m1I.get(), copy.get());
 	}
@@ -155,7 +154,7 @@ public class MaybeMTest extends MaybeTest{
 	 * Test of or(Maybe) method with this absent and Maybe parameter.
 	 */
 	@Test
-	public void testOr_Maybe5(){
+	public void testOr_Maybe_05(){
 		assertSame(absent1.or(m1I), m1I);
 	}
 
@@ -163,7 +162,7 @@ public class MaybeMTest extends MaybeTest{
 	 * Test of or(Maybe) method with this non absent and Maybe parameter.
 	 */
 	@Test
-	public void testOr_Maybe6(){
+	public void testOr_Maybe_06(){
 		assertSame(m1.or(m1I), m1);
 	}
 
@@ -171,7 +170,7 @@ public class MaybeMTest extends MaybeTest{
 	 * Test of compareTo method with both absents and Maybe parameter.
 	 */
 	@Test
-	public void testCompareTo12(){
+	public void testCompareTo_11(){
 		assertTrue(absent1.compareTo(absentI) == 0);
 		assertTrue(absentI.compareTo(absent1) == 0);
 	}
@@ -180,7 +179,7 @@ public class MaybeMTest extends MaybeTest{
 	 * Test of compareTo method with first absent and Maybe parameter.
 	 */
 	@Test
-	public void testCompareTo13(){
+	public void testCompareTo_12(){
 		assertTrue(absent1.compareTo(m1I) < 0);
 	}
 
@@ -188,7 +187,7 @@ public class MaybeMTest extends MaybeTest{
 	 * Test of compareTo method with second absent and Maybe parameter.
 	 */
 	@Test
-	public void testCompareTo14(){
+	public void testCompareTo_13(){
 		assertTrue(m1.compareTo(absentI) > 0);
 	}
 
@@ -197,7 +196,7 @@ public class MaybeMTest extends MaybeTest{
 	 * parameter.
 	 */
 	@Test
-	public void testCompareTo15(){
+	public void testCompareTo_14(){
 		assertTrue(null1.compareTo(m1I) < 0);
 	}
 
@@ -206,7 +205,7 @@ public class MaybeMTest extends MaybeTest{
 	 * Maybe parameter.
 	 */
 	@Test
-	public void testCompareTo16(){
+	public void testCompareTo_15(){
 		assertTrue(m1.compareTo(nullI) > 0);
 	}
 
@@ -215,7 +214,7 @@ public class MaybeMTest extends MaybeTest{
 	 * parameter.
 	 */
 	@Test
-	public void testCompareTo17(){
+	public void testCompareTo_16(){
 		assertTrue(null1.compareTo(nullI) == 0);
 		assertTrue(nullI.compareTo(null1) == 0);
 	}
@@ -224,7 +223,7 @@ public class MaybeMTest extends MaybeTest{
 	 * Test of compareTo method with non comparable and Maybe parameter.
 	 */
 	@Test(expected=ClassCastException.class)
-	public void testCompareTo18(){
+	public void testCompareTo_17(){
 		uncomparable.compareTo(m1I);
 	}
 
@@ -232,7 +231,7 @@ public class MaybeMTest extends MaybeTest{
 	 * Test of compareTo method with non comparable and Maybe parameter.
 	 */
 	@Test(expected=ClassCastException.class)
-	public void testCompareTo19(){
+	public void testCompareTo_18(){
 		m1.compareTo(uncomparableI);
 	}
 
@@ -240,7 +239,7 @@ public class MaybeMTest extends MaybeTest{
 	 * Test of equals method with absents and Maybe parameter.
 	 */
 	@Test
-	public void testEquals7(){
+	public void testEquals_07(){
 		assertTrue(absent1.equals(absentI));
 		assertTrue(absentI.equals(absent1));
 	}
@@ -249,7 +248,7 @@ public class MaybeMTest extends MaybeTest{
 	 * Test of equals method with absents and Maybe parameter.
 	 */
 	@Test
-	public void testEquals8(){
+	public void testEquals_08(){
 		assertFalse(m1.equals(absentI));
 		assertFalse(absent1.equals(m1I));
 	}
@@ -257,7 +256,7 @@ public class MaybeMTest extends MaybeTest{
 	/**
 	 * Test of equals method with no absents and Maybe parameter.
 	 */
-	public void testEquals9(){
+	public void testEquals_09(){
 		assertFalse(m1.equals(m2I));
 		assertFalse(m2.equals(m1I));
 	}
@@ -265,7 +264,7 @@ public class MaybeMTest extends MaybeTest{
 	/**
 	 * Test of equals method with no absents and Maybe parameter.
 	 */
-	public void testEquals10(){
+	public void testEquals_10(){
 		assertTrue(m1.equals(m1I));
 		assertTrue(m1I.equals(m1));
 	}
@@ -275,7 +274,7 @@ public class MaybeMTest extends MaybeTest{
 	 * parameter.
 	 */
 	@Test
-	public void testEquals11(){
+	public void testEquals_11(){
 		assertFalse(m1.equals(nullI));
 		assertFalse(null1.equals(m1I));
 	}
@@ -285,7 +284,7 @@ public class MaybeMTest extends MaybeTest{
 	 * parameter.
 	 */
 	@Test
-	public void testEquals12(){
+	public void testEquals_12(){
 		assertTrue(null1.equals(nullI));
 		assertTrue(nullI.equals(null1));
 	}
@@ -294,7 +293,7 @@ public class MaybeMTest extends MaybeTest{
 	 * Test of hashCode method of equals MaybeM and Maybe.
 	 */
 	@Test
-	public void testHashCode4(){
+	public void testHashCode_04(){
 		assertEquals(m1.hashCode(), m1I.hashCode());
 	}
 
@@ -302,7 +301,7 @@ public class MaybeMTest extends MaybeTest{
 	 * Test of set method.
 	 */
 	@Test
-	public void testSet1(){
+	public void testSet_01(){
 		MaybeM maybe=MaybeM.absent();
 		int new_value=1;
 		maybe.set(new_value);
@@ -313,7 +312,7 @@ public class MaybeMTest extends MaybeTest{
 	 * Test of set method.
 	 */
 	@Test
-	public void testSet2(){
+	public void testSet_02(){
 		MaybeM maybe=MaybeM.absent();
 		int new_value=1;
 		maybe.set(new_value);
@@ -324,7 +323,7 @@ public class MaybeMTest extends MaybeTest{
 	 * Test of set method.
 	 */
 	@Test
-	public void testSet3(){
+	public void testSet_03(){
 		MaybeM maybe=MaybeM.absent();
 		int new_value=1;
 		maybe.set(new_value);
@@ -335,7 +334,7 @@ public class MaybeMTest extends MaybeTest{
 	 * Test of set method.
 	 */
 	@Test
-	public void testSet4(){
+	public void testSet_04(){
 		MaybeM maybe=MaybeM.from(2);
 		int new_value=1;
 		maybe.set(new_value);
@@ -346,7 +345,7 @@ public class MaybeMTest extends MaybeTest{
 	 * Test of set method.
 	 */
 	@Test
-	public void testSet5(){
+	public void testSet_05(){
 		MaybeM maybe=MaybeM.from(2);
 		int new_value=1;
 		maybe.set(new_value);
@@ -357,7 +356,7 @@ public class MaybeMTest extends MaybeTest{
 	 * Test of set method.
 	 */
 	@Test
-	public void testSet6(){
+	public void testSet_06(){
 		MaybeM maybe=MaybeM.from(2);
 		int new_value=1;
 		maybe.set(new_value);
@@ -368,7 +367,7 @@ public class MaybeMTest extends MaybeTest{
 	 * Test of setAbsent method.
 	 */
 	@Test(expected=IllegalStateException.class)
-	public void testSetAbsent1(){
+	public void testSetAbsent_01(){
 		MaybeM maybe=MaybeM.absent();
 		maybe.setAbsent();
 		maybe.get();
@@ -378,7 +377,7 @@ public class MaybeMTest extends MaybeTest{
 	 * Test of setAbsent method.
 	 */
 	@Test
-	public void testSetAbsent2(){
+	public void testSetAbsent_02(){
 		MaybeM maybe=MaybeM.absent();
 		maybe.setAbsent();
 		assertFalse(maybe.isPresent());
@@ -388,7 +387,7 @@ public class MaybeMTest extends MaybeTest{
 	 * Test of setAbsent method.
 	 */
 	@Test
-	public void testSetAbsent3(){
+	public void testSetAbsent_03(){
 		MaybeM maybe=MaybeM.absent();
 		maybe.setAbsent();
 		assertTrue(maybe.isAbsent());
@@ -398,7 +397,7 @@ public class MaybeMTest extends MaybeTest{
 	 * Test of setAbsent method.
 	 */
 	@Test(expected=IllegalStateException.class)
-	public void testSetAbsent4(){
+	public void testSetAbsent_04(){
 		MaybeM maybe=MaybeM.from(2);
 		maybe.setAbsent();
 		maybe.get();
@@ -408,7 +407,7 @@ public class MaybeMTest extends MaybeTest{
 	 * Test of setAbsent method.
 	 */
 	@Test
-	public void testSetAbsent5(){
+	public void testSetAbsent_05(){
 		MaybeM maybe=MaybeM.from(2);
 		maybe.setAbsent();
 		assertFalse(maybe.isPresent());
@@ -418,7 +417,7 @@ public class MaybeMTest extends MaybeTest{
 	 * Test of setAbsent method.
 	 */
 	@Test
-	public void testSetAbsent6(){
+	public void testSetAbsent_06(){
 		MaybeM maybe=MaybeM.from(2);
 		maybe.setAbsent();
 		assertTrue(maybe.isAbsent());

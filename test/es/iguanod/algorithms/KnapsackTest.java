@@ -55,7 +55,7 @@ public class KnapsackTest{
 		 * Test of knapsack function.
 		 */
 		@Test
-		public void testKnapsack1(){
+		public void testKnapsack_01(){
 
 			ArrayList<Tuple2<Double, Integer>> items=new ArrayList<>();
 			items.add(new Tuple2<>(4.0, 12));
@@ -71,7 +71,7 @@ public class KnapsackTest{
 		 * Test of knapsack function with empty items.
 		 */
 		@Test
-		public void testKnapsack2(){
+		public void testKnapsack_02(){
 
 			ArrayList<Tuple2<Double, Integer>> items=new ArrayList<>();
 
@@ -82,7 +82,7 @@ public class KnapsackTest{
 		 * Test of knapsack function with weight zero.
 		 */
 		@Test
-		public void testKnapsack3(){
+		public void testKnapsack_03(){
 
 			ArrayList<Tuple2<Double, Integer>> items=new ArrayList<>();
 			items.add(new Tuple2<>(4.0, 12));
@@ -98,7 +98,7 @@ public class KnapsackTest{
 		 * Test of knapsack function with empty items and zero weight.
 		 */
 		@Test
-		public void testKnapsack4(){
+		public void testKnapsack_04(){
 
 			ArrayList<Tuple2<Double, Integer>> items=new ArrayList<>();
 
@@ -109,7 +109,7 @@ public class KnapsackTest{
 		 * Test of knapsack function with nulls.
 		 */
 		@Test(expected=NullPointerException.class)
-		public void testKnapsack5(){
+		public void testKnapsack_05(){
 			Knapsack.knapsack(null, 15);
 		}
 
@@ -117,7 +117,7 @@ public class KnapsackTest{
 		 * Test of knapsack function with nulls.
 		 */
 		@Test(expected=NullPointerException.class)
-		public void testKnapsack6(){
+		public void testKnapsack_06(){
 
 			ArrayList<Tuple2<Double, Integer>> items=new ArrayList<>();
 			items.add(new Tuple2<>(4.0, 12));
@@ -133,7 +133,7 @@ public class KnapsackTest{
 		 * Test of knapsack function with nulls.
 		 */
 		@Test(expected=NullPointerException.class)
-		public void testKnapsack7(){
+		public void testKnapsack_07(){
 
 			ArrayList<Tuple2<Double, Integer>> items=new ArrayList<>();
 			items.add(new Tuple2<>(4.0, 12));
@@ -149,7 +149,7 @@ public class KnapsackTest{
 		 * Test of knapsack function with negative weights.
 		 */
 		@Test(expected=IllegalArgumentException.class)
-		public void testKnapsack8(){
+		public void testKnapsack_08(){
 
 			ArrayList<Tuple2<Double, Integer>> items=new ArrayList<>();
 			items.add(new Tuple2<>(4.0, 12));
@@ -165,7 +165,7 @@ public class KnapsackTest{
 		 * Test of knapsack function with negative weights.
 		 */
 		@Test(expected=IllegalArgumentException.class)
-		public void testKnapsack9(){
+		public void testKnapsack_09(){
 
 			ArrayList<Tuple2<Double, Integer>> items=new ArrayList<>();
 			items.add(new Tuple2<>(4.0, -12));
@@ -181,7 +181,7 @@ public class KnapsackTest{
 		 * Test of knapsack function with negative profits.
 		 */
 		@Test
-		public void testKnapsack10(){
+		public void testKnapsack_10(){
 
 			ArrayList<Tuple2<Double, Integer>> items=new ArrayList<>();
 			items.add(new Tuple2<>(4.0, 12));
@@ -197,7 +197,7 @@ public class KnapsackTest{
 		 * Test of knapsack function with all negative profits.
 		 */
 		@Test
-		public void testKnapsack11(){
+		public void testKnapsack_11(){
 
 			ArrayList<Tuple2<Double, Integer>> items=new ArrayList<>();
 			items.add(new Tuple2<>(-4.0, 12));
@@ -213,7 +213,7 @@ public class KnapsackTest{
 		 * Test of knapsackCount function.
 		 */
 		@Test
-		public void testKnapsackCount1(){
+		public void testKnapsackCount_01(){
 
 			ArrayList<Tuple2<Double, Integer>> items=new ArrayList<>();
 			items.add(new Tuple2<>(4.0, 12));
@@ -231,7 +231,7 @@ public class KnapsackTest{
 		 * Test of knapsackCount function with empty items.
 		 */
 		@Test
-		public void testKnapsackCount2(){
+		public void testKnapsackCount_02(){
 
 			ArrayList<Tuple2<Double, Integer>> items=new ArrayList<>();
 
@@ -244,7 +244,7 @@ public class KnapsackTest{
 		 * Test of knapsackCount function with weight zero.
 		 */
 		@Test
-		public void testKnapsackCount3(){
+		public void testKnapsackCount_03(){
 
 			ArrayList<Tuple2<Double, Integer>> items=new ArrayList<>();
 			items.add(new Tuple2<>(4.0, 12));
@@ -262,7 +262,7 @@ public class KnapsackTest{
 		 * Test of knapsackCount function with empty items and zero weight.
 		 */
 		@Test
-		public void testKnapsackCount4(){
+		public void testKnapsackCount_04(){
 
 			ArrayList<Tuple2<Double, Integer>> items=new ArrayList<>();
 
@@ -275,7 +275,7 @@ public class KnapsackTest{
 		 * Test of knapsackCount function with nulls.
 		 */
 		@Test(expected=NullPointerException.class)
-		public void testKnapsackCount5(){
+		public void testKnapsackCount_05(){
 			Knapsack.knapsackCount(null, 15);
 		}
 
@@ -283,7 +283,7 @@ public class KnapsackTest{
 		 * Test of knapsackCount function with nulls.
 		 */
 		@Test(expected=NullPointerException.class)
-		public void testKnapsackCount6(){
+		public void testKnapsackCount_06(){
 
 			ArrayList<Tuple2<Double, Integer>> items=new ArrayList<>();
 			items.add(new Tuple2<>(4.0, 12));
@@ -299,7 +299,7 @@ public class KnapsackTest{
 		 * Test of knapsackCount function with nulls.
 		 */
 		@Test(expected=NullPointerException.class)
-		public void testKnapsackCount7(){
+		public void testKnapsackCount_07(){
 
 			ArrayList<Tuple2<Double, Integer>> items=new ArrayList<>();
 			items.add(new Tuple2<>(4.0, 12));
@@ -315,7 +315,7 @@ public class KnapsackTest{
 		 * Test of knapsackCount function with negative weights.
 		 */
 		@Test(expected=IllegalArgumentException.class)
-		public void testKnapsackCount8(){
+		public void testKnapsackCount_08(){
 
 			ArrayList<Tuple2<Double, Integer>> items=new ArrayList<>();
 			items.add(new Tuple2<>(4.0, 12));
@@ -331,7 +331,7 @@ public class KnapsackTest{
 		 * Test of knapsackCount function with negative weights.
 		 */
 		@Test(expected=IllegalArgumentException.class)
-		public void testKnapsackCount9(){
+		public void testKnapsackCount_09(){
 
 			ArrayList<Tuple2<Double, Integer>> items=new ArrayList<>();
 			items.add(new Tuple2<>(4.0, -12));
@@ -347,7 +347,7 @@ public class KnapsackTest{
 		 * Test of knapsackCount function with negative profits.
 		 */
 		@Test
-		public void testKnapsackCount10(){
+		public void testKnapsackCount_10(){
 
 			ArrayList<Tuple2<Double, Integer>> items=new ArrayList<>();
 			items.add(new Tuple2<>(4.0, 12));
@@ -365,7 +365,7 @@ public class KnapsackTest{
 		 * Test of knapsackCount function with all negative profits.
 		 */
 		@Test
-		public void testKnapsackCount11(){
+		public void testKnapsackCount_11(){
 
 			ArrayList<Tuple2<Double, Integer>> items=new ArrayList<>();
 			items.add(new Tuple2<>(-4.0, 12));
@@ -383,7 +383,7 @@ public class KnapsackTest{
 		 * Test of knapsackUnbounded function.
 		 */
 		@Test
-		public void testKnapsackUnbounded1(){
+		public void testKnapsackUnbounded_01(){
 
 			ArrayList<Tuple2<Double, Integer>> items=new ArrayList<>();
 			items.add(new Tuple2<>(4.0, 12));
@@ -399,7 +399,7 @@ public class KnapsackTest{
 		 * Test of knapsackUnbounded function with empty items.
 		 */
 		@Test
-		public void testKnapsackUnbounded2(){
+		public void testKnapsackUnbounded_02(){
 
 			ArrayList<Tuple2<Double, Integer>> items=new ArrayList<>();
 			assertTrue(Knapsack.knapsackUnbounded(items, 15) == 0.0);
@@ -409,7 +409,7 @@ public class KnapsackTest{
 		 * Test of knapsackUnbounded function with weight zero.
 		 */
 		@Test
-		public void testKnapsackUnbounded3(){
+		public void testKnapsackUnbounded_03(){
 
 			ArrayList<Tuple2<Double, Integer>> items=new ArrayList<>();
 			items.add(new Tuple2<>(4.0, 12));
@@ -426,7 +426,7 @@ public class KnapsackTest{
 		 * weight.
 		 */
 		@Test
-		public void testKnapsackUnbounded4(){
+		public void testKnapsackUnbounded_04(){
 
 			ArrayList<Tuple2<Double, Integer>> items=new ArrayList<>();
 
@@ -437,7 +437,7 @@ public class KnapsackTest{
 		 * Test of knapsackUnbounded function with nulls.
 		 */
 		@Test(expected=NullPointerException.class)
-		public void testKnapsackUnbounded5(){
+		public void testKnapsackUnbounded_05(){
 			Knapsack.knapsackUnbounded(null, 15);
 		}
 
@@ -445,7 +445,7 @@ public class KnapsackTest{
 		 * Test of knapsackUnbounded function with nulls.
 		 */
 		@Test(expected=NullPointerException.class)
-		public void testKnapsackUnbounded6(){
+		public void testKnapsackUnbounded_06(){
 
 			ArrayList<Tuple2<Double, Integer>> items=new ArrayList<>();
 			items.add(new Tuple2<>(4.0, 12));
@@ -461,7 +461,7 @@ public class KnapsackTest{
 		 * Test of knapsackUnbounded function with nulls.
 		 */
 		@Test(expected=NullPointerException.class)
-		public void testKnapsackUnbounded7(){
+		public void testKnapsackUnbounded_07(){
 
 			ArrayList<Tuple2<Double, Integer>> items=new ArrayList<>();
 			items.add(new Tuple2<>(4.0, 12));
@@ -477,7 +477,7 @@ public class KnapsackTest{
 		 * Test of knapsackUnbounded function with negative weights.
 		 */
 		@Test(expected=IllegalArgumentException.class)
-		public void testKnapsackUnbounded8(){
+		public void testKnapsackUnbounded_08(){
 
 			ArrayList<Tuple2<Double, Integer>> items=new ArrayList<>();
 			items.add(new Tuple2<>(4.0, 12));
@@ -493,7 +493,7 @@ public class KnapsackTest{
 		 * Test of knapsackUnbounded function with negative weights.
 		 */
 		@Test(expected=IllegalArgumentException.class)
-		public void testKnapsackUnbounded9(){
+		public void testKnapsackUnbounded_09(){
 
 			ArrayList<Tuple2<Double, Integer>> items=new ArrayList<>();
 			items.add(new Tuple2<>(4.0, -12));
@@ -509,7 +509,7 @@ public class KnapsackTest{
 		 * Test of knapsackUnbounded function with negative profits.
 		 */
 		@Test
-		public void testKnapsackUnbounded10(){
+		public void testKnapsackUnbounded_10(){
 
 			ArrayList<Tuple2<Double, Integer>> items=new ArrayList<>();
 			items.add(new Tuple2<>(4.0, 12));
@@ -525,7 +525,7 @@ public class KnapsackTest{
 		 * Test of knapsackUnbounded function with all negative profits.
 		 */
 		@Test
-		public void testKnapsackUnbounded11(){
+		public void testKnapsackUnbounded_11(){
 
 			ArrayList<Tuple2<Double, Integer>> items=new ArrayList<>();
 			items.add(new Tuple2<>(-4.0, 12));
@@ -541,7 +541,7 @@ public class KnapsackTest{
 		 * Test of knapsackUnboundedCount function.
 		 */
 		@Test
-		public void testKnapsackUnboundedCount1(){
+		public void testKnapsackUnboundedCount_01(){
 
 			ArrayList<Tuple2<Double, Integer>> items=new ArrayList<>();
 			items.add(new Tuple2<>(4.0, 12));
@@ -559,7 +559,7 @@ public class KnapsackTest{
 		 * Test of knapsackUnboundedCount function with empty items.
 		 */
 		@Test
-		public void testKnapsackUnboundedCount2(){
+		public void testKnapsackUnboundedCount_02(){
 
 			ArrayList<Tuple2<Double, Integer>> items=new ArrayList<>();
 
@@ -572,7 +572,7 @@ public class KnapsackTest{
 		 * Test of knapsackUnboundedCount function with weight zero.
 		 */
 		@Test
-		public void testKnapsackUnboundedCount3(){
+		public void testKnapsackUnboundedCount_03(){
 
 			ArrayList<Tuple2<Double, Integer>> items=new ArrayList<>();
 			items.add(new Tuple2<>(4.0, 12));
@@ -591,7 +591,7 @@ public class KnapsackTest{
 		 * weight.
 		 */
 		@Test
-		public void testKnapsackUnboundedCount4(){
+		public void testKnapsackUnboundedCount_04(){
 
 			ArrayList<Tuple2<Double, Integer>> items=new ArrayList<>();
 
@@ -604,7 +604,7 @@ public class KnapsackTest{
 		 * Test of knapsackUnboundedCount function with nulls.
 		 */
 		@Test(expected=NullPointerException.class)
-		public void testKnapsackUnboundedCount5(){
+		public void testKnapsackUnboundedCount_05(){
 			Knapsack.knapsackUnboundedCount(null, 15);
 		}
 
@@ -612,7 +612,7 @@ public class KnapsackTest{
 		 * Test of knapsackUnboundedCount function with nulls.
 		 */
 		@Test(expected=NullPointerException.class)
-		public void testKnapsackUnboundedCount6(){
+		public void testKnapsackUnboundedCount_06(){
 
 			ArrayList<Tuple2<Double, Integer>> items=new ArrayList<>();
 			items.add(new Tuple2<>(4.0, 12));
@@ -628,7 +628,7 @@ public class KnapsackTest{
 		 * Test of knapsackUnboundedCount function with nulls.
 		 */
 		@Test(expected=NullPointerException.class)
-		public void testKnapsackUnboundedCount7(){
+		public void testKnapsackUnboundedCount_07(){
 
 			ArrayList<Tuple2<Double, Integer>> items=new ArrayList<>();
 			items.add(new Tuple2<>(4.0, 12));
@@ -644,7 +644,7 @@ public class KnapsackTest{
 		 * Test of knapsackUnboundedCount function with negative weights.
 		 */
 		@Test(expected=IllegalArgumentException.class)
-		public void testKnapsackUnboundedCount8(){
+		public void testKnapsackUnboundedCount_08(){
 
 			ArrayList<Tuple2<Double, Integer>> items=new ArrayList<>();
 			items.add(new Tuple2<>(4.0, 12));
@@ -660,7 +660,7 @@ public class KnapsackTest{
 		 * Test of knapsackUnboundedCount function with negative weights.
 		 */
 		@Test(expected=IllegalArgumentException.class)
-		public void testKnapsackUnboundedCount9(){
+		public void testKnapsackUnboundedCount_09(){
 
 			ArrayList<Tuple2<Double, Integer>> items=new ArrayList<>();
 			items.add(new Tuple2<>(4.0, -12));
@@ -676,7 +676,7 @@ public class KnapsackTest{
 		 * Test of knapsackUnboundedCount function with negative profits.
 		 */
 		@Test
-		public void testKnapsackUnboundedCount10(){
+		public void testKnapsackUnboundedCount_10(){
 
 			ArrayList<Tuple2<Double, Integer>> items=new ArrayList<>();
 			items.add(new Tuple2<>(4.0, 12));
@@ -695,7 +695,7 @@ public class KnapsackTest{
 		 * profits.
 		 */
 		@Test
-		public void testKnapsackUnboundedCount11(){
+		public void testKnapsackUnboundedCount_11(){
 
 			ArrayList<Tuple2<Double, Integer>> items=new ArrayList<>();
 			items.add(new Tuple2<>(-4.0, 12));
@@ -713,7 +713,7 @@ public class KnapsackTest{
 	public static class LongSingleRunTests{
 
 		@Test
-		public void testKnapsack1() throws FileNotFoundException, IOException{
+		public void testKnapsack_01() throws FileNotFoundException, IOException{
 
 			try(BufferedReader in=new BufferedReader(new InputStreamReader(new FileInputStream("resources/test/knapsack.in")))){
 				try(BufferedReader out=new BufferedReader(new InputStreamReader(new FileInputStream("resources/test/knapsack.out")))){
@@ -734,7 +734,7 @@ public class KnapsackTest{
 		}
 
 		@Test
-		public void testKnapsackCount1() throws FileNotFoundException, IOException{
+		public void testKnapsackCount_01() throws FileNotFoundException, IOException{
 
 			try(BufferedReader in=new BufferedReader(new InputStreamReader(new FileInputStream("resources/test/knapsackCount.in")))){
 				try(BufferedReader out=new BufferedReader(new InputStreamReader(new FileInputStream("resources/test/knapsackCount.out")))){
@@ -759,7 +759,7 @@ public class KnapsackTest{
 		}
 
 		@Test
-		public void testKnapsackUnbounded1() throws FileNotFoundException, IOException{
+		public void testKnapsackUnbounded_01() throws FileNotFoundException, IOException{
 
 			try(BufferedReader in=new BufferedReader(new InputStreamReader(new FileInputStream("resources/test/knapsackUnbounded.in")))){
 				try(BufferedReader out=new BufferedReader(new InputStreamReader(new FileInputStream("resources/test/knapsackUnbounded.out")))){
@@ -780,7 +780,7 @@ public class KnapsackTest{
 		}
 
 		@Test
-		public void testKnapsackUnboundedCount1() throws FileNotFoundException, IOException{
+		public void testKnapsackUnboundedCount_01() throws FileNotFoundException, IOException{
 
 			try(BufferedReader in=new BufferedReader(new InputStreamReader(new FileInputStream("resources/test/knapsackUnboundedCount.in")))){
 				try(BufferedReader out=new BufferedReader(new InputStreamReader(new FileInputStream("resources/test/knapsackUnboundedCount.out")))){
@@ -958,7 +958,7 @@ public class KnapsackTest{
 		 * Test of knapsack function.
 		 */
 		@Test
-		public void testKnapsack1(){
+		public void testKnapsack_01(){
 
 			new Thread(){
 				@Override
@@ -977,7 +977,7 @@ public class KnapsackTest{
 		 * Test of knapsackCount function.
 		 */
 		@Test
-		public void testKnapsackCount1(){
+		public void testKnapsackCount_01(){
 
 			new Thread(){
 				@Override
@@ -996,7 +996,7 @@ public class KnapsackTest{
 		 * Test of knapsackUnbounded function.
 		 */
 		@Test
-		public void testKnapsackUnbounded1() throws InterruptedException{
+		public void testKnapsackUnbounded_01() throws InterruptedException{
 
 			new Thread(){
 				@Override
@@ -1015,7 +1015,7 @@ public class KnapsackTest{
 		 * Test of knapsackUnboundedCount function.
 		 */
 		@Test
-		public void testKnapsackUnboundedCount1() throws InterruptedException{
+		public void testKnapsackUnboundedCount_01() throws InterruptedException{
 
 			new Thread(){
 				@Override

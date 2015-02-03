@@ -26,6 +26,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Random;
 import static org.junit.Assert.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -43,6 +44,8 @@ import org.junit.runners.Parameterized.Parameters;
 @RunWith(value=Parameterized.class)
 public class TuplesTest{
 
+	private static Random rand=new Random();
+	//************
 	private static LinkedList<Object[]> candidates;
 	//************
 	private Object tuple;
@@ -56,7 +59,7 @@ public class TuplesTest{
 		candidates=new LinkedList();
 		Integer[] v;
 
-		v=new Integer[]{1, 2, 3, 4, 5, 6};
+		v=new Integer[]{rand.nextInt(), rand.nextInt(), rand.nextInt(), rand.nextInt(), rand.nextInt(), rand.nextInt()};
 		candidates.addFirst(new Object[]{new Tuple2(v[0], v[1]), v, null});
 		candidates.addFirst(new Object[]{new Tuple3(v[0], v[1], v[2]), v, null});
 		candidates.addFirst(new Object[]{new Tuple4(v[0], v[1], v[2], v[3]), v, null});
@@ -364,7 +367,7 @@ public class TuplesTest{
 	 * Tests wether the construction of a new tuple gives a non null object.
 	 */
 	@Test
-	public void testConstructor(){
+	public void testConstructor_01(){
 		assertNotNull(tuple);
 	}
 
@@ -372,7 +375,7 @@ public class TuplesTest{
 	 * Test of getFirst method.
 	 */
 	@Test
-	public void testGetFirst1(){
+	public void testGetFirst_01(){
 		if(tuple instanceof Tuple2){
 			assertSame(((Tuple2)tuple).getFirst(), values[0]);
 		}else if(tuple instanceof Tuple3){
@@ -390,7 +393,7 @@ public class TuplesTest{
 	 * Test of getSecond method.
 	 */
 	@Test
-	public void testGetSecond1(){
+	public void testGetSecond_01(){
 		if(tuple instanceof Tuple2){
 			assertSame(((Tuple2)tuple).getSecond(), values[1]);
 		}else if(tuple instanceof Tuple3){
@@ -408,7 +411,7 @@ public class TuplesTest{
 	 * Test of getThird method.
 	 */
 	@Test
-	public void testGetThird1(){
+	public void testGetThird_01(){
 		if(tuple instanceof Tuple3){
 			assertSame(((Tuple3)tuple).getThird(), values[2]);
 		}else if(tuple instanceof Tuple4){
@@ -424,7 +427,7 @@ public class TuplesTest{
 	 * Test of getFourth method.
 	 */
 	@Test
-	public void testGetFourth1(){
+	public void testGetFourth_01(){
 		if(tuple instanceof Tuple4){
 			assertSame(((Tuple4)tuple).getFourth(), values[3]);
 		}else if(tuple instanceof Tuple5){
@@ -438,7 +441,7 @@ public class TuplesTest{
 	 * Test of getFifth method.
 	 */
 	@Test
-	public void testGetFifth1(){
+	public void testGetFifth_01(){
 		if(tuple instanceof Tuple5){
 			assertSame(((Tuple5)tuple).getFifth(), values[4]);
 		}else if(tuple instanceof Tuple6){
@@ -450,7 +453,7 @@ public class TuplesTest{
 	 * Test of getSixth method.
 	 */
 	@Test
-	public void testGetSixth1(){
+	public void testGetSixth_01(){
 		if(tuple instanceof Tuple6){
 			assertSame(((Tuple6)tuple).getSixth(), values[5]);
 		}
@@ -460,7 +463,7 @@ public class TuplesTest{
 	 * Test of setFirst method.
 	 */
 	@Test
-	public void testSetFirst1(){
+	public void testSetFirst_01(){
 		Integer new_value=7;
 		Integer old_value=null;
 		if(tuple instanceof Tuple2M){
@@ -516,7 +519,7 @@ public class TuplesTest{
 	 * Test of setFirst method with null new value.
 	 */
 	@Test
-	public void testSetFirst2(){
+	public void testSetFirst_02(){
 		Integer new_value=null;
 		Integer old_value=null;
 		if(tuple instanceof Tuple2M){
@@ -572,7 +575,7 @@ public class TuplesTest{
 	 * Test of setSecond method.
 	 */
 	@Test
-	public void testSetSecond1(){
+	public void testSetSecond_01(){
 		Integer new_value=7;
 		Integer old_value=null;
 		if(tuple instanceof Tuple2M){
@@ -628,7 +631,7 @@ public class TuplesTest{
 	 * Test of setSecond method with null new value.
 	 */
 	@Test
-	public void testSetSecond2(){
+	public void testSetSecond_02(){
 		Integer new_value=null;
 		Integer old_value=null;
 		if(tuple instanceof Tuple2M){
@@ -684,7 +687,7 @@ public class TuplesTest{
 	 * Test of setThird method.
 	 */
 	@Test
-	public void testSetThird1(){
+	public void testSetThird_01(){
 		Integer new_value=7;
 		Integer old_value;
 		if(tuple instanceof Tuple3M){
@@ -734,7 +737,7 @@ public class TuplesTest{
 	 * Test of setThird method with null value.
 	 */
 	@Test
-	public void testSetThird2(){
+	public void testSetThird_02(){
 		Integer new_value=null;
 		Integer old_value;
 		if(tuple instanceof Tuple3M){
@@ -784,7 +787,7 @@ public class TuplesTest{
 	 * Test of setFourth method.
 	 */
 	@Test
-	public void testSetFourth1(){
+	public void testSetFourth_01(){
 		Integer new_value=7;
 		Integer old_value;
 		if(tuple instanceof Tuple4M){
@@ -826,7 +829,7 @@ public class TuplesTest{
 	 * Test of setFourth method with null new value.
 	 */
 	@Test
-	public void testSetFourth2(){
+	public void testSetFourth_02(){
 		Integer new_value=null;
 		Integer old_value;
 		if(tuple instanceof Tuple4M){
@@ -868,7 +871,7 @@ public class TuplesTest{
 	 * Test of setFifth method.
 	 */
 	@Test
-	public void testSetFifth1(){
+	public void testSetFifth_01(){
 		Integer new_value=7;
 		Integer old_value;
 		if(tuple instanceof Tuple5M){
@@ -903,7 +906,7 @@ public class TuplesTest{
 	 * Test of setFifth method with null new value.
 	 */
 	@Test
-	public void testSetFifth2(){
+	public void testSetFifth_02(){
 		Integer new_value=null;
 		Integer old_value;
 		if(tuple instanceof Tuple5M){
@@ -938,7 +941,7 @@ public class TuplesTest{
 	 * Test of setSixth method.
 	 */
 	@Test
-	public void testSetSixth1(){
+	public void testSetSixth_01(){
 		Integer new_value=7;
 		Integer old_value;
 		if(tuple instanceof Tuple6M){
@@ -958,7 +961,7 @@ public class TuplesTest{
 	 * Test of setSixth method with null new value.
 	 */
 	@Test
-	public void testSetSixth2(){
+	public void testSetSixth_02(){
 		Integer new_value=null;
 		Integer old_value;
 		if(tuple instanceof Tuple6M){
@@ -978,7 +981,7 @@ public class TuplesTest{
 	 * Test of compareTo with an equal tuple.
 	 */
 	@Test
-	public void testCompareTo1(){
+	public void testCompareTo_01(){
 		if(values[0] == null){
 			return;
 		}
@@ -1005,7 +1008,7 @@ public class TuplesTest{
 	 * Test of compareTo with a lesser tuple (first different).
 	 */
 	@Test
-	public void testCompareTo2(){
+	public void testCompareTo_02(){
 		if(values[0] == null){
 			return;
 		}
@@ -1032,7 +1035,7 @@ public class TuplesTest{
 	 * Test of compareTo with a lesser tuple (second different).
 	 */
 	@Test
-	public void testCompareTo3(){
+	public void testCompareTo_03(){
 		if(values[0] == null){
 			return;
 		}
@@ -1059,7 +1062,7 @@ public class TuplesTest{
 	 * Test of compareTo with a greater tuple (first different).
 	 */
 	@Test
-	public void testCompareTo4(){
+	public void testCompareTo_04(){
 		if(values[0] == null){
 			return;
 		}
@@ -1086,7 +1089,7 @@ public class TuplesTest{
 	 * Test of compareTo with a greater tuple (second different).
 	 */
 	@Test
-	public void testCompareTo5(){
+	public void testCompareTo_05(){
 		if(values[0] == null){
 			return;
 		}
@@ -1113,7 +1116,7 @@ public class TuplesTest{
 	 * Test of compareTo with two null tuples.
 	 */
 	@Test
-	public void testCompareTo6(){
+	public void testCompareTo_06(){
 		if(values[0] != null){
 			return;
 		}
@@ -1140,7 +1143,7 @@ public class TuplesTest{
 	 * Test of compareTo with one null tuple (first different).
 	 */
 	@Test
-	public void testCompareTo7(){
+	public void testCompareTo_07(){
 		if(values[0] != null){
 			return;
 		}
@@ -1167,7 +1170,7 @@ public class TuplesTest{
 	 * Test of compareTo with one null tuple (second different).
 	 */
 	@Test
-	public void testCompareTo8(){
+	public void testCompareTo_08(){
 		if(values[0] != null){
 			return;
 		}
@@ -1194,7 +1197,7 @@ public class TuplesTest{
 	 * Test of compareTo with an equal tuple and different mutability.
 	 */
 	@Test
-	public void testCompareTo9(){
+	public void testCompareTo_09(){
 		Object copy;
 		if(values[0] == null){
 			copy=contraryMutabilityNull();
@@ -1224,7 +1227,7 @@ public class TuplesTest{
 	 * mutability.
 	 */
 	@Test
-	public void testCompareTo10(){
+	public void testCompareTo_10(){
 		if(values[0] == null){
 			return;
 		}
@@ -1252,7 +1255,7 @@ public class TuplesTest{
 	 * mutability.
 	 */
 	@Test
-	public void testCompareTo11(){
+	public void testCompareTo_11(){
 		if(values[0] == null){
 			return;
 		}
@@ -1280,7 +1283,7 @@ public class TuplesTest{
 	 * mutability.
 	 */
 	@Test
-	public void testCompareTo12(){
+	public void testCompareTo_12(){
 		if(values[0] == null){
 			return;
 		}
@@ -1308,7 +1311,7 @@ public class TuplesTest{
 	 * mutability.
 	 */
 	@Test
-	public void testCompareTo13(){
+	public void testCompareTo_13(){
 		if(values[0] == null){
 			return;
 		}
@@ -1335,7 +1338,7 @@ public class TuplesTest{
 	 * Test of compareTo with null argument.
 	 */
 	@Test(expected=NullPointerException.class)
-	public void testCompareTo14(){
+	public void testCompareTo_14(){
 		if(tuple instanceof Tuple2){
 			((Tuple2)tuple).compareTo(null);
 		}else if(tuple instanceof Tuple3){
@@ -1353,7 +1356,7 @@ public class TuplesTest{
 	 * Test of compareTo with an uncomparableTuple as first tuple.
 	 */
 	@Test(expected=ClassCastException.class)
-	public void testCompareTo15(){
+	public void testCompareTo_15(){
 		if(values[0] == null){
 			throw new ClassCastException("Forced exception");
 		}
@@ -1375,7 +1378,7 @@ public class TuplesTest{
 	 * Test of compareTo with an uncomparableTuple as second tuple.
 	 */
 	@Test(expected=ClassCastException.class)
-	public void testCompareTo16(){
+	public void testCompareTo_16(){
 		if(values[0] == null){
 			throw new ClassCastException("Forced exception");
 		}
@@ -1397,7 +1400,7 @@ public class TuplesTest{
 	 * Test of equals with an equal tuple.
 	 */
 	@Test
-	public void testEquals1(){
+	public void testEquals_01(){
 		Object copy;
 		if(values[0] == null){
 			copy=shallowCopyTuple();
@@ -1412,7 +1415,7 @@ public class TuplesTest{
 	 * Test of equals with a different tuple (first different).
 	 */
 	@Test
-	public void testEquals2(){
+	public void testEquals_02(){
 		Object copy;
 		if(values[0] == null){
 			copy=uncomparableTuple();
@@ -1427,7 +1430,7 @@ public class TuplesTest{
 	 * Test of equals with a different tuple (second different).
 	 */
 	@Test
-	public void testEquals3(){
+	public void testEquals_03(){
 		Object copy;
 		if(values[0] == null){
 			copy=uncomparableTuple();
@@ -1442,7 +1445,7 @@ public class TuplesTest{
 	 * Test of equals with an equal tuple and different mutability.
 	 */
 	@Test
-	public void testEquals4(){
+	public void testEquals_04(){
 		Object copy;
 		if(values[0] == null){
 			copy=contraryMutabilityNull();
@@ -1458,7 +1461,7 @@ public class TuplesTest{
 	 * mutability.
 	 */
 	@Test
-	public void testEquals5(){
+	public void testEquals_05(){
 		Object copy;
 		if(values[0] == null){
 			return;
@@ -1474,7 +1477,7 @@ public class TuplesTest{
 	 * mutability.
 	 */
 	@Test
-	public void testEquals6(){
+	public void testEquals_06(){
 		Object copy;
 		if(values[0] == null){
 			return;
@@ -1489,20 +1492,26 @@ public class TuplesTest{
 	 * Test of equals with non a tuple.
 	 */
 	@Test
-	public void testEquals7(){
+	public void testEquals_07(){
 		assertFalse(tuple.equals(1));
 	}
 
+	private int hashCode_last=-1;
+	
 	/**
 	 * Test of hashCode.
 	 */
 	@Test
-	public void testHashCode1(){
-		tuple.hashCode();
+	public void testHashCode_01(){
+		int next=tuple.hashCode();
+		if(next==hashCode_last){
+			fail("Retry this test because it is probability-based");
+		}
+		hashCode_last=next;
 	}
 
 	@Test
-	public void testToString1(){
+	public void testToString_01(){
 		if(tuple instanceof Tuple2){
 			assertEquals(tuple.toString(), "(" + values[0] + ", " + values[1] + ")");
 		}else if(tuple instanceof Tuple3){
@@ -1517,7 +1526,7 @@ public class TuplesTest{
 	}
 
 	@Test
-	public void testAsTuple2(){
+	public void testAsTuple2_01(){
 		Object as;
 		if(tuple instanceof Tuple3){
 			as=((Tuple3)tuple).asTuple2();
@@ -1535,7 +1544,7 @@ public class TuplesTest{
 	}
 
 	@Test
-	public void testAsTuple2M(){
+	public void testAsTuple2M_01(){
 		Object as;
 		if(tuple instanceof Tuple3M){
 			as=((Tuple3M)tuple).asTuple2M();
@@ -1559,7 +1568,7 @@ public class TuplesTest{
 	}
 
 	@Test
-	public void testAsTuple3(){
+	public void testAsTuple3_01(){
 		Object as;
 		if(tuple instanceof Tuple4){
 			as=((Tuple4)tuple).asTuple3();
@@ -1575,7 +1584,7 @@ public class TuplesTest{
 	}
 
 	@Test
-	public void testAsTuple3M(){
+	public void testAsTuple3M_01(){
 		Object as;
 		if(tuple instanceof Tuple4M){
 			as=((Tuple4M)tuple).asTuple3M();
@@ -1597,7 +1606,7 @@ public class TuplesTest{
 	}
 
 	@Test
-	public void testAsTuple4(){
+	public void testAsTuple4_01(){
 		Object as;
 		if(tuple instanceof Tuple5){
 			as=((Tuple5)tuple).asTuple4();
@@ -1611,7 +1620,7 @@ public class TuplesTest{
 	}
 
 	@Test
-	public void testAsTuple4M(){
+	public void testAsTuple4M_01(){
 		Object as;
 		if(tuple instanceof Tuple5M){
 			as=((Tuple5M)tuple).asTuple4M();
@@ -1631,7 +1640,7 @@ public class TuplesTest{
 	}
 
 	@Test
-	public void testAsTuple5(){
+	public void testAsTuple5_01(){
 		Object as;
 		if(tuple instanceof Tuple6){
 			as=((Tuple6)tuple).asTuple5();
@@ -1643,7 +1652,7 @@ public class TuplesTest{
 	}
 
 	@Test
-	public void testAsTuple5M(){
+	public void testAsTuple5M_01(){
 		Object as;
 		if(tuple instanceof Tuple6M){
 			as=((Tuple6M)tuple).asTuple5M();
