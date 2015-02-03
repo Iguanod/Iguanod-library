@@ -367,6 +367,22 @@ public class BigLong extends Number implements Comparable<BigLong>{
 		return new BigLongM(this).sqrtM();
 	}
 
+	public BigLongM and(BigLong n){
+		return new BigLongM(this).andM(n);
+	}
+
+	public BigLongM or(BigLong n){
+		return new BigLongM(this).orM(n);
+	}
+
+	public BigLongM xor(BigLong n){
+		return new BigLongM(this).xorM(n);
+	}
+
+	public BigLongM not(){
+		return new BigLongM(this).notM();
+	}
+
 	public BigLongM shiftRight(int n){
 		return new BigLongM(this).shiftRightM(n);
 	}
@@ -542,9 +558,9 @@ public class BigLong extends Number implements Comparable<BigLong>{
 				negateM();
 				negate=true;
 			}
-			
-			boolean pos=mant1>=0;
-			boolean p=pos==(n.mant1>=0);
+
+			boolean pos=mant1 >= 0;
+			boolean p=pos == (n.mant1 >= 0);
 
 			long op14=mant2 & 0x00000000FFFFFFFFL;
 			long op13=(mant2 & 0xFFFFFFFF00000000L) >> 32;
@@ -586,46 +602,46 @@ public class BigLong extends Number implements Comparable<BigLong>{
 			boolean completed=false;
 			do{
 				mant1+=op14 * op22;
-				if(overinf && (p!=mant1>=0)){
+				if(overinf && (p != mant1 >= 0)){
 					break;
 				}
 
 				mant1+=op12 * op24;
-				if(overinf && (p!=mant1>=0)){
+				if(overinf && (p != mant1 >= 0)){
 					break;
 				}
 
 				mant1+=(op13 * op23) << 1;
-				if(overinf && (p!=mant1>=0)){
+				if(overinf && (p != mant1 >= 0)){
 					break;
 				}
 
 				//************
 				mant1+=((op14 * op21) & 0xFFFFFFFFL) << 32;
-				if(overinf && (p!=mant1>=0)){
+				if(overinf && (p != mant1 >= 0)){
 					break;
 				}
 
 				mant1+=((op13 * op22) & 0xFFFFFFFFL) << 32;
-				if(overinf && (p!=mant1>=0)){
+				if(overinf && (p != mant1 >= 0)){
 					break;
 				}
 
 				mant1+=((op12 * op23) & 0xFFFFFFFFL) << 32;
-				if(overinf && (p!=mant1>=0)){
+				if(overinf && (p != mant1 >= 0)){
 					break;
 				}
 
 				mant1+=((op11 * op24) & 0xFFFFFFFFL) << 32;
-				if(overinf && (p!=mant1>=0)){
+				if(overinf && (p != mant1 >= 0)){
 					break;
 				}
 				completed=true;
 			}while(false);
-			
+
 			if(!completed){
 				inf=true;
-				if(pos!=mant1>=0){
+				if(pos != mant1 >= 0){
 					mant1=~mant1;
 				}
 			}
@@ -830,6 +846,58 @@ public class BigLong extends Number implements Comparable<BigLong>{
 			return this.mul(this).compareTo(this_cpy) <= 0 ? (BigLongM)this : last;
 		}
 
+		return (BigLongM)this;
+	}
+
+	protected BigLongM andM(BigLong n){
+		if(nan){
+			//Nothing to do
+		}else if(inf || n.inf || n.nan){
+			nan=true;
+			inf=false;
+		}else{
+			mant1&=n.mant1;
+			mant2&=n.mant2;
+		}
+		return (BigLongM)this;
+	}
+
+	protected BigLongM orM(BigLong n){
+		if(nan){
+			//Nothing to do
+		}else if(inf || n.inf || n.nan){
+			nan=true;
+			inf=false;
+		}else{
+			mant1|=n.mant1;
+			mant2|=n.mant2;
+		}
+		return (BigLongM)this;
+	}
+
+	protected BigLongM xorM(BigLong n){
+		if(nan){
+			//Nothing to do
+		}else if(inf || n.inf || n.nan){
+			nan=true;
+			inf=false;
+		}else{
+			mant1^=n.mant1;
+			mant2^=n.mant2;
+			mant2&=0x7FFFFFFFFFFFFFFFL;
+		}
+		return (BigLongM)this;
+	}
+
+	protected BigLongM notM(){
+		if(nan||inf){
+			nan=true;
+			inf=false;
+		}else{
+			mant1=~mant1;
+			mant2=~mant2;
+			mant2&=0x7FFFFFFFFFFFFFFFL;
+		}
 		return (BigLongM)this;
 	}
 
