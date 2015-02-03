@@ -21,7 +21,9 @@ package es.iguanod.collect;
 
 import es.iguanod.util.Caster;
 import java.math.BigDecimal;
+import java.util.Collections;
 import java.util.Comparator;
+import java.util.NoSuchElementException;
 import java.util.Set;
 
 /**
@@ -44,12 +46,20 @@ public abstract class AbstractSortedCounter<K, V extends Number> extends Abstrac
 
 	@Override
 	public Set<K> maxKeySet(){
-		return keySet(maxValue());
+		try{
+			return keySet(maxValue());
+		}catch(NoSuchElementException ex){
+			return Collections.EMPTY_SET;
+		}
 	}
 
 	@Override
 	public Set<K> minKeySet(){
-		return keySet(minValue());
+		try{
+			return keySet(minValue());
+		}catch(NoSuchElementException ex){
+			return Collections.EMPTY_SET;
+		}
 	}
 
 	@Override
