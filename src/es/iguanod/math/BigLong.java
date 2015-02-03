@@ -425,7 +425,7 @@ public class BigLong extends Number implements Comparable<BigLong>{
 				mant2&=0X7FFFFFFFFFFFFFFFL;
 				mant1++;
 			}
-		}
+			}
 
 		return (BigLongM)this;
 	}
@@ -651,9 +651,9 @@ public class BigLong extends Number implements Comparable<BigLong>{
 				}
 				this.fastSubM(cpy);
 				if(res >= 63){
-					m1|=(0x1) << (res - 63);
+					m1|=(0x1L) << (res - 63);
 				}else{
-					m2|=(0x1) << res;
+					m2|=(0x1L) << res;
 				}
 				lead=this.numberOfLeadingZeros();
 				res-=lead - cpy_lead;
