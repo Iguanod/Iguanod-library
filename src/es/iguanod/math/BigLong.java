@@ -33,6 +33,8 @@ public class BigLong extends Number implements Comparable<BigLong>{
 
 	private static final long serialVersionUID=5106436255847615324L;
 	//**********
+	private static boolean overinf=true;
+	//**********
 	private boolean nan;
 	private boolean inf;
 	private long mant1;
@@ -68,6 +70,14 @@ public class BigLong extends Number implements Comparable<BigLong>{
 		TEN=new BigLong(10);
 		MAX_VALUE=new BigLong(false, false, 0x7FFFFFFFFFFFFFFFL, 0x7FFFFFFFFFFFFFFFL);
 		MIN_VALUE=new BigLong(false, false, 0x8000000000000000L, 0x0L);
+	}
+
+	public static final void setOverflowInfinity(boolean b){
+		overinf=b;
+	}
+
+	public static final boolean isOverflowInfinity(){
+		return overinf;
 	}
 
 	public BigLong(long n){
@@ -419,13 +429,25 @@ public class BigLong extends Number implements Comparable<BigLong>{
 			inf=true;
 			mant1=n.mant1;
 		}else{
+			int p=0;
+			if(overinf){
+				if(mant1 >= 0 && n.mant1 >= 0){
+					p=1;
+				}else if(mant1 < 0 && n.mant1 < 0){
+					p=-1;
+				}
+			}
 			mant2+=n.mant2;
 			mant1+=n.mant1;
 			if(mant2 < 0){
 				mant2&=0X7FFFFFFFFFFFFFFFL;
 				mant1++;
 			}
+			if(overinf && ((p > 0 && mant1 < 0) || (p < 0 && mant1 >= 0))){
+				inf=true;
+				mant1=~mant1;
 			}
+		}
 
 		return (BigLongM)this;
 	}
@@ -447,11 +469,23 @@ public class BigLong extends Number implements Comparable<BigLong>{
 			inf=true;
 			mant1=~mant1;
 		}else{
+			int p=0;
+			if(overinf){
+				if(mant1 >= 0 && n.mant1 < 0){
+					p=1;
+				}else if(mant1 < 0 && n.mant1 >= 0){
+					p=-1;
+				}
+			}
 			mant2-=n.mant2;
 			mant1-=n.mant1;
 			if(mant2 < 0){
 				mant2&=0X7FFFFFFFFFFFFFFFL;
 				mant1--;
+			}
+			if(overinf && ((p > 0 && mant1 < 0) || (p < 0 && mant1 >= 0))){
+				inf=true;
+				mant1=~mant1;
 			}
 		}
 
@@ -508,6 +542,9 @@ public class BigLong extends Number implements Comparable<BigLong>{
 				negateM();
 				negate=true;
 			}
+			
+			boolean pos=mant1>=0;
+			boolean p=pos==(n.mant1>=0);
 
 			long op14=mant2 & 0x00000000FFFFFFFFL;
 			long op13=(mant2 & 0xFFFFFFFF00000000L) >> 32;
@@ -546,20 +583,52 @@ public class BigLong extends Number implements Comparable<BigLong>{
 			mant1+=(res & 0x7FFFFFFF80000000L) >>> 31;
 
 			//************
-			mant1+=op14 * op22;
+			boolean completed=false;
+			do{
+				mant1+=op14 * op22;
+				if(overinf && (p!=mant1>=0)){
+					break;
+				}
 
-			mant1+=op12 * op24;
+				mant1+=op12 * op24;
+				if(overinf && (p!=mant1>=0)){
+					break;
+				}
 
-			mant1+=(op13 * op23) << 1;
+				mant1+=(op13 * op23) << 1;
+				if(overinf && (p!=mant1>=0)){
+					break;
+				}
 
-			//************
-			mant1+=((op14 * op21) & 0xFFFFFFFFL) << 32;
+				//************
+				mant1+=((op14 * op21) & 0xFFFFFFFFL) << 32;
+				if(overinf && (p!=mant1>=0)){
+					break;
+				}
 
-			mant1+=((op13 * op22) & 0xFFFFFFFFL) << 32;
+				mant1+=((op13 * op22) & 0xFFFFFFFFL) << 32;
+				if(overinf && (p!=mant1>=0)){
+					break;
+				}
 
-			mant1+=((op12 * op23) & 0xFFFFFFFFL) << 32;
+				mant1+=((op12 * op23) & 0xFFFFFFFFL) << 32;
+				if(overinf && (p!=mant1>=0)){
+					break;
+				}
 
-			mant1+=((op11 * op24) & 0xFFFFFFFFL) << 32;
+				mant1+=((op11 * op24) & 0xFFFFFFFFL) << 32;
+				if(overinf && (p!=mant1>=0)){
+					break;
+				}
+				completed=true;
+			}while(false);
+			
+			if(!completed){
+				inf=true;
+				if(pos!=mant1>=0){
+					mant1=~mant1;
+				}
+			}
 
 			//************
 			if(negate){
